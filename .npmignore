@@ -1,0 +1,17 @@
+# Dirs
+.docz
+.github
+.storybook
+node_modules
+src
+storybook-static
+# Files
+.eslintignore
+.eslintrc
+.gitattributes
+.gitignore
+.npmignore
+doczrc.js
+jest.config.js
+package-lock.json
+tsconfig.json
