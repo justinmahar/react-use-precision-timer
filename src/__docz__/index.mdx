@@ -16,45 +16,112 @@ import githubSvg from '../__docz__/images/github.svg';
 	alignItems: 'center',
 }}>
   <div>
-    <h1>React Library Starter</h1>
+    <h1>React Use Precision Timer</h1>
   </div>
   <div>
-    <a href="https://github.com/devboldly/react-library-starter" target="_blank" rel="noopener noreferrer">
+    <a href="https://github.com/devboldly/react-use-precision-timer/" target="_blank" rel="noopener noreferrer">
       <SvgIcon src={githubSvg} size={28} style={{ margin: '0 0 0 20px' }} />
     </a>
   </div>
 </div>
 
-**This header will contain a brief description of the project.**
+**A versatile precision timer hook for React. Doubles as a stopwatch.**
 
-👁️ **[Live Demo](/ExampleComponent#example)**
+👁️ **[Live Demo](/demo)**
 
 ## Overview
 
-This section will contain an overview so people can have a high-level understanding of the project.
+A React timer hook that calls the provided callback at regular intervals. Can be used as a stopwatch, too.
+
+It's accurate, precise, and includes a rich set of options, functionality, and accessors.
 
 ### Features include:
 
-- **🚀 List your features, use fun [emojis](https://emojipedia.org/search/?q=rocket)**
-  - Give a little more info on each feature or mention benefits.
+- **⏰ Timeout and timestamp based**
+  - Based on `setTimeout()` and Unix times, not ticks.
+- **🎯 Accurate and precise**
+  - Perfect mean accuracy with no wandering, with sub 10ms callback precision.
+- **💪 Doesn't choke under pressure**
+  - Resilient to expensive callbacks and low timer delays.
+- **🧰 Versatile**
+  - Can be used as a timer, one-time delay, or stopwatch. Additional options available.
+- **⏯️ Pause and resume**
+  - Supports pausing, and tracks cumulative elapsed pause time between resumes.
+- **🌞 Accessors for everything**
+  - Includes getters for everything under the sun! Know all the things.
 
 ## Installation
 
 ```
-npm i @devboldly/react-library-starter
+npm i react-use-precision-timer
 ```
 
 ## Quick Start
 
-This section will contain a copy/paste example so people can get started quickly.
+### Repeating Timer
 
 ```jsx
-import { ExampleComponent } from '@devboldly/react-library-starter';
+import { useTimer } from 'react-use-precision-timer';
+```
+
+In your function component: 
+
+```jsx
+// The callback will be called every 1000 milliseconds.
+const timer = useTimer({ delay: 1000, callback: () => console.log("Boom") });
+```
+
+In a handler or effect: 
+
+```jsx
+timer.start();
+```
+
+The following functions can be used to control the [Timer](/useTimer#timer):
+
+- `timer.start()` - Start the timer. If already started, will restart the timer.
+- `timer.stop()` - Stop the timer.
+- `timer.pause()` - Pause the timer.
+- `timer.resume()` - Resume the timer.
+
+Refer to [Timer](/useTimer#timer) for all available functions, including getters for elapsed times.
+
+### One-Time Delay
+
+If you'd like to run a callback after a one-time delay, use the helper hook [useDelay](/useDelay):
+
+```jsx
+import { useDelay } from 'react-use-precision-timer';
 ```
 
 ```jsx
-<ExampleComponent text="Example Component"/>
+// Call once after 1000ms.
+useDelay(1000, () => console.log("Boom"));
 ```
+
+The provided callback will be called only once after the provided delay.
+
+### Stopwatch
+
+The timer also functions as a stopwatch when no delay is provided. You can use the helper hook [useStopwatch](/useStopwatch):
+
+```jsx
+import { useStopwatch } from 'react-use-precision-timer';
+```
+
+```jsx
+const stopwatch = useStopwatch();
+```
+
+Use `start()`, `stop()`, `pause()`, and `resume()` to control the stopwatch.
+
+Stopwatch is a [Timer](/useTimer#timer) object. Refer to Timer's getters to retrieve elapsed running time, paused time, and so forth.
+
+Calling start while a stopwatch is already running will restart it.
+
+### Other Usage
+
+See [useTimer](/useTimer) for all other hook options and timer functions.
 
 ## TypeScript
 
@@ -68,6 +135,6 @@ For major changes, open an issue first to discuss what you'd like to change.
 
 See the [library template](https://tinyurl.com/ya3k258d) for npm script documentation.
 
-## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-library-starter/stargazers)
+## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-use-precision-timer/stargazers)
 
-If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-library-starter/stargazers): [👉⭐](https://github.com/devboldly/react-library-starter/stargazers)
+If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-use-precision-timer/stargazers): [👉⭐](https://github.com/devboldly/react-use-precision-timer/stargazers)

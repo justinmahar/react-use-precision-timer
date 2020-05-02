@@ -1,0 +1,47 @@
+---
+name: useStopwatch
+menu: Hooks
+route: /useStopwatch
+---
+
+import { UseDelayExample } from '../__docz__/components/UseDelayExample';
+
+<h1>useStopwatch</h1>
+
+## Description
+
+This convenience hook creates a stopwatch using [useTimer](/useTimer). A stopwatch tracks time when started and can be paused, resumed, and stopped.
+
+## Usage
+
+```jsx
+import { useStopwatch } from 'react-use-precision-timer';
+```
+
+In your function component: 
+
+```jsx
+const stopwatch = useStopwatch();
+```
+
+Use `start()`, `stop()`, `pause()`, and `resume()` to control the stopwatch.
+
+Stopwatch is a [Timer](/useTimer#timer) object. Refer to Timer's getters to retrieve elapsed running time, paused time, and so forth.
+
+Calling start while a stopwatch is already running will restart it.
+
+## Signature
+
+`useStopwatch() => Timer`
+
+### Props
+
+This hook takes no props.
+
+### Return
+
+The hook returns a [Timer](/useTimer#timer) that behaves like a stopwatch.
+
+## Demo
+
+Go to the [useTimer demo](/demo) and set the delay to `0`. This will turn the timer into a stopwatch.

@@ -1,9 +1,9 @@
 {
-  "name": "@devboldly/react-library-starter",
-  "version": "1.0.0",
+  "name": "react-use-precision-timer",
+  "version": "1.0.2",
   "author": "Dev Boldly <devboldly@gmail.com>",
-  "description": "A template to build, test, and share React components and hooks easily. Uses Storybook, Jest, and more.",
-  "homepage": "https://github.com/devboldly/react-library-starter#readme",
+  "description": "A versatile precision timer hook for React. Doubles as a stopwatch.",
+  "homepage": "https://github.com/devboldly/react-use-precision-timer#readme",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
@@ -27,10 +27,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/devboldly/react-library-starter.git"
+    "url": "git+https://github.com/devboldly/react-use-precision-timer.git"
   },
   "bugs": {
-    "url": "https://github.com/devboldly/react-library-starter/issues"
+    "url": "https://github.com/devboldly/react-use-precision-timer/issues"
   },
   "keywords": [],
   "dependencies": {},

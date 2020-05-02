@@ -1,2 +1,3 @@
-export * from './components/ExampleComponent';
-export * from './hooks/useExample';
+export * from './hooks/useDelay';
+export * from './hooks/useStopwatch';
+export * from './hooks/useTimer';

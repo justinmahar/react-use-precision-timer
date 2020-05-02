@@ -1,2 +1,2 @@
-export * from './components/ExampleComponent';
-export * from './hooks/useExample';
+export * from './hooks/useTimer';
+export * from './hooks/useDelay';

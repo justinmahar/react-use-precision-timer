@@ -1,5 +1,5 @@
 /** Name of your repository */
-const repoName = 'react-library-starter';
+const repoName = 'react-use-precision-timer';
 /** URL to public assets such as images */
 const publicUrl = `/${repoName}/public`;
 
@@ -11,7 +11,7 @@ export const themeAdditionsConfig = {
   /** Name of the project */
   projectName: repoName,
   /** Google Analytics tracking ID */
-  gaTrackingId: 'UA-148090679-9',
+  gaTrackingId: undefined, //'UA-000000000-0',
   /** Used to ensure site runs */
   repoName: repoName,
   /** URL to public assets, such as images. */
@@ -51,15 +51,15 @@ export const themeAdditionsConfig = {
      * IMPORTANT: Be sure none of the fields have validation or your submits will fail!
      */
     formActionUrl:
-      'https://docs.google.com/forms/u/0/d/e/123abc456def789ghi_0123_a-bcdefg1234567HIJKLMNoqrs123yz/formResponse',
+      'https://docs.google.com/forms/u/0/d/e/1FAIpQLScMRAM6r__I_rSeg_l-a5mk8p8iSTDNrjJCUOTlnxa63Czwrg/formResponse',
     /** Form field name for the yes/no text field */
-    yesNoFieldName: 'entry.123456789',
+    yesNoFieldName: 'entry.681938809',
     /** Form field name for the feedback message text field */
-    feedbackFieldName: 'entry.234567890',
+    feedbackFieldName: 'entry.593370879',
     /** Form field name for the site name text field */
-    siteFieldName: 'entry.345678901',
+    siteFieldName: 'entry.1824430892',
     /** Form field name for the page URL text field */
-    pageUrlFieldName: 'entry.456789012',
+    pageUrlFieldName: 'entry.2081371977',
     /**
      * Page paths to exclude the feedback form from.
      * Automatically uses repo name above to exclude in gh-pages as well.
