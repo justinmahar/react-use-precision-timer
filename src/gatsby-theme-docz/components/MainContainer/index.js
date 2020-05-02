@@ -2,8 +2,10 @@ import { DoczFooter, DoczFeedbackForm } from '@devboldly/react-devboldly-tools';
 import { MainContainer as OriginalMainContainer } from 'gatsby-theme-docz/src/components/MainContainer/index';
 import React from 'react';
 import { themeAdditionsConfig } from '../../theme-additions-config';
+import { useScrollTo } from 'react-use-window-scroll';
 
 export const MainContainer = ({ children, ...rest }) => {
+  const scrollTo = useScrollTo();
   let showFeedbackForm = typeof window !== 'undefined' && themeAdditionsConfig.feedbackForm.enabled;
   if (showFeedbackForm) {
     for (let i = 0; i < themeAdditionsConfig.feedbackForm.excludedPaths.length; i++) {
@@ -24,6 +26,9 @@ export const MainContainer = ({ children, ...rest }) => {
   return (
     <OriginalMainContainer {...rest}>
       {children}
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <button onClick={e => scrollTo({ left: 0, top: 0, behavior: 'smooth' })}>⬆ Scroll To Top</button>
+      </div>
       {showFeedbackForm && (
         <div
           style={{

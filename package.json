@@ -1,7 +1,7 @@
 {
   "name": "react-use-precision-timer",
   "version": "1.0.3",
-  "author": "Dev Boldly <devboldly@gmail.com>",
+  "author": "DevBoldly <devboldly@gmail.com>",
   "description": "A versatile precision timer hook for React. Doubles as a stopwatch.",
   "homepage": "https://github.com/devboldly/react-use-precision-timer#readme",
   "main": "./dist/index.js",
@@ -68,6 +68,7 @@
     "react-ga": "^2.7.0",
     "react-helmet": "^6.0.0",
     "react-test-renderer": "^16.13.0",
+    "react-use-window-scroll": "^1.0.8",
     "ts-jest": "^25.2.1",
     "ts-loader": "^6.2.1",
     "typescript": "^3.8.3"
