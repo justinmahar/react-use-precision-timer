@@ -20,6 +20,8 @@
 
 Read the **[official documentation](https://devboldly.github.io/react-use-precision-timer/)**.
 
+[![Demo](./src/__docz__/images/demo.gif "Demo")](https://devboldly.github.io/react-use-precision-timer/demo)
+
 👁️ **[Live Demo](https://devboldly.github.io/react-use-precision-timer/demo)**
 
 ## Overview
