@@ -11,7 +11,7 @@ var React = __importStar(require("react"));
 /** Milliseconds representing forever in the future. */
 var never = Number.MAX_SAFE_INTEGER;
 /**
- * See documentation: https://devboldly.github.io/react-use-precision-timer/useTimer
+ * See documentation: [useTimer](https://devboldly.github.io/react-use-precision-timer/useTimer)
  *
  * A versatile precision timer hook for React. Doubles as a stopwatch.
  *
