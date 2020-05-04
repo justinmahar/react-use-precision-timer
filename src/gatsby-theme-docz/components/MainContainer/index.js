@@ -1,4 +1,4 @@
-import { DoczFooter, DoczFeedbackForm } from '@devboldly/react-devboldly-tools';
+import { DoczFooter, DoczFeedbackForm } from 'dboldly-react-tools';
 import { MainContainer as OriginalMainContainer } from 'gatsby-theme-docz/src/components/MainContainer/index';
 import React from 'react';
 import { themeAdditionsConfig } from '../../theme-additions-config';
