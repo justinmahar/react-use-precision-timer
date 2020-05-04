@@ -1,6 +1,6 @@
 {
   "name": "react-use-precision-timer",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "author": "DevBoldly <devboldly@gmail.com>",
   "description": "A versatile precision timer hook for React. Doubles as a stopwatch.",
   "homepage": "https://github.com/devboldly/react-use-precision-timer#readme",
