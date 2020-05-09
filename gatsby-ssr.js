@@ -1,7 +1,7 @@
 import React from 'react';
 
 // Google site verification for Docz
-const googleSiteVerification = undefined; //'abcdefg123456789hijk_0a9b8c7d6e5f4g3h2i1j0k';
+const googleSiteVerification = 'm3gim8TmX19i4PGPoMR4_6j4eSThtszNtFH9QRBKQlY';
 
 export const onPreRenderHTML = ({ getHeadComponents, replaceHeadComponents }) => {
   if (googleSiteVerification) {
