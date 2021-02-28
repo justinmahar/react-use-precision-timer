@@ -1,5 +1,5 @@
 <h2 align="center">
-  <a href="https://github.com/devboldly/react-use-precision-timer">React Use Precision Timer</a>
+  <a href="https://github.com/justinmahar/react-use-precision-timer">React Use Precision Timer</a>
 </h2>
 <h3 align="center">
   A versatile precision timer hook for React. Doubles as a stopwatch.
@@ -8,21 +8,21 @@
   <a href="https://badge.fury.io/js/react-use-precision-timer">
     <img src="https://badge.fury.io/js/react-use-precision-timer.svg" alt="npm Version"/>
   </a>
-  <a href="https://github.com/devboldly/react-use-precision-timer/actions?query=workflow%3ATests">
-    <img src="https://github.com/devboldly/react-use-precision-timer/workflows/Tests/badge.svg" alt="Tests Status"/>
+  <a href="https://github.com/justinmahar/react-use-precision-timer/actions?query=workflow%3ATests">
+    <img src="https://github.com/justinmahar/react-use-precision-timer/workflows/Tests/badge.svg" alt="Tests Status"/>
   </a>
-  <a href="https://github.com/devboldly/react-use-precision-timer/actions?query=workflow%3ADeploy">
-    <img src="https://github.com/devboldly/react-use-precision-timer/workflows/Deploy/badge.svg" alt="Deploy Status"/>
+  <a href="https://github.com/justinmahar/react-use-precision-timer/actions?query=workflow%3ADeploy">
+    <img src="https://github.com/justinmahar/react-use-precision-timer/workflows/Deploy/badge.svg" alt="Deploy Status"/>
   </a>
 </p>
 
 ## Documentation
 
-Read the **[official documentation](https://devboldly.github.io/react-use-precision-timer/)**.
+Read the **[official documentation](https://justinmahar.github.io/react-use-precision-timer/)**.
 
-[![Demo](./src/__docz__/images/demo.gif "Demo")](https://devboldly.github.io/react-use-precision-timer/demo)
+[![Demo](./src/__docz__/images/demo.gif "Demo")](https://justinmahar.github.io/react-use-precision-timer/demo)
 
-👁️ **[Live Demo](https://devboldly.github.io/react-use-precision-timer/demo)**
+👁️ **[Live Demo](https://justinmahar.github.io/react-use-precision-timer/demo)**
 
 ## Overview
 
@@ -56,37 +56,37 @@ npm i react-use-precision-timer
 ### Repeating Timer
 
 ```jsx
-import { useTimer } from 'react-use-precision-timer';
+import { useTimer } from "react-use-precision-timer";
 ```
 
-In your function component: 
+In your function component:
 
 ```jsx
 // The callback will be called every 1000 milliseconds.
 const timer = useTimer({ delay: 1000, callback: () => console.log("Boom") });
 ```
 
-In a handler or effect: 
+In a handler or effect:
 
 ```jsx
 timer.start();
 ```
 
-The following functions can be used to control the [Timer](https://devboldly.github.io/react-use-precision-timer/useTimer#timer):
+The following functions can be used to control the [Timer](https://justinmahar.github.io/react-use-precision-timer/useTimer#timer):
 
 - `timer.start()` - Start the timer. If already started, will restart the timer.
 - `timer.stop()` - Stop the timer.
 - `timer.pause()` - Pause the timer.
 - `timer.resume()` - Resume the timer.
 
-Refer to [Timer](https://devboldly.github.io/react-use-precision-timer/useTimer#timer) for all available functions, including getters for elapsed times.
+Refer to [Timer](https://justinmahar.github.io/react-use-precision-timer/useTimer#timer) for all available functions, including getters for elapsed times.
 
 ### One-Time Delay
 
-If you'd like to run a callback after a one-time delay, use the helper hook [useDelay](https://devboldly.github.io/react-use-precision-timer/useDelay):
+If you'd like to run a callback after a one-time delay, use the helper hook [useDelay](https://justinmahar.github.io/react-use-precision-timer/useDelay):
 
 ```jsx
-import { useDelay } from 'react-use-precision-timer';
+import { useDelay } from "react-use-precision-timer";
 ```
 
 ```jsx
@@ -98,10 +98,10 @@ The provided callback will be called only once after the provided delay.
 
 ### Stopwatch
 
-The timer also functions as a stopwatch when no delay is provided. You can use the helper hook [useStopwatch](https://devboldly.github.io/react-use-precision-timer/useStopwatch):
+The timer also functions as a stopwatch when no delay is provided. You can use the helper hook [useStopwatch](https://justinmahar.github.io/react-use-precision-timer/useStopwatch):
 
 ```jsx
-import { useStopwatch } from 'react-use-precision-timer';
+import { useStopwatch } from "react-use-precision-timer";
 ```
 
 ```jsx
@@ -110,13 +110,13 @@ const stopwatch = useStopwatch();
 
 Use `start()`, `stop()`, `pause()`, and `resume()` to control the stopwatch.
 
-Stopwatch is a [Timer](https://devboldly.github.io/react-use-precision-timer/useTimer#timer) object. Refer to Timer's getters to retrieve elapsed running time, paused time, and so forth.
+Stopwatch is a [Timer](https://justinmahar.github.io/react-use-precision-timer/useTimer#timer) object. Refer to Timer's getters to retrieve elapsed running time, paused time, and so forth.
 
 Calling start while a stopwatch is already running will restart it.
 
 ### Other Usage
 
-See [useTimer](https://devboldly.github.io/react-use-precision-timer/useTimer) for all other hook options and timer functions.
+See [useTimer](https://justinmahar.github.io/react-use-precision-timer/useTimer) for all other hook options and timer functions.
 
 ## TypeScript
 
@@ -136,14 +136,14 @@ For major changes, open an issue first to discuss what you'd like to change.
 
 See [Kindling](https://tinyurl.com/kindlingscripts) for npm script documentation.
 
-## ⭐ Found It Helpful? [Star It!](https://github.com/devboldly/react-use-precision-timer/stargazers)
+## ⭐ Found It Helpful? [Star It!](https://github.com/justinmahar/react-use-precision-timer/stargazers)
 
-If you found this project helpful, let the community know by giving it a [star](https://github.com/devboldly/react-use-precision-timer/stargazers): [👉⭐](https://github.com/devboldly/react-use-precision-timer/stargazers)
+If you found this project helpful, let the community know by giving it a [star](https://github.com/justinmahar/react-use-precision-timer/stargazers): [👉⭐](https://github.com/justinmahar/react-use-precision-timer/stargazers)
 
 ## MIT License
 
 ```
-Copyright © 2020 DevBoldly https://devboldly.com
+Copyright © 2020 Justin Mahar https://github.com/justinmahar
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

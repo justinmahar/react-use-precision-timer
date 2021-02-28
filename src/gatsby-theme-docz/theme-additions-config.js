@@ -1,5 +1,5 @@
 /** Name of your repository */
-const repoName = 'react-use-precision-timer';
+const repoName = "react-use-precision-timer";
 /** URL to public assets such as images */
 const publicUrl = `/${repoName}/public`;
 
@@ -11,7 +11,7 @@ export const themeAdditionsConfig = {
   /** Name of the project */
   projectName: repoName,
   /** Google Analytics tracking ID */
-  gaTrackingId: 'UA-148090679-15',
+  gaTrackingId: "UA-148090679-15",
   /** Used to ensure site runs */
   repoName: repoName,
   /** URL to public assets, such as images. */
@@ -25,9 +25,9 @@ export const themeAdditionsConfig = {
     /** Set to false to disable the author/"powered by" footer. */
     enabled: true,
     /** Name of project author */
-    authorName: 'DevBoldly',
+    authorName: "Justin Mahar",
     /** URL to author's page */
-    authorUrl: 'https://devboldly.com/',
+    authorUrl: "https://github.com/justinmahar/",
     /** Set to true if you're a grumpy person :) */
     hideEmoji: false,
     /** Hide the "Created with <3 by name" author text from footer. */
@@ -35,9 +35,9 @@ export const themeAdditionsConfig = {
     /** Holidays like New Year's Day and Pi Day are announced for fun. It's an easter egg. Hide if you want. */
     hideHolidays: false,
     /** Shoutout to what's powering this project. */
-    poweredByName: `React${' '}Kindling`,
+    poweredByName: `React${" "}Kindling`,
     /** Link for shoutout. */
-    poweredByUrl: `https://github.com/dev${''}boldly/react${'-'}kindling`,
+    poweredByUrl: `https://github.com/justinmahar/react-kindling`,
     /** Hide the "powered by" text from footer. */
     hidePoweredBy: false,
   },
@@ -51,19 +51,19 @@ export const themeAdditionsConfig = {
      * IMPORTANT: Be sure none of the fields have validation or your submits will fail!
      */
     formActionUrl:
-      'https://docs.google.com/forms/u/0/d/e/1FAIpQLScMRAM6r__I_rSeg_l-a5mk8p8iSTDNrjJCUOTlnxa63Czwrg/formResponse',
+      "https://docs.google.com/forms/u/0/d/e/1FAIpQLScMRAM6r__I_rSeg_l-a5mk8p8iSTDNrjJCUOTlnxa63Czwrg/formResponse",
     /** Form field name for the yes/no text field */
-    yesNoFieldName: 'entry.681938809',
+    yesNoFieldName: "entry.681938809",
     /** Form field name for the feedback message text field */
-    feedbackFieldName: 'entry.593370879',
+    feedbackFieldName: "entry.593370879",
     /** Form field name for the site name text field */
-    siteFieldName: 'entry.1824430892',
+    siteFieldName: "entry.1824430892",
     /** Form field name for the page URL text field */
-    pageUrlFieldName: 'entry.2081371977',
+    pageUrlFieldName: "entry.2081371977",
     /**
      * Page paths to exclude the feedback form from.
      * Automatically uses repo name above to exclude in gh-pages as well.
      */
-    excludedPaths: ['/', '/mit-license', '/code-of-conduct'],
+    excludedPaths: ["/", "/mit-license", "/code-of-conduct"],
   },
 };

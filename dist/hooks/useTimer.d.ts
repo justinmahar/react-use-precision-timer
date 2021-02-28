@@ -13,7 +13,7 @@ export interface TimerOptions {
     fireOverdueCallbacks?: boolean;
 }
 /**
- * See documentation: [useTimer](https://devboldly.github.io/react-use-precision-timer/useTimer)
+ * See documentation: [useTimer](https://justinmahar.github.io/react-use-precision-timer/useTimer)
  *
  * A versatile precision timer hook for React. Doubles as a stopwatch.
  *
@@ -26,7 +26,7 @@ export interface TimerOptions {
  */
 export declare const useTimer: (options?: TimerOptions) => Timer;
 /**
- * See documentation: [Timer](https://devboldly.github.io/react-use-precision-timer/useTimer#timer)
+ * See documentation: [Timer](https://justinmahar.github.io/react-use-precision-timer/useTimer#timer)
  */
 export interface Timer {
     /** Start the timer. If already started, will restart the timer. */

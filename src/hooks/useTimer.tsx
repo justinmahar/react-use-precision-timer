@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 
 export interface TimerOptions {
   /** Amount of time to wait before firing the timer, in milliseconds. Use `undefined` or `0` if you'd like the timer to behave as a stopwatch, never firing. */
@@ -19,7 +19,7 @@ export interface TimerOptions {
 const never = Number.MAX_SAFE_INTEGER;
 
 /**
- * See documentation: [useTimer](https://devboldly.github.io/react-use-precision-timer/useTimer)
+ * See documentation: [useTimer](https://justinmahar.github.io/react-use-precision-timer/useTimer)
  *
  * A versatile precision timer hook for React. Doubles as a stopwatch.
  *
@@ -140,7 +140,10 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
         return Math.max(0, nextFireTime - currentTime);
       } else if (isPaused()) {
         const edgeTime = lastFireTime !== never ? lastFireTime : startTime;
-        return Math.max(0, options.delay - (pauseTime - edgeTime - periodElapsedPauseTime));
+        return Math.max(
+          0,
+          options.delay - (pauseTime - edgeTime - periodElapsedPauseTime)
+        );
       }
     }
     return 0;
@@ -159,7 +162,10 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
   const start = React.useCallback(() => {
     const currentTime = new Date().getTime();
     const newNextFireTime = options.delay
-      ? Math.max(currentTime, options.fireImmediately ? currentTime : currentTime + options.delay)
+      ? Math.max(
+          currentTime,
+          options.fireImmediately ? currentTime : currentTime + options.delay
+        )
       : never;
     setStartTime(currentTime);
     setLastFireTime(never);
@@ -192,20 +198,34 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
   const resume = React.useCallback((): void => {
     if (isStarted() && isPaused()) {
       const currentTime = new Date().getTime();
-      setTotalElapsedPauseTime(totalElapsedPauseTime + (currentTime - pauseTime));
-      setPeriodElapsedPauseTime(periodElapsedPauseTime + (currentTime - pauseTime));
+      setTotalElapsedPauseTime(
+        totalElapsedPauseTime + (currentTime - pauseTime)
+      );
+      setPeriodElapsedPauseTime(
+        periodElapsedPauseTime + (currentTime - pauseTime)
+      );
       setNextFireTime(currentTime + getRemainingTime());
       setPauseTime(never);
       setResumeTime(currentTime);
     }
-  }, [isStarted, isPaused, getRemainingTime, totalElapsedPauseTime, pauseTime, periodElapsedPauseTime]);
+  }, [
+    isStarted,
+    isPaused,
+    getRemainingTime,
+    totalElapsedPauseTime,
+    pauseTime,
+    periodElapsedPauseTime,
+  ]);
 
   React.useEffect(() => {
     let timeout: NodeJS.Timeout;
     // If it's a timer and it isn't paused...
     if (options.delay && !isPaused()) {
       // Check if we're overdue on any events being fired (super low delay or expensive callback)
-      const overdueCalls = Math.max(0, Math.floor((now - nextFireTime) / options.delay));
+      const overdueCalls = Math.max(
+        0,
+        Math.floor((now - nextFireTime) / options.delay)
+      );
       // If we're overdue, this means we're not firing callbacks fast enough and need to prevent
       // exceeding the maximum update depth.
       // To do this, we only fire the callback on an even number of overdues (including 0, no overdues).
@@ -214,10 +234,14 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
         // If the timer is up...
         if (now >= nextFireTime) {
           // Call the callback
-          if (typeof options.callback === 'function') {
+          if (typeof options.callback === "function") {
             try {
               // Only fire overdue callbacks if we're told to, otherwise skip them
-              for (let i = 0; i < (options.fireOverdueCallbacks ? overdueCalls + 1 : 1); i++) {
+              for (
+                let i = 0;
+                i < (options.fireOverdueCallbacks ? overdueCalls + 1 : 1);
+                i++
+              ) {
                 options.callback();
               }
             } catch (e) {
@@ -230,7 +254,10 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
           if (!options.runOnce) {
             // Calculate and set the next time the timer should fire
             const overdueElapsedTime = overdueCalls * options.delay;
-            const newFireTime = Math.max(now, nextFireTime + options.delay + overdueElapsedTime);
+            const newFireTime = Math.max(
+              now,
+              nextFireTime + options.delay + overdueElapsedTime
+            );
             setNextFireTime(newFireTime);
             // Set a timeout to check and fire the timer when time's up
             timeout = setTimeout(() => {
@@ -264,7 +291,16 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
     return () => {
       clearTimeout(timeout);
     };
-  }, [now, nextFireTime, options.runOnce, options.delay, pauseTime, stop, isPaused, options]);
+  }, [
+    now,
+    nextFireTime,
+    options.runOnce,
+    options.delay,
+    pauseTime,
+    stop,
+    isPaused,
+    options,
+  ]);
 
   // Start immediately if this is our first run.
   React.useEffect(() => {
@@ -300,7 +336,7 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
 };
 
 /**
- * See documentation: [Timer](https://devboldly.github.io/react-use-precision-timer/useTimer#timer)
+ * See documentation: [Timer](https://justinmahar.github.io/react-use-precision-timer/useTimer#timer)
  */
 export interface Timer {
   /** Start the timer. If already started, will restart the timer. */

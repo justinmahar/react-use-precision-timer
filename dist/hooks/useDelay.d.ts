@@ -1,6 +1,6 @@
 import { Timer } from './useTimer';
 /**
- * See documentation: [useDelay](https://devboldly.github.io/react-use-precision-timer/useDelay)
+ * See documentation: [useDelay](https://justinmahar.github.io/react-use-precision-timer/useDelay)
  *
  * Fires the callback after the specified delay has passed.
  *

@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { useTimer, Timer } from './useTimer';
+import * as React from "react";
+import { useTimer, Timer } from "./useTimer";
 
 /**
- * See documentation: [useDelay](https://devboldly.github.io/react-use-precision-timer/useDelay)
+ * See documentation: [useDelay](https://justinmahar.github.io/react-use-precision-timer/useDelay)
  *
  * Fires the callback after the specified delay has passed.
  *
@@ -11,7 +11,12 @@ import { useTimer, Timer } from './useTimer';
  */
 export const useDelay = (delay: number, callback: () => void): Timer => {
   const [firstRun, setFirstRun] = React.useState(true);
-  const timer = useTimer({ delay, callback, runOnce: true, fireImmediately: false });
+  const timer = useTimer({
+    delay,
+    callback,
+    runOnce: true,
+    fireImmediately: false,
+  });
   React.useEffect(() => {
     // Ensures the delay only ever runs once
     if (firstRun) {
