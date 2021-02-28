@@ -5,7 +5,7 @@ const publicUrl = `/${repoName}/public`;
 
 /**
  * Configuration for additions to the default Docz theme.
- * Includes Google Analytics, favicon, a footer, and feedback forms.
+ * Includes Google Analytics, favicon, a footer, and more.
  */
 export const themeAdditionsConfig = {
   /** Name of the project */
@@ -40,30 +40,5 @@ export const themeAdditionsConfig = {
     poweredByUrl: `https://github.com/justinmahar/react-kindling`,
     /** Hide the "powered by" text from footer. */
     hidePoweredBy: false,
-  },
-  feedbackForm: {
-    /** Set to false to disable "was this page helpful?" feedback forms for whole site. */
-    enabled: true,
-    /** Site name submitted along with form, so you can track multiple sites with one form. Not shown to user. */
-    siteName: repoName,
-    /**
-     * Create and inspect your google form (i.e. in Chrome dev tools) and retrieve the form action URL.
-     * IMPORTANT: Be sure none of the fields have validation or your submits will fail!
-     */
-    formActionUrl:
-      "https://docs.google.com/forms/u/0/d/e/1FAIpQLScMRAM6r__I_rSeg_l-a5mk8p8iSTDNrjJCUOTlnxa63Czwrg/formResponse",
-    /** Form field name for the yes/no text field */
-    yesNoFieldName: "entry.681938809",
-    /** Form field name for the feedback message text field */
-    feedbackFieldName: "entry.593370879",
-    /** Form field name for the site name text field */
-    siteFieldName: "entry.1824430892",
-    /** Form field name for the page URL text field */
-    pageUrlFieldName: "entry.2081371977",
-    /**
-     * Page paths to exclude the feedback form from.
-     * Automatically uses repo name above to exclude in gh-pages as well.
-     */
-    excludedPaths: ["/", "/mit-license", "/code-of-conduct"],
   },
 };

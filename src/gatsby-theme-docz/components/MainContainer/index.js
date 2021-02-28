@@ -1,4 +1,4 @@
-import { DoczFooter } from "../tools/DoczFooter";
+import { DoczFooter } from "../../tools/DoczFooter";
 import { MainContainer as OriginalMainContainer } from "gatsby-theme-docz/src/components/MainContainer/index";
 import React from "react";
 import { themeAdditionsConfig } from "../../theme-additions-config";
