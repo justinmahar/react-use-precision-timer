@@ -42,7 +42,7 @@ const HookComponent = () => {
             min="10"
             max="5000"
             value={delay}
-            onChange={e => {
+            onChange={(e) => {
               setDelay(parseInt(e.target.value));
               timer.start();
             }}
@@ -55,7 +55,7 @@ const HookComponent = () => {
             id="runOnce"
             name="runOnce"
             checked={runOnce}
-            onChange={e => setRunOnce(e.target.checked)}
+            onChange={(e) => setRunOnce(e.target.checked)}
           />
           <label htmlFor="runOnce"> runOnce</label>
           <input
@@ -63,7 +63,7 @@ const HookComponent = () => {
             id="fireImmediately"
             name="fireImmediately"
             checked={fireImmediately}
-            onChange={e => setFireImmediately(e.target.checked)}
+            onChange={(e) => setFireImmediately(e.target.checked)}
           />
           <label htmlFor="fireImmediately"> fireImmediately</label>
           <input
@@ -71,7 +71,7 @@ const HookComponent = () => {
             id="startImmediately"
             name="startImmediately"
             checked={startImmediately}
-            onChange={e => setStartImmediately(e.target.checked)}
+            onChange={(e) => setStartImmediately(e.target.checked)}
           />
           <label htmlFor="startImmediately"> startImmediately</label>
           <br />

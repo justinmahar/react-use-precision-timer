@@ -1,5 +1,5 @@
-import * as React from "react";
-import { useTimer, Timer } from "./useTimer";
+import * as React from 'react';
+import { useTimer, Timer } from './useTimer';
 
 /**
  * See documentation: [useDelay](https://justinmahar.github.io/react-use-precision-timer/useDelay)

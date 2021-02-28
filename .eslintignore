@@ -3,7 +3,5 @@
 dist
 node_modules
 storybook-static
-# Files to ignore
-package-lock.json
 # Don't ignore (prefix with !)
 !.storybook

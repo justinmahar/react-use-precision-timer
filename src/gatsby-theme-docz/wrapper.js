@@ -9,7 +9,11 @@ let gaInitialized = false;
 let lastPageview = undefined;
 
 export default ({ children }) => {
-  if (typeof window !== 'undefined' && themeAdditionsConfig.gaTrackingId && !window.location.host.includes('localhost')) {
+  if (
+    typeof window !== 'undefined' &&
+    themeAdditionsConfig.gaTrackingId &&
+    !window.location.host.includes('localhost')
+  ) {
     if (!gaInitialized) {
       ReactGA.initialize(themeAdditionsConfig.gaTrackingId);
       gaInitialized = true;

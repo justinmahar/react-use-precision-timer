@@ -39,7 +39,7 @@ const HookComponent = () => {
             min="10"
             max="5000"
             value={delay}
-            onChange={e => {
+            onChange={(e) => {
               setDelay(parseInt(e.target.value));
               timer.start();
             }}

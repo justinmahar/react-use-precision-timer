@@ -5,7 +5,7 @@ export function UseDelayExample(): JSX.Element {
   const [run, setRun] = React.useState(false);
   return (
     <div>
-      {!run && <button onClick={e => setRun(true)}>▶️ Run 1 Second Delay</button>}
+      {!run && <button onClick={(e) => setRun(true)}>▶️ Run 1 Second Delay</button>}
       {run && <OneSecondDelay />}
     </div>
   );

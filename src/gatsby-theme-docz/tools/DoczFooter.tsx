@@ -1,13 +1,13 @@
-import * as React from "react";
-import styled from "styled-components";
+import * as React from 'react';
+import styled from 'styled-components';
 
 const emojis: { [label: string]: string } = {
-  love: "❤️",
-  beer: "🍺",
-  tacos: "🌮",
-  coffee: "☕",
-  sushi: "🍣",
-  pizza: "🍕",
+  love: '❤️',
+  beer: '🍺',
+  tacos: '🌮',
+  coffee: '☕',
+  sushi: '🍣',
+  pizza: '🍕',
 };
 
 export interface DoczFooterProps {
@@ -23,8 +23,7 @@ export interface DoczFooterProps {
 
 export function DoczFooter(props: DoczFooterProps): JSX.Element {
   const emojiLabels: string[] = Object.keys(emojis);
-  const emojiLabel: string =
-    emojiLabels[Math.floor(Math.random() * emojiLabels.length)];
+  const emojiLabel: string = emojiLabels[Math.floor(Math.random() * emojiLabels.length)];
   const emoji: string = emojis[emojiLabel];
 
   // Holiday div just for fun :)
@@ -36,15 +35,11 @@ export function DoczFooter(props: DoczFooterProps): JSX.Element {
   } else if (month === 2 && day === 2) {
     holidayDiv = <div className="holiday">Happy Groundhog Day! 🐿️🕳</div>;
   } else if (month === 2 && day === 14) {
-    holidayDiv = (
-      <div className="holiday">💘 Happy Valentine&apos;s Day! 💞</div>
-    );
+    holidayDiv = <div className="holiday">💘 Happy Valentine&apos;s Day! 💞</div>;
   } else if (month === 3 && day === 14) {
     holidayDiv = <div className="holiday">🍰 Happy Pie Day! 🥧</div>;
   } else if (month === 3 && day === 17) {
-    holidayDiv = (
-      <div className="holiday">☘️ Happy St. Patrick&apos;s Day! 🍻</div>
-    );
+    holidayDiv = <div className="holiday">☘️ Happy St. Patrick&apos;s Day! 🍻</div>;
   } else if (month === 4 && day === 22) {
     holidayDiv = <div className="holiday">🌎 Happy Earth Day! 🌱</div>;
   } else if (month === 5 && day === 5) {
@@ -52,11 +47,7 @@ export function DoczFooter(props: DoczFooterProps): JSX.Element {
   } else if (month === 7 && day === 4) {
     holidayDiv = <div className="holiday">🎆 Happy Independence Day! 🧨</div>;
   } else if (month === 9 && day === 19) {
-    holidayDiv = (
-      <div className="holiday">
-        🏴‍☠️ Happy International Talk Like A Pirate Day! 🦜
-      </div>
-    );
+    holidayDiv = <div className="holiday">🏴‍☠️ Happy International Talk Like A Pirate Day! 🦜</div>;
   } else if (month === 10 && day === 31) {
     holidayDiv = <div className="holiday">👻 Happy Halloween! 🎃</div>;
   } else if (month === 11 && day >= 22 && day <= 28) {
@@ -64,9 +55,7 @@ export function DoczFooter(props: DoczFooterProps): JSX.Element {
   } else if (month === 12 && day >= 21 && day <= 30) {
     holidayDiv = <div className="holiday">🎁 Happy Holidays! ⛄</div>;
   } else if (month === 12 && day === 31) {
-    holidayDiv = (
-      <div className="holiday">🥳 Happy New Year&apos;s Eve! 🎆</div>
-    );
+    holidayDiv = <div className="holiday">🥳 Happy New Year&apos;s Eve! 🎆</div>;
   }
 
   return (
@@ -75,16 +64,16 @@ export function DoczFooter(props: DoczFooterProps): JSX.Element {
         <div>
           {!props.hideAuthor && (
             <>
-              Created{" "}
+              Created{' '}
               {!props.hideEmoji && (
                 <>
-                  with{" "}
+                  with{' '}
                   <span role="img" aria-label={emojiLabel}>
                     {emoji}
-                  </span>{" "}
+                  </span>{' '}
                 </>
               )}
-              by{" "}
+              by{' '}
               <a href={props.authorUrl} className="author">
                 {props.authorName}
               </a>
@@ -95,12 +84,8 @@ export function DoczFooter(props: DoczFooterProps): JSX.Element {
         <div>
           {!props.hidePoweredBy && (
             <>
-              Powered by{" "}
-              <a
-                href={props.poweredByUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              Powered by{' '}
+              <a href={props.poweredByUrl} target="_blank" rel="noopener noreferrer">
                 {props.poweredByName}
               </a>
             </>

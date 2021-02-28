@@ -53,7 +53,7 @@ export function UseTimerExample(): JSX.Element {
                 min="0"
                 max="5000"
                 value={delay}
-                onChange={e => {
+                onChange={(e) => {
                   const newDelay = parseInt(e.target.value);
                   setDelay(newDelay);
                   setDelayChanged(true);
@@ -71,7 +71,7 @@ export function UseTimerExample(): JSX.Element {
               id="runOnce"
               name="runOnce"
               checked={runOnce}
-              onChange={e => setRunOnce(e.target.checked)}
+              onChange={(e) => setRunOnce(e.target.checked)}
             />
             <label htmlFor="runOnce"> runOnce</label>
             <input
@@ -79,7 +79,7 @@ export function UseTimerExample(): JSX.Element {
               id="fireImmediately"
               name="fireImmediately"
               checked={fireImmediately}
-              onChange={e => setFireImmediately(e.target.checked)}
+              onChange={(e) => setFireImmediately(e.target.checked)}
             />
             <label htmlFor="fireImmediately"> fireImmediately</label>
             <input
@@ -87,7 +87,7 @@ export function UseTimerExample(): JSX.Element {
               id="startImmediately"
               name="startImmediately"
               checked={startImmediately}
-              onChange={e => setStartImmediately(e.target.checked)}
+              onChange={(e) => setStartImmediately(e.target.checked)}
             />
             <label htmlFor="startImmediately"> startImmediately</label>
             <br />
@@ -211,7 +211,7 @@ export function UseTimerExample(): JSX.Element {
             min="1"
             max="5000"
             value={frameRate}
-            onChange={e => {
+            onChange={(e) => {
               setFrameRate(parseInt(e.target.value));
             }}
           />

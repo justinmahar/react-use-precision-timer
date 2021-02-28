@@ -1,4 +1,4 @@
-import { Timer, useTimer } from "./useTimer";
+import { Timer, useTimer } from './useTimer';
 
 /**
  * See documentation: [useStopwatch](https://justinmahar.github.io/react-use-precision-timer/useStopwatch)
