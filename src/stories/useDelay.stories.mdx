@@ -1,0 +1,69 @@
+import { Meta } from '@storybook/addon-docs';
+import { UseDelayExample } from '../components/UseDelayExample';
+
+<Meta title="Docs/useDelay" />
+
+<h1>useDelay</h1>
+
+## Description
+
+Convenience hook that uses [useTimer](/useTimer) to fire a callback after the specified delay has passed.
+
+The callback will be called only once.
+
+## Usage
+
+```jsx
+import { useDelay } from 'react-use-precision-timer';
+```
+
+In your function component:
+
+```jsx
+const callback = () => console.log('Boom');
+useDelay(1000, callback);
+```
+
+This will call the callback after the provided 1000 millisecond delay only once.
+
+## Signature
+
+`useDelay(delay: number, callback: () => void) => Timer`
+
+### Props
+
+| Prop     | Type         | Description                                                  |
+| -------- | ------------ | ------------------------------------------------------------ |
+| delay    | `number`     | The amount of time, in milliseconds, before the timer fires. |
+| callback | `() => void` | Called when the timer fires.                                 |
+
+### Return
+
+The hook returns a [Timer](/useTimer#timer) that is configured to start immediately and only run once.
+
+## Example
+
+<div style={{ border: 'solid 2px #67788a', padding: '20px' }}>
+  <UseDelayExample />
+</div>
+
+```jsx
+import * as React from 'react';
+import { useDelay } from 'react-use-precision-timer';
+
+export function UseDelayExample() {
+  const [run, setRun] = React.useState(false);
+  return (
+    <div>
+      {!run && <button onClick={(e) => setRun(true)}>▶️ Run 1 Second Delay</button>}
+      {run && <OneSecondDelay />}
+    </div>
+  );
+}
+
+export function OneSecondDelay() {
+  const [firedAt, setFiredAt] = React.useState(0);
+  useDelay(1000, () => setFiredAt(new Date().getTime()));
+  return <>Timer fired? {firedAt > 0 ? `✔️ (at ${firedAt})` : '❌'}</>;
+}
+```

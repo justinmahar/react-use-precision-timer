@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -14,15 +18,15 @@ var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
     __setModuleDefault(result, mod);
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useTimer = void 0;
-var React = __importStar(require("react"));
+const React = __importStar(require("react"));
 /** Milliseconds representing forever in the future. */
-var never = Number.MAX_SAFE_INTEGER;
+const never = Number.MAX_SAFE_INTEGER;
 /**
  * See documentation: [useTimer](https://justinmahar.github.io/react-use-precision-timer/useTimer)
  *
@@ -35,66 +39,65 @@ var never = Number.MAX_SAFE_INTEGER;
  * - Supports starting, stopping, pausing, and resuming.
  * - Includes accessors for everything under the sun.
  */
-exports.useTimer = function (options) {
-    if (options === void 0) { options = {}; }
-    var now = new Date().getTime();
-    var _a = React.useState(true), firstRun = _a[0], setFirstRun = _a[1];
+const useTimer = (options = {}) => {
+    const now = new Date().getTime();
+    const [firstRun, setFirstRun] = React.useState(true);
     // This is used to trigger a render that checks to fire the timer
-    var _b = React.useState(now), setCheckTime = _b[1];
-    var _c = React.useState(false), started = _c[0], setStarted = _c[1];
-    var _d = React.useState(never), startTime = _d[0], setStartTime = _d[1];
-    var _e = React.useState(never), lastFireTime = _e[0], setLastFireTime = _e[1];
-    var _f = React.useState(never), nextFireTime = _f[0], setNextFireTime = _f[1];
-    var _g = React.useState(never), pauseTime = _g[0], setPauseTime = _g[1];
-    var _h = React.useState(never), resumeTime = _h[0], setResumeTime = _h[1];
-    var _j = React.useState(0), periodElapsedPauseTime = _j[0], setPeriodElapsedPauseTime = _j[1];
-    var _k = React.useState(0), totalElapsedPauseTime = _k[0], setTotalElapsedPauseTime = _k[1];
-    var isStarted = React.useCallback(function () {
+    const [, setCheckTime] = React.useState(now);
+    const [started, setStarted] = React.useState(false);
+    const [startTime, setStartTime] = React.useState(never);
+    const [lastFireTime, setLastFireTime] = React.useState(never);
+    const [nextFireTime, setNextFireTime] = React.useState(never);
+    const [pauseTime, setPauseTime] = React.useState(never);
+    const [resumeTime, setResumeTime] = React.useState(never);
+    const [periodElapsedPauseTime, setPeriodElapsedPauseTime] = React.useState(0);
+    const [totalElapsedPauseTime, setTotalElapsedPauseTime] = React.useState(0);
+    const isStarted = React.useCallback(() => {
         return started;
     }, [started]);
-    var isStopped = React.useCallback(function () {
+    const isStopped = React.useCallback(() => {
         return !isStarted();
     }, [isStarted]);
-    var isPaused = React.useCallback(function () {
+    const isPaused = React.useCallback(() => {
         return isStarted() && pauseTime !== never;
     }, [isStarted, pauseTime]);
-    var isRunning = React.useCallback(function () {
+    const isRunning = React.useCallback(() => {
         return isStarted() && !isPaused();
     }, [isPaused, isStarted]);
-    var getStartTime = React.useCallback(function () {
+    const getStartTime = React.useCallback(() => {
         if (isStarted()) {
             return startTime;
         }
         return -1;
     }, [isStarted, startTime]);
-    var getLastFireTime = React.useCallback(function () {
+    const getLastFireTime = React.useCallback(() => {
         return lastFireTime < never && !!options.delay ? lastFireTime : -1;
     }, [lastFireTime, options.delay]);
-    var getNextFireTime = React.useCallback(function () {
+    const getNextFireTime = React.useCallback(() => {
         if (isRunning() && !!options.delay) {
             return nextFireTime;
         }
         return -1;
     }, [isRunning, nextFireTime, options.delay]);
-    var getPauseTime = React.useCallback(function () {
+    const getPauseTime = React.useCallback(() => {
         if (isPaused()) {
             return pauseTime;
         }
         return -1;
     }, [isPaused, pauseTime]);
-    var getResumeTime = React.useCallback(function () {
+    const getResumeTime = React.useCallback(() => {
         if (isStarted() && resumeTime < never) {
             return resumeTime;
         }
         return -1;
     }, [isStarted, resumeTime]);
-    var getElapsedStartedTime = React.useCallback(function () {
+    const getElapsedStartedTime = React.useCallback(() => {
         if (isStarted()) {
             return new Date().getTime() - startTime;
         }
         return 0;
     }, [isStarted, startTime]);
-    var getElapsedRunningTime = React.useCallback(function () {
+    const getElapsedRunningTime = React.useCallback(() => {
         if (isStarted()) {
             if (isPaused()) {
                 return pauseTime - startTime - totalElapsedPauseTime;
@@ -105,34 +108,34 @@ exports.useTimer = function (options) {
         }
         return 0;
     }, [totalElapsedPauseTime, isPaused, isStarted, pauseTime, startTime]);
-    var getPeriodElapsedPausedTime = React.useCallback(function () {
-        var additionalElapsedPauseTime = 0;
+    const getPeriodElapsedPausedTime = React.useCallback(() => {
+        let additionalElapsedPauseTime = 0;
         if (isPaused()) {
             additionalElapsedPauseTime = new Date().getTime() - pauseTime;
         }
         return periodElapsedPauseTime + additionalElapsedPauseTime;
     }, [isPaused, periodElapsedPauseTime, pauseTime]);
-    var getTotalElapsedPausedTime = React.useCallback(function () {
-        var additionalElapsedPauseTime = 0;
+    const getTotalElapsedPausedTime = React.useCallback(() => {
+        let additionalElapsedPauseTime = 0;
         if (isPaused()) {
             additionalElapsedPauseTime = new Date().getTime() - pauseTime;
         }
         return totalElapsedPauseTime + additionalElapsedPauseTime;
     }, [totalElapsedPauseTime, isPaused, pauseTime]);
-    var getElapsedResumedTime = React.useCallback(function () {
+    const getElapsedResumedTime = React.useCallback(() => {
         if (isRunning()) {
             return new Date().getTime() - resumeTime;
         }
         return 0;
     }, [isRunning, resumeTime]);
-    var getRemainingTime = React.useCallback(function () {
-        var currentTime = new Date().getTime();
+    const getRemainingTime = React.useCallback(() => {
+        const currentTime = new Date().getTime();
         if (isStarted() && !!options.delay) {
             if (isRunning()) {
                 return Math.max(0, nextFireTime - currentTime);
             }
             else if (isPaused()) {
-                var edgeTime = lastFireTime !== never ? lastFireTime : startTime;
+                const edgeTime = lastFireTime !== never ? lastFireTime : startTime;
                 return Math.max(0, options.delay - (pauseTime - edgeTime - periodElapsedPauseTime));
             }
         }
@@ -148,9 +151,9 @@ exports.useTimer = function (options) {
         pauseTime,
         startTime,
     ]);
-    var start = React.useCallback(function () {
-        var currentTime = new Date().getTime();
-        var newNextFireTime = options.delay
+    const start = React.useCallback(() => {
+        const currentTime = new Date().getTime();
+        const newNextFireTime = options.delay
             ? Math.max(currentTime, options.fireImmediately ? currentTime : currentTime + options.delay)
             : never;
         setStartTime(currentTime);
@@ -162,7 +165,7 @@ exports.useTimer = function (options) {
         setTotalElapsedPauseTime(0);
         setStarted(true);
     }, [options.delay, options.fireImmediately]);
-    var stop = React.useCallback(function () {
+    const stop = React.useCallback(() => {
         setStartTime(never);
         setLastFireTime(never);
         setNextFireTime(never);
@@ -172,15 +175,15 @@ exports.useTimer = function (options) {
         setTotalElapsedPauseTime(0);
         setStarted(false);
     }, []);
-    var pause = React.useCallback(function () {
+    const pause = React.useCallback(() => {
         if (isRunning()) {
             setPauseTime(new Date().getTime());
             setResumeTime(never);
         }
     }, [isRunning]);
-    var resume = React.useCallback(function () {
+    const resume = React.useCallback(() => {
         if (isStarted() && isPaused()) {
-            var currentTime = new Date().getTime();
+            const currentTime = new Date().getTime();
             setTotalElapsedPauseTime(totalElapsedPauseTime + (currentTime - pauseTime));
             setPeriodElapsedPauseTime(periodElapsedPauseTime + (currentTime - pauseTime));
             setNextFireTime(currentTime + getRemainingTime());
@@ -188,12 +191,12 @@ exports.useTimer = function (options) {
             setResumeTime(currentTime);
         }
     }, [isStarted, isPaused, getRemainingTime, totalElapsedPauseTime, pauseTime, periodElapsedPauseTime]);
-    React.useEffect(function () {
-        var timeout;
+    React.useEffect(() => {
+        let timeout;
         // If it's a timer and it isn't paused...
         if (options.delay && !isPaused()) {
             // Check if we're overdue on any events being fired (super low delay or expensive callback)
-            var overdueCalls = Math.max(0, Math.floor((now - nextFireTime) / options.delay));
+            const overdueCalls = Math.max(0, Math.floor((now - nextFireTime) / options.delay));
             // If we're overdue, this means we're not firing callbacks fast enough and need to prevent
             // exceeding the maximum update depth.
             // To do this, we only fire the callback on an even number of overdues (including 0, no overdues).
@@ -205,7 +208,7 @@ exports.useTimer = function (options) {
                     if (typeof options.callback === 'function') {
                         try {
                             // Only fire overdue callbacks if we're told to, otherwise skip them
-                            for (var i = 0; i < (options.fireOverdueCallbacks ? overdueCalls + 1 : 1); i++) {
+                            for (let i = 0; i < (options.fireOverdueCallbacks ? overdueCalls + 1 : 1); i++) {
                                 options.callback();
                             }
                         }
@@ -218,11 +221,11 @@ exports.useTimer = function (options) {
                     // If it repeats
                     if (!options.runOnce) {
                         // Calculate and set the next time the timer should fire
-                        var overdueElapsedTime = overdueCalls * options.delay;
-                        var newFireTime = Math.max(now, nextFireTime + options.delay + overdueElapsedTime);
+                        const overdueElapsedTime = overdueCalls * options.delay;
+                        const newFireTime = Math.max(now, nextFireTime + options.delay + overdueElapsedTime);
                         setNextFireTime(newFireTime);
                         // Set a timeout to check and fire the timer when time's up
-                        timeout = setTimeout(function () {
+                        timeout = setTimeout(() => {
                             // This merely triggers a rerender to check if the timer can fire.
                             setCheckTime(new Date().getTime());
                         }, Math.max(newFireTime - new Date().getTime(), 1));
@@ -234,7 +237,7 @@ exports.useTimer = function (options) {
                 }
                 // Time is not up yet. Set a timeout to check and fire when time's up
                 else if (nextFireTime < never) {
-                    timeout = setTimeout(function () {
+                    timeout = setTimeout(() => {
                         // This merely triggers a rerender to check if the timer can fire.
                         setCheckTime(new Date().getTime());
                         // Home in on the exact time to fire.
@@ -246,17 +249,17 @@ exports.useTimer = function (options) {
                 // When calls become overdue, there's too expensive of a callback or too low of a delay to keep up.
                 // In both cases, the React max update stack will be exceeded due to repeated firings.
                 // To relieve this, don't check to fire this time around, but check again in a short time.
-                timeout = setTimeout(function () {
+                timeout = setTimeout(() => {
                     setCheckTime(new Date().getTime());
                 }, 20);
             }
         }
-        return function () {
+        return () => {
             clearTimeout(timeout);
         };
     }, [now, nextFireTime, options.runOnce, options.delay, pauseTime, stop, isPaused, options]);
     // Start immediately if this is our first run.
-    React.useEffect(function () {
+    React.useEffect(() => {
         if (firstRun) {
             setFirstRun(false);
             if (options.startImmediately) {
@@ -265,24 +268,25 @@ exports.useTimer = function (options) {
         }
     }, [firstRun, options.startImmediately, start]);
     return {
-        start: start,
-        stop: stop,
-        pause: pause,
-        resume: resume,
-        isStarted: isStarted,
-        isStopped: isStopped,
-        isRunning: isRunning,
-        isPaused: isPaused,
-        getStartTime: getStartTime,
-        getLastFireTime: getLastFireTime,
-        getNextFireTime: getNextFireTime,
-        getPauseTime: getPauseTime,
-        getResumeTime: getResumeTime,
-        getRemainingTime: getRemainingTime,
-        getElapsedStartedTime: getElapsedStartedTime,
-        getElapsedRunningTime: getElapsedRunningTime,
-        getTotalElapsedPausedTime: getTotalElapsedPausedTime,
-        getPeriodElapsedPausedTime: getPeriodElapsedPausedTime,
-        getElapsedResumedTime: getElapsedResumedTime,
+        start,
+        stop,
+        pause,
+        resume,
+        isStarted,
+        isStopped,
+        isRunning,
+        isPaused,
+        getStartTime,
+        getLastFireTime,
+        getNextFireTime,
+        getPauseTime,
+        getResumeTime,
+        getRemainingTime,
+        getElapsedStartedTime,
+        getElapsedRunningTime,
+        getTotalElapsedPausedTime,
+        getPeriodElapsedPausedTime,
+        getElapsedResumedTime,
     };
 };
+exports.useTimer = useTimer;

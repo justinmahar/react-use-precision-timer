@@ -1,0 +1,30 @@
+renameFiles: []
+replaceFiles:
+  - .node-version
+  - CODE_OF_CONDUCT.md
+  - lockblocks.yml
+  - src/stories/core
+fillFiles: []
+deleteFiles: []
+excludePaths:
+  - .git
+  - .lockblocks
+  - dist
+  - node_modules
+  - public
+  - storybook-static
+updateJson:
+  - path: package.json
+    updateFields:
+      - key: version
+        as: coreVersion
+      - key: scripts
+        merge: true
+      - key: devDependencies
+        merge: true
+    deleteFields:
+      - devDependencies.html-webpack-plugin
+      - devDependencies.@storybook/builder-webpack5
+      - devDependencies.@storybook/manager-webpack5
+      - devDependencies.webpack
+updateYaml: []

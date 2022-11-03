@@ -1,5 +1,4 @@
 # Dirs
-.docz
 .github
 .storybook
 node_modules
@@ -11,7 +10,6 @@ storybook-static
 .gitattributes
 .gitignore
 .npmignore
-doczrc.js
 jest.config.js
 package-lock.json
 tsconfig.json

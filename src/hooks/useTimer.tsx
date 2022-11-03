@@ -156,20 +156,23 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
     startTime,
   ]);
 
-  const start = React.useCallback(() => {
-    const currentTime = new Date().getTime();
-    const newNextFireTime = options.delay
-      ? Math.max(currentTime, options.fireImmediately ? currentTime : currentTime + options.delay)
-      : never;
-    setStartTime(currentTime);
-    setLastFireTime(never);
-    setNextFireTime(newNextFireTime);
-    setPauseTime(never);
-    setResumeTime(currentTime);
-    setPeriodElapsedPauseTime(0);
-    setTotalElapsedPauseTime(0);
-    setStarted(true);
-  }, [options.delay, options.fireImmediately]);
+  const start = React.useCallback(
+    (startingElapsedMillis = 0) => {
+      const currentTime = new Date().getTime();
+      const newNextFireTime = options.delay
+        ? Math.max(currentTime, options.fireImmediately ? currentTime : currentTime + options.delay)
+        : never;
+      setStartTime(currentTime - startingElapsedMillis);
+      setLastFireTime(never);
+      setNextFireTime(newNextFireTime);
+      setPauseTime(never);
+      setResumeTime(currentTime);
+      setPeriodElapsedPauseTime(0);
+      setTotalElapsedPauseTime(0);
+      setStarted(true);
+    },
+    [options.delay, options.fireImmediately],
+  );
 
   const stop = React.useCallback((): void => {
     setStartTime(never);
@@ -304,7 +307,7 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
  */
 export interface Timer {
   /** Start the timer. If already started, will restart the timer. */
-  start: () => void;
+  start: (startingElapsedMillis?: number) => void;
   /** Stop the timer. */
   stop: () => void;
   /** Pause the timer. */

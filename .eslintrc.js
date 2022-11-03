@@ -1,6 +1,8 @@
+// [lock-all/] 🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫
+
 /*
  * We use a JavaScript file for the .eslintrc file (instead of a JSON file) as it supports
- * comments that can be used to better describe rules.
+ * comments that can be used to better describe rules and allows us to write some logic.
  *
  * This config lints both TS and JS. Shared rules are defined below, and any additional rules specific
  * to either TS or JS are specified in addition to those.
@@ -35,30 +37,39 @@
 
 /** Rules shared by both the TS and JS lint configurations. */
 const sharedTSAndJSRules = {
-  'react/display-name': 'off', // Disable error about display name
-  'react/prop-types': 'off', // Disable error about prop types
-  'react/no-unescaped-entities': 'off', // Disable error about unescaped entities
+  'react/display-name': 'off',
+  // Disable error about display name
+  'react/prop-types': 'off',
+  // Disable error about prop types
+  'react/no-unescaped-entities': 'off',
+  // Disable error about unescaped entities
+  'react-hooks/rules-of-hooks': 'error',
+  // Checks rules of Hooks
+  'react-hooks/exhaustive-deps': 'warn', // Checks effect dependencies
 };
-
 /** Rules specific to TS. */
+
 const tsSpecificRules = {
   '@typescript-eslint/no-empty-interface': 'off', // Disable empty interface error
 };
-
 /** Rules specific to JS. */
+
 const jsSpecificRules = {
   'react/prop-types': 'off', // Disable error about prop types
 };
-
 module.exports = {
   // Below we use the overrides array to define separate linting options for both TS and JS.
   overrides: [
     {
-      files: ['**/*.ts', '**/*.tsx'], // TypeScript files
-      parser: '@typescript-eslint/parser', // Specifies the ESLint parser for TypeScript
+      files: ['**/*.ts', '**/*.tsx'],
+      // TypeScript files
+      parser: '@typescript-eslint/parser',
+      // Specifies the ESLint parser for TypeScript
       parserOptions: {
-        ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
-        sourceType: 'module', // Allows for the use of imports
+        ecmaVersion: 2020,
+        // Allows for the parsing of modern ECMAScript features
+        sourceType: 'module',
+        // Allows for the use of imports
         ecmaFeatures: {
           jsx: true, // Allows for the parsing of JSX
         },
@@ -68,6 +79,7 @@ module.exports = {
         'plugin:react-hooks/recommended', // Uses the recommended rules from @eslint-plugin-react-hooks
         'plugin:@typescript-eslint/recommended', // Uses the recommended rules from @typescript-eslint/eslint-plugin
         'plugin:prettier/recommended', // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+        'plugin:storybook/recommended', // Storybook
       ],
       settings: {
         react: {
@@ -77,15 +89,19 @@ module.exports = {
       rules: {
         // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
         // e.g. "@typescript-eslint/explicit-function-return-type": "off",
-        ...sharedTSAndJSRules, // Rules shared by both TS and JS lint configs
+        ...sharedTSAndJSRules,
+        // Rules shared by both TS and JS lint configs
         ...tsSpecificRules, // Rules specific to TS
       },
     },
     {
-      files: ['**/*.js', '**/*.jsx'], // JavaScript files
+      files: ['**/*.js', '**/*.jsx'],
+      // JavaScript files
       parserOptions: {
-        ecmaVersion: 2020, // Allows for the parsing of modern ECMAScript features
-        sourceType: 'module', // Allows for the use of imports
+        ecmaVersion: 2020,
+        // Allows for the parsing of modern ECMAScript features
+        sourceType: 'module',
+        // Allows for the use of imports
         ecmaFeatures: {
           jsx: true, // Allows for the parsing of JSX
         },
@@ -94,6 +110,7 @@ module.exports = {
         'plugin:react/recommended', // Uses the recommended rules from @eslint-plugin-react
         'plugin:react-hooks/recommended', // Uses the recommended rules from @eslint-plugin-react-hooks
         'plugin:prettier/recommended', // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
+        'plugin:storybook/recommended', // Storybook
       ],
       settings: {
         react: {
@@ -103,7 +120,8 @@ module.exports = {
       rules: {
         // Place to specify ESLint rules. Can be used to overwrite rules specified from the extended configs
         // e.g. "@typescript-eslint/explicit-function-return-type": "off",
-        ...sharedTSAndJSRules, // Rules shared by both TS and JS lint configs
+        ...sharedTSAndJSRules,
+        // Rules shared by both TS and JS lint configs
         ...jsSpecificRules, // Rules specific to JS
       },
     },

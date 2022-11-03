@@ -23,32 +23,21 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.useDelay = void 0;
+exports.OneSecondDelay = exports.UseDelayExample = void 0;
 const React = __importStar(require("react"));
-const useTimer_1 = require("./useTimer");
-/**
- * See documentation: [useDelay](https://justinmahar.github.io/react-use-precision-timer/useDelay)
- *
- * Fires the callback after the specified delay has passed.
- *
- * @param delay The amount of time, in milliseconds, before the timer fires.
- * @param callback Called when the timer fires.
- */
-const useDelay = (delay, callback) => {
-    const [firstRun, setFirstRun] = React.useState(true);
-    const timer = (0, useTimer_1.useTimer)({
-        delay,
-        callback,
-        runOnce: true,
-        fireImmediately: false,
-    });
-    React.useEffect(() => {
-        // Ensures the delay only ever runs once
-        if (firstRun) {
-            setFirstRun(false);
-            timer.start();
-        }
-    }, [firstRun, timer]);
-    return timer;
-};
-exports.useDelay = useDelay;
+const useDelay_1 = require("../hooks/useDelay");
+function UseDelayExample() {
+    const [run, setRun] = React.useState(false);
+    return (React.createElement("div", null,
+        !run && React.createElement("button", { onClick: (e) => setRun(true) }, "\u25B6\uFE0F Run 1 Second Delay"),
+        run && React.createElement(OneSecondDelay, null)));
+}
+exports.UseDelayExample = UseDelayExample;
+function OneSecondDelay() {
+    const [firedAt, setFiredAt] = React.useState(0);
+    (0, useDelay_1.useDelay)(1000, () => setFiredAt(new Date().getTime()));
+    return React.createElement(React.Fragment, null,
+        "Timer fired? ",
+        firedAt > 0 ? `✔️ (at ${firedAt})` : '❌');
+}
+exports.OneSecondDelay = OneSecondDelay;

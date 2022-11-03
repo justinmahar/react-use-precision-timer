@@ -1,7 +1,7 @@
+# [lock-all/] 🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫
+
 # Directories to ignore
-.docz
-dist
+.cache
 node_modules
-storybook-static
+public
 # Don't ignore (prefix with !)
-!.storybook

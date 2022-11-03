@@ -1,18 +1,18 @@
 <h2 align="center">
-  <a href="https://github.com/justinmahar/react-use-precision-timer">React Use Precision Timer</a>
+  ⏱️ React Use Precision Timer
 </h2>
 <h3 align="center">
   A versatile precision timer hook for React. Doubles as a stopwatch.
 </h3>
 <p align="center">
-  <a href="https://badge.fury.io/js/react-use-precision-timer">
-    <img src="https://badge.fury.io/js/react-use-precision-timer.svg" alt="npm Version"/>
+  <a href="https://badge.fury.io/js/react-use-precision-timer" target="_blank" rel="noopener noreferrer">
+    <img src="https://badge.fury.io/js/react-use-precision-timer.svg" alt="npm Version" />
   </a>
-  <a href="https://github.com/justinmahar/react-use-precision-timer/actions?query=workflow%3ATests">
-    <img src="https://github.com/justinmahar/react-use-precision-timer/workflows/Tests/badge.svg" alt="Tests Status"/>
+  <a href="https://github.com/justinmahar/react-use-precision-timer/" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/badge/GitHub-Source-success" alt="View project on GitHub" />
   </a>
-  <a href="https://github.com/justinmahar/react-use-precision-timer/actions?query=workflow%3ADeploy">
-    <img src="https://github.com/justinmahar/react-use-precision-timer/workflows/Deploy/badge.svg" alt="Deploy Status"/>
+  <a href="https://github.com/justinmahar/react-use-precision-timer/actions?query=workflow%3ADeploy" target="_blank" rel="noopener noreferrer">
+    <img src="https://github.com/justinmahar/react-use-precision-timer/workflows/Deploy/badge.svg" alt="Deploy Status" />
   </a>
 </p>
 
@@ -20,9 +20,23 @@
 
 Read the **[official documentation](https://justinmahar.github.io/react-use-precision-timer/)**.
 
-[![Demo](./src/__docz__/images/demo.gif "Demo")](https://justinmahar.github.io/react-use-precision-timer/demo)
+[![Demo](https://justinmahar.github.io/react-use-precision-timer/images/demo.gif "Demo")](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--page)
 
-👁️ **[Live Demo](https://justinmahar.github.io/react-use-precision-timer/demo)**
+👁️ **[Live Demo](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--page)**
+
+## Donate 
+
+This project is the result of countless hours of work and I really hope it saves you hours of your own precious time.
+
+If you would like to join others in showing support for the development of this project, then please feel free to buy me a coffee.
+
+<a href="https://paypal.me/thejustinmahar/5">
+  <img src="https://justinmahar.github.io/react-use-precision-timer/support/coffee-1.png" alt="Buy me a coffee" height="35" />
+</a> <a href="https://paypal.me/thejustinmahar/15">
+  <img src="https://justinmahar.github.io/react-use-precision-timer/support/coffee-3.png" alt="Buy me 3 coffees" height="35" />
+</a> <a href="https://paypal.me/thejustinmahar/25">
+  <img src="https://justinmahar.github.io/react-use-precision-timer/support/coffee-5.png" alt="Buy me 5 coffees" height="35" />
+</a>
 
 ## Overview
 
@@ -74,7 +88,7 @@ timer.start();
 
 The following functions can be used to control the [Timer](https://justinmahar.github.io/react-use-precision-timer/useTimer#timer):
 
-- `timer.start()` - Start the timer. If already started, will restart the timer.
+- `timer.start()` - Start the timer. If already started, will restart the timer. You can optionally pass an elapsed starting amount in milliseconds.
 - `timer.stop()` - Stop the timer.
 - `timer.pause()` - Pause the timer.
 - `timer.resume()` - Resume the timer.
@@ -122,9 +136,9 @@ See [useTimer](https://justinmahar.github.io/react-use-precision-timer/useTimer)
 
 Type definitions have been included for [TypeScript](https://www.typescriptlang.org/) support.
 
-## Logo Attribution
+## Icon Attribution
 
-Logo graphics by [Twemoji](https://github.com/twitter/twemoji), licensed under [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/). Favicon by [favicon.io](https://favicon.io/emoji-favicons/).
+Favicon by [Twemoji](https://github.com/twitter/twemoji).
 
 ## Contributing
 
@@ -134,32 +148,10 @@ Feel free to submit a pull request for bugs or additions, and make sure to updat
 
 For major changes, open an issue first to discuss what you'd like to change.
 
-See [Kindling](https://tinyurl.com/kindlingscripts) for npm script documentation.
-
 ## ⭐ Found It Helpful? [Star It!](https://github.com/justinmahar/react-use-precision-timer/stargazers)
 
 If you found this project helpful, let the community know by giving it a [star](https://github.com/justinmahar/react-use-precision-timer/stargazers): [👉⭐](https://github.com/justinmahar/react-use-precision-timer/stargazers)
 
-## MIT License
+## License
 
-```
-Copyright © 2020 Justin Mahar https://github.com/justinmahar
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+See [LICENSE.md](https://justinmahar.github.io/react-use-precision-timer/?path=/story/license--page).

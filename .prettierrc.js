@@ -1,3 +1,4 @@
+// [lock-all/] 🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫🚫
 /**
  * Prettier Configuration: https://prettier.io/docs/en/configuration.html
  * Prettier Options: https://prettier.io/docs/en/options.html
