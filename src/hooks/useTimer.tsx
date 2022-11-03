@@ -19,7 +19,7 @@ export interface TimerOptions {
 const never = Number.MAX_SAFE_INTEGER;
 
 /**
- * See documentation: [useTimer](https://justinmahar.github.io/react-use-precision-timer/useTimer)
+ * See documentation: [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page)
  *
  * A versatile precision timer hook for React. Doubles as a stopwatch.
  *
@@ -303,7 +303,7 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
 };
 
 /**
- * See documentation: [Timer](https://justinmahar.github.io/react-use-precision-timer/useTimer#timer)
+ * See documentation: [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page#timer)
  */
 export interface Timer {
   /** Start the timer. If already started, will restart the timer. */

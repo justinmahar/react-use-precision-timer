@@ -86,14 +86,14 @@ In a handler or effect:
 timer.start();
 ```
 
-The following functions can be used to control the [Timer](https://justinmahar.github.io/react-use-precision-timer/useTimer#timer):
+The following functions can be used to control the [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page#timer):
 
 - `timer.start()` - Start the timer. If already started, will restart the timer. You can optionally pass an elapsed starting amount in milliseconds.
 - `timer.stop()` - Stop the timer.
 - `timer.pause()` - Pause the timer.
 - `timer.resume()` - Resume the timer.
 
-Refer to [Timer](https://justinmahar.github.io/react-use-precision-timer/useTimer#timer) for all available functions, including getters for elapsed times.
+Refer to [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page#timer) for all available functions, including getters for elapsed times.
 
 ### One-Time Delay
 
@@ -124,13 +124,13 @@ const stopwatch = useStopwatch();
 
 Use `start()`, `stop()`, `pause()`, and `resume()` to control the stopwatch.
 
-Stopwatch is a [Timer](https://justinmahar.github.io/react-use-precision-timer/useTimer#timer) object. Refer to Timer's getters to retrieve elapsed running time, paused time, and so forth.
+Stopwatch is a [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page#timer) object. Refer to Timer's getters to retrieve elapsed running time, paused time, and so forth.
 
 Calling start while a stopwatch is already running will restart it.
 
 ### Other Usage
 
-See [useTimer](https://justinmahar.github.io/react-use-precision-timer/useTimer) for all other hook options and timer functions.
+See [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page) for all other hook options and timer functions.
 
 ## TypeScript
 
