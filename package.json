@@ -30,8 +30,8 @@
   },
   "keywords": [],
   "peerDependencies": {
-    "react": ">=16",
-    "react-dom": ">=16"
+    "react": ">=16 || >= 17 || >=18 || >= 19 || >=20",
+    "react-dom": ">=16 || >= 17 || >=18 || >= 19 || >=20"
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",
