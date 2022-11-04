@@ -111,12 +111,12 @@ The Timer object returned by the hook has the following properties.
 
 #### Mutators
 
-| Property | Type                                                   | Description                                                                                                                      |
-| -------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------- |
-| start    | `(startingElapsedMillis: number OR undefined) => void` | Start the timer. If already started, will restart the timer. You can optionally pass an elapsed starting amount in milliseconds. |
-| stop     | `() => void`                                           | Stop the timer.                                                                                                                  |
-| pause    | `() => void`                                           | Pause the timer.                                                                                                                 |
-| resume   | `() => void`                                           | Resume the timer.                                                                                                                |
+| Property | Type                           | Description                                                                                                                   |
+| -------- | ------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
+| start    | `(startTime?: number) => void` | Start the timer. If already started, will restart the timer. You can optionally pass a start time in Unix epoch milliseconds. |
+| stop     | `() => void`                   | Stop the timer.                                                                                                               |
+| pause    | `() => void`                   | Pause the timer.                                                                                                              |
+| resume   | `() => void`                   | Resume the timer.                                                                                                             |
 
 #### Getters
 

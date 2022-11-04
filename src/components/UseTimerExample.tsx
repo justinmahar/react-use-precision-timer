@@ -3,7 +3,8 @@ import { useTimer } from '../hooks/useTimer';
 
 export function UseTimerExample(): JSX.Element {
   const [delay, setDelay] = React.useState(1000);
-  const [startingElapsedMillis, setStartingElapsedMillis] = React.useState(0);
+  const [startTimeEnabled, setStartTimeEnabled] = React.useState(false);
+  const [startTime, setStartTime] = React.useState(0);
   const [callbackTime, setCallbackTime] = React.useState(-1);
   const [runOnce, setRunOnce] = React.useState(false);
   const [fireImmediately, setFireImmediately] = React.useState(false);
@@ -35,12 +36,12 @@ export function UseTimerExample(): JSX.Element {
     if (delayChanged) {
       setDelayChanged(false);
       if (startImmediately) {
-        timer.start(startingElapsedMillis);
+        timer.start(startTimeEnabled ? startTime : undefined);
       } else {
         timer.stop();
       }
     }
-  }, [delay, delayChanged, startImmediately, startingElapsedMillis, timer]);
+  }, [delay, delayChanged, startImmediately, startTime, timer]);
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -66,17 +67,29 @@ export function UseTimerExample(): JSX.Element {
               {delay > 0 ? `${delay} ms` : 'Stopwatch'}
             </div>
             <div style={{ marginBottom: 10 }}>
-              Starting elapsed millis:{' '}
+              <input
+                type="checkbox"
+                id="startTimeEnabled"
+                name="startTimeEnabled"
+                checked={startTimeEnabled}
+                onChange={(e) => {
+                  setStartTimeEnabled(e.target.checked);
+                  if (e.target.checked) {
+                    setStartTime(Date.now());
+                  }
+                }}
+              />
+              Use start time:{' '}
               <input
                 type="number"
                 min="0"
-                value={startingElapsedMillis}
+                value={startTime}
                 onChange={(e) => {
                   const newVal = parseInt(e.target.value);
-                  setStartingElapsedMillis(newVal);
+                  setStartTime(newVal);
                 }}
               />{' '}
-              ms
+              (Unix timestamp in millis)
             </div>
           </div>
           <div style={{ marginBottom: 10 }}>
@@ -110,7 +123,7 @@ export function UseTimerExample(): JSX.Element {
         <div style={{ marginBottom: 10 }}>
           <button
             onClick={() => {
-              timer.start(startingElapsedMillis);
+              timer.start(startTimeEnabled ? startTime : undefined);
             }}
           >
             Start
