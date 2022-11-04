@@ -29,8 +29,12 @@ export declare const useTimer: (options?: TimerOptions) => Timer;
  * See documentation: [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page#timer)
  */
 export interface Timer {
-    /** Start the timer. If already started, will restart the timer. */
-    start: (startingElapsedMillis?: number) => void;
+    /**
+     * Start the timer. If already started, will restart the timer.
+     *
+     * @param startTime Optional. The Unix epoch time in milliseconds at which to start the timer. Defaults to the current time in millis.
+     */
+    start: (startTime?: number) => void;
     /** Stop the timer. */
     stop: () => void;
     /** Pause the timer. */

@@ -28,7 +28,8 @@ const React = __importStar(require("react"));
 const useTimer_1 = require("../hooks/useTimer");
 function UseTimerExample() {
     const [delay, setDelay] = React.useState(1000);
-    const [startingElapsedMillis, setStartingElapsedMillis] = React.useState(0);
+    const [startTimeEnabled, setStartTimeEnabled] = React.useState(false);
+    const [startTime, setStartTime] = React.useState(0);
     const [callbackTime, setCallbackTime] = React.useState(-1);
     const [runOnce, setRunOnce] = React.useState(false);
     const [fireImmediately, setFireImmediately] = React.useState(false);
@@ -58,13 +59,13 @@ function UseTimerExample() {
         if (delayChanged) {
             setDelayChanged(false);
             if (startImmediately) {
-                timer.start(startingElapsedMillis);
+                timer.start(startTimeEnabled ? startTime : undefined);
             }
             else {
                 timer.stop();
             }
         }
-    }, [delay, delayChanged, startImmediately, startingElapsedMillis, timer]);
+    }, [delay, delayChanged, startImmediately, startTime, timer]);
     return (React.createElement("div", { style: { display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start' } },
         React.createElement("div", null,
             React.createElement("div", null,
@@ -83,14 +84,20 @@ function UseTimerExample() {
                         ' ',
                         delay > 0 ? `${delay} ms` : 'Stopwatch'),
                     React.createElement("div", { style: { marginBottom: 10 } },
-                        "Starting elapsed millis:",
+                        React.createElement("input", { type: "checkbox", id: "startTimeEnabled", name: "startTimeEnabled", checked: startTimeEnabled, onChange: (e) => {
+                                setStartTimeEnabled(e.target.checked);
+                                if (e.target.checked) {
+                                    setStartTime(Date.now());
+                                }
+                            } }),
+                        "Use start time:",
                         ' ',
-                        React.createElement("input", { type: "number", min: "0", value: startingElapsedMillis, onChange: (e) => {
+                        React.createElement("input", { type: "number", min: "0", value: startTime, onChange: (e) => {
                                 const newVal = parseInt(e.target.value);
-                                setStartingElapsedMillis(newVal);
+                                setStartTime(newVal);
                             } }),
                         ' ',
-                        "ms")),
+                        "(Unix timestamp in millis)")),
                 React.createElement("div", { style: { marginBottom: 10 } },
                     React.createElement("input", { type: "checkbox", id: "runOnce", name: "runOnce", checked: runOnce, onChange: (e) => setRunOnce(e.target.checked) }),
                     React.createElement("label", { htmlFor: "runOnce" }, " runOnce"),
@@ -101,7 +108,7 @@ function UseTimerExample() {
                     React.createElement("br", null))),
             React.createElement("div", { style: { marginBottom: 10 } },
                 React.createElement("button", { onClick: () => {
-                        timer.start(startingElapsedMillis);
+                        timer.start(startTimeEnabled ? startTime : undefined);
                     } }, "Start"),
                 React.createElement("button", { onClick: () => {
                         timer.stop();

@@ -151,16 +151,15 @@ const useTimer = (options = {}) => {
         pauseTime,
         startTime,
     ]);
-    const start = React.useCallback((startingElapsedMillis = 0) => {
-        const currentTime = new Date().getTime();
+    const start = React.useCallback((startTimeMillis = new Date().getTime()) => {
         const newNextFireTime = options.delay
-            ? Math.max(currentTime, options.fireImmediately ? currentTime : currentTime + options.delay)
+            ? Math.max(startTimeMillis, options.fireImmediately ? startTimeMillis : startTimeMillis + options.delay)
             : never;
-        setStartTime(currentTime - startingElapsedMillis);
+        setStartTime(startTimeMillis);
         setLastFireTime(never);
         setNextFireTime(newNextFireTime);
         setPauseTime(never);
-        setResumeTime(currentTime);
+        setResumeTime(startTimeMillis);
         setPeriodElapsedPauseTime(0);
         setTotalElapsedPauseTime(0);
         setStarted(true);
@@ -196,7 +195,7 @@ const useTimer = (options = {}) => {
         // If it's a timer and it isn't paused...
         if (options.delay && !isPaused()) {
             // Check if we're overdue on any events being fired (super low delay or expensive callback)
-            const overdueCalls = Math.max(0, Math.floor((now - nextFireTime) / options.delay));
+            const overdueCalls = lastFireTime !== never ? Math.max(0, Math.floor((now - nextFireTime) / options.delay)) : 0;
             // If we're overdue, this means we're not firing callbacks fast enough and need to prevent
             // exceeding the maximum update depth.
             // To do this, we only fire the callback on an even number of overdues (including 0, no overdues).
@@ -257,7 +256,7 @@ const useTimer = (options = {}) => {
         return () => {
             clearTimeout(timeout);
         };
-    }, [now, nextFireTime, options.runOnce, options.delay, pauseTime, stop, isPaused, options]);
+    }, [now, nextFireTime, options.runOnce, options.delay, pauseTime, stop, isPaused, options, lastFireTime]);
     // Start immediately if this is our first run.
     React.useEffect(() => {
         if (firstRun) {
