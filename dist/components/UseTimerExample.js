@@ -29,7 +29,7 @@ const useTimer_1 = require("../hooks/useTimer");
 function UseTimerExample() {
     const [delay, setDelay] = React.useState(1000);
     const [startTimeEnabled, setStartTimeEnabled] = React.useState(false);
-    const [startTime, setStartTime] = React.useState(0);
+    const [startTime, setStartTime] = React.useState(Date.now());
     const [callbackTime, setCallbackTime] = React.useState(-1);
     const [runOnce, setRunOnce] = React.useState(false);
     const [fireImmediately, setFireImmediately] = React.useState(false);
@@ -65,7 +65,7 @@ function UseTimerExample() {
                 timer.stop();
             }
         }
-    }, [delay, delayChanged, startImmediately, startTime, timer]);
+    }, [delay, delayChanged, startImmediately, startTime, startTimeEnabled, timer]);
     return (React.createElement("div", { style: { display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start' } },
         React.createElement("div", null,
             React.createElement("div", null,
@@ -86,9 +86,6 @@ function UseTimerExample() {
                     React.createElement("div", { style: { marginBottom: 10 } },
                         React.createElement("input", { type: "checkbox", id: "startTimeEnabled", name: "startTimeEnabled", checked: startTimeEnabled, onChange: (e) => {
                                 setStartTimeEnabled(e.target.checked);
-                                if (e.target.checked) {
-                                    setStartTime(Date.now());
-                                }
                             } }),
                         "Use start time:",
                         ' ',
