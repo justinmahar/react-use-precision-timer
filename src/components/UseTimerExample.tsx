@@ -4,7 +4,7 @@ import { useTimer } from '../hooks/useTimer';
 export function UseTimerExample(): JSX.Element {
   const [delay, setDelay] = React.useState(1000);
   const [startTimeEnabled, setStartTimeEnabled] = React.useState(false);
-  const [startTime, setStartTime] = React.useState(0);
+  const [startTime, setStartTime] = React.useState(Date.now());
   const [callbackTime, setCallbackTime] = React.useState(-1);
   const [runOnce, setRunOnce] = React.useState(false);
   const [fireImmediately, setFireImmediately] = React.useState(false);
@@ -41,7 +41,7 @@ export function UseTimerExample(): JSX.Element {
         timer.stop();
       }
     }
-  }, [delay, delayChanged, startImmediately, startTime, timer]);
+  }, [delay, delayChanged, startImmediately, startTime, startTimeEnabled, timer]);
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -74,9 +74,6 @@ export function UseTimerExample(): JSX.Element {
                 checked={startTimeEnabled}
                 onChange={(e) => {
                   setStartTimeEnabled(e.target.checked);
-                  if (e.target.checked) {
-                    setStartTime(Date.now());
-                  }
                 }}
               />
               Use start time:{' '}
