@@ -88,7 +88,7 @@ timer.start();
 
 The following functions can be used to control the [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page#timer):
 
-- `timer.start()` - Start the timer. If already started, will restart the timer. You can optionally pass an elapsed starting amount in milliseconds.
+- `timer.start()` - Start the timer. If already started, will restart the timer. You can optionally pass a start time in Unix epoch milliseconds.
 - `timer.stop()` - Stop the timer.
 - `timer.pause()` - Pause the timer.
 - `timer.resume()` - Resume the timer.
