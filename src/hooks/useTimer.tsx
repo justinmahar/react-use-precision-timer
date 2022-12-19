@@ -92,7 +92,7 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
 
   const getElapsedStartedTime = React.useCallback((): number => {
     if (isStarted()) {
-      return new Date().getTime() - startTimeRef.current;
+      return Date.now() - startTimeRef.current;
     }
     return 0;
   }, [isStarted]);
@@ -102,7 +102,7 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
       if (isPaused()) {
         return pauseTimeRef.current - startTimeRef.current - totalElapsedPauseTimeRef.current;
       } else {
-        return new Date().getTime() - startTimeRef.current - totalElapsedPauseTimeRef.current;
+        return Date.now() - startTimeRef.current - totalElapsedPauseTimeRef.current;
       }
     }
     return 0;
@@ -111,7 +111,7 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
   const getPeriodElapsedPausedTime = React.useCallback((): number => {
     let additionalElapsedPauseTime = 0;
     if (isPaused()) {
-      additionalElapsedPauseTime = new Date().getTime() - pauseTimeRef.current;
+      additionalElapsedPauseTime = Date.now() - pauseTimeRef.current;
     }
     return periodElapsedPauseTimeRef.current + additionalElapsedPauseTime;
   }, [isPaused]);
@@ -119,20 +119,20 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
   const getTotalElapsedPausedTime = React.useCallback((): number => {
     let additionalElapsedPauseTime = 0;
     if (isPaused()) {
-      additionalElapsedPauseTime = new Date().getTime() - pauseTimeRef.current;
+      additionalElapsedPauseTime = Date.now() - pauseTimeRef.current;
     }
     return totalElapsedPauseTimeRef.current + additionalElapsedPauseTime;
   }, [isPaused]);
 
   const getElapsedResumedTime = React.useCallback((): number => {
     if (isRunning()) {
-      return new Date().getTime() - resumeTimeRef.current;
+      return Date.now() - resumeTimeRef.current;
     }
     return 0;
   }, [isRunning]);
 
   const getRemainingTime = React.useCallback((): number => {
-    const currentTime = new Date().getTime();
+    const currentTime = Date.now();
     if (isStarted() && !!options.delay) {
       if (isRunning()) {
         return Math.max(0, nextFireTimeRef.current - currentTime);
@@ -145,7 +145,7 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
   }, [isPaused, isRunning, isStarted, options.delay]);
 
   const start = React.useCallback(
-    (startTimeMillis = new Date().getTime()) => {
+    (startTimeMillis = Date.now()) => {
       const newNextFireTime = options.delay
         ? Math.max(startTimeMillis, options.fireImmediately ? startTimeMillis : startTimeMillis + options.delay)
         : never;
@@ -157,6 +157,7 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
       periodElapsedPauseTimeRef.current = 0;
       totalElapsedPauseTimeRef.current = 0;
       startedRef.current = true;
+      setRenderTime(Date.now());
     },
     [options.delay, options.fireImmediately],
   );
@@ -170,23 +171,26 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
     periodElapsedPauseTimeRef.current = 0;
     totalElapsedPauseTimeRef.current = 0;
     startedRef.current = false;
+    setRenderTime(Date.now());
   }, []);
 
   const pause = React.useCallback((): void => {
     if (isRunning()) {
-      pauseTimeRef.current = new Date().getTime();
+      pauseTimeRef.current = Date.now();
       resumeTimeRef.current = never;
+      setRenderTime(Date.now());
     }
   }, [isRunning]);
 
   const resume = React.useCallback((): void => {
     if (isStarted() && isPaused()) {
-      const currentTime = new Date().getTime();
+      const currentTime = Date.now();
       totalElapsedPauseTimeRef.current = totalElapsedPauseTimeRef.current + (currentTime - pauseTimeRef.current);
       periodElapsedPauseTimeRef.current = periodElapsedPauseTimeRef.current + (currentTime - pauseTimeRef.current);
       nextFireTimeRef.current = currentTime + getRemainingTime();
       pauseTimeRef.current = never;
       resumeTimeRef.current = currentTime;
+      setRenderTime(Date.now());
     }
   }, [isStarted, isPaused, getRemainingTime]);
 
@@ -229,8 +233,8 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
             // Set a timeout to check and fire the timer when time's up
             timeout = setTimeout(() => {
               // This merely triggers a rerender to check if the timer can fire.
-              setRenderTime(new Date().getTime());
-            }, Math.max(newFireTime - new Date().getTime(), 1));
+              setRenderTime(Date.now());
+            }, Math.max(newFireTime - Date.now(), 1));
           } else {
             // If it doesn't repeat, stop the timer.
             stop();
@@ -240,9 +244,9 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
         else if (nextFireTimeRef.current < never) {
           timeout = setTimeout(() => {
             // This merely triggers a rerender to check if the timer can fire.
-            setRenderTime(new Date().getTime());
+            setRenderTime(Date.now());
             // Home in on the exact time to fire.
-          }, Math.max(nextFireTimeRef.current - new Date().getTime(), 1));
+          }, Math.max(nextFireTimeRef.current - Date.now(), 1));
         }
       } else {
         // Relief valve to avoid maximum update depth exceeded errors.
@@ -250,7 +254,7 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
         // In both cases, the React max update stack will be exceeded due to repeated firings.
         // To relieve this, don't check to fire this time around, but check again in a short time.
         timeout = setTimeout(() => {
-          setRenderTime(new Date().getTime());
+          setRenderTime(Date.now());
         }, 20);
       }
     }
