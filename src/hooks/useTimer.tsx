@@ -185,9 +185,9 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
   const resume = React.useCallback((): void => {
     if (isStarted() && isPaused()) {
       const currentTime = Date.now();
+      nextFireTimeRef.current = currentTime + getRemainingTime();
       totalElapsedPauseTimeRef.current = totalElapsedPauseTimeRef.current + (currentTime - pauseTimeRef.current);
       periodElapsedPauseTimeRef.current = periodElapsedPauseTimeRef.current + (currentTime - pauseTimeRef.current);
-      nextFireTimeRef.current = currentTime + getRemainingTime();
       pauseTimeRef.current = never;
       resumeTimeRef.current = currentTime;
       setRenderTime(Date.now());
