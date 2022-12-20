@@ -107,16 +107,24 @@ Refer to [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/
 If you'd like to run a callback after a one-time delay, use the helper hook [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--page):
 
 ```jsx
-import { useDelay } from "react-use-precision-timer";
+import { useDelay } from 'react-use-precision-timer';
 ```
+
+In your function component:
 
 ```jsx
-const callback = React.useCallback(() => console.log("Boom"), []);
-// Call once after 1000ms.
-useDelay(1000, callback);
+const callback = React.useCallback(() => console.log('Boom'), []);
+// Will call once after 1000ms.
+const onceTimer = useDelay(1000, callback);
 ```
 
-The provided callback will be called only once after the provided delay.
+In a handler or effect:
+
+```jsx
+onceTimer.start();
+```
+
+This will call the callback after the provided 1000 millisecond delay only once.
 
 ### Stopwatch
 
