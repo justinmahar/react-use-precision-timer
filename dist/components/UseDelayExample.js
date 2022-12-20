@@ -41,7 +41,8 @@ function UseDelayExample() {
 exports.UseDelayExample = UseDelayExample;
 function OneSecondDelay() {
     const [firedAt, setFiredAt] = React.useState(0);
-    (0, useDelay_1.useDelay)(1000, () => setFiredAt(new Date().getTime()));
+    const callback = React.useCallback(() => setFiredAt(new Date().getTime()), []);
+    (0, useDelay_1.useDelay)(1000, callback);
     return (React.createElement("div", null,
         React.createElement("div", { style: { marginBottom: 10 } },
             "Timer fired? ",

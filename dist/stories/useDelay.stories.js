@@ -11,9 +11,9 @@ const HookComponent = (props) => {
     const [delay, setDelay] = react_1.default.useState(2000);
     const [callbackTime, setCallbackTime] = react_1.default.useState(-1);
     const [renderTime, setRenderTime] = react_1.default.useState(new Date().getTime());
-    const callback = () => {
+    const callback = react_1.default.useCallback(() => {
         setCallbackTime(new Date().getTime());
-    };
+    }, []);
     const timer = (0, useDelay_1.useDelay)(delay, callback);
     react_1.default.useEffect(() => {
         const timeout = setTimeout(() => setRenderTime(new Date().getTime()), 1);

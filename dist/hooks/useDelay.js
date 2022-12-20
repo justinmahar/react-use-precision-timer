@@ -36,12 +36,15 @@ const useTimer_1 = require("./useTimer");
  */
 const useDelay = (delay, callback) => {
     const [firstRun, setFirstRun] = React.useState(true);
-    const timer = (0, useTimer_1.useTimer)({
-        delay,
-        callback,
-        runOnce: true,
-        fireImmediately: false,
-    });
+    const timerOptions = React.useMemo(() => {
+        return {
+            delay,
+            callback,
+            runOnce: true,
+            fireImmediately: false,
+        };
+    }, [callback, delay]);
+    const timer = (0, useTimer_1.useTimer)(timerOptions);
     React.useEffect(() => {
         // Ensures the delay only ever runs once
         if (firstRun) {
