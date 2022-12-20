@@ -143,9 +143,20 @@ Calling start while a stopwatch is already running will restart it.
 
 ### Momentary Boolean
 
-For convenience, the [useMomentaryBoolean](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usemomentarybool--page) hook has been included to momentarily toggle a boolean using the [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--page) hook.
+For convenience, the [useMomentaryBoolean](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usemomentarybool--page) hook has been included to momentarily toggle a boolean. This wraps the [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--page) hook.
 
 This is very useful for momentary notifications, such as a copy button that shows a momentary checkmark to indicate the operation succeeded.
+
+```jsx
+import { useMomentaryBool } from 'react-use-precision-timer';
+```
+
+In your function component:
+
+```jsx
+// Toggle to true, then back to false after 1000ms.
+const [value, toggle] = useMomentaryBool(false, 1000);
+```
 
 ### Other Usage
 

@@ -7,19 +7,18 @@ import { useTimer, Timer, TimerOptions } from './useTimer';
  * Fires the callback after the specified delay has passed.
  *
  * @param delay The amount of time, in milliseconds, before the timer fires.
- * @param callback Called when the timer fires.
+ * @param callback Called when the timer fires. Use React.useCallback() for this.
  */
 export const useDelay = (delay: number, callback: () => void): Timer => {
   const [firstRun, setFirstRun] = React.useState(true);
-  const timerOptions: TimerOptions = React.useMemo(() => {
-    return {
+  const timer = useTimer(
+    {
       delay,
-      callback,
       runOnce: true,
       fireImmediately: false,
-    };
-  }, [callback, delay]);
-  const timer = useTimer(timerOptions);
+    },
+    callback,
+  );
   React.useEffect(() => {
     // Ensures the delay only ever runs once
     if (firstRun) {

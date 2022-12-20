@@ -1,4 +1,3 @@
-import React from 'react';
 import { Timer, useTimer } from './useTimer';
 
 /**
@@ -7,9 +6,5 @@ import { Timer, useTimer } from './useTimer';
  * Runs indefinitely, counting elapsed time, until paused or stopped.
  */
 export const useStopwatch = (): Timer => {
-  return useTimer(
-    React.useMemo(() => {
-      return {};
-    }, []),
-  );
+  return useTimer();
 };

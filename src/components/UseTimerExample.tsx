@@ -25,7 +25,6 @@ export function UseTimerExample(): JSX.Element {
       runOnce,
       fireImmediately,
       startImmediately,
-      fireOverdueCallbacks: true,
     };
   }, [delay, fireImmediately, runOnce, startImmediately]);
   const timer = useTimer(timerOptions);
