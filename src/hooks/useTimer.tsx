@@ -191,8 +191,8 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
     if (isStarted() && isPaused()) {
       const currentTime = Date.now();
       nextFireTimeRef.current = currentTime + getRemainingTime();
+      periodElapsedPauseTimeRef.current = 0;
       totalElapsedPauseTimeRef.current = totalElapsedPauseTimeRef.current + (currentTime - pauseTimeRef.current);
-      periodElapsedPauseTimeRef.current = periodElapsedPauseTimeRef.current + (currentTime - pauseTimeRef.current);
       pauseTimeRef.current = never;
       resumeTimeRef.current = currentTime;
       setRenderTime(Date.now());
