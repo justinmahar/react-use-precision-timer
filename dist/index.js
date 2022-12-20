@@ -17,3 +17,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./hooks/useDelay"), exports);
 __exportStar(require("./hooks/useStopwatch"), exports);
 __exportStar(require("./hooks/useTimer"), exports);
+__exportStar(require("./hooks/useMomentaryBool"), exports);

@@ -191,12 +191,16 @@ const useTimer = (options = {}) => {
             // If it's a timer and it isn't paused...
             if (options.delay && !isPaused()) {
                 const now = Date.now();
-                // Check if we're overdue on any events being fired (super low delay or expensive callback)
-                const overdueCalls = lastFireTimeRef.current !== never
-                    ? Math.max(0, Math.floor((now - nextFireTimeRef.current) / options.delay))
-                    : 0;
                 // If the timer is up...
                 if (now >= nextFireTimeRef.current) {
+                    // Check if we're overdue on any events being fired (super low delay or expensive callback).
+                    // To do this, we divide the time elapsed beyond the next expected fire time by the delay,
+                    // and floor the result. In other words, find how overdue we are, then divide by the delay.
+                    const overdueCalls = lastFireTimeRef.current !== never
+                        ? Math.max(0, Math.floor((now - nextFireTimeRef.current) / options.delay))
+                        : 0;
+                    lastFireTimeRef.current = now;
+                    periodElapsedPauseTimeRef.current = 0;
                     // Call the callback
                     if (typeof options.callback === 'function') {
                         try {
@@ -206,11 +210,9 @@ const useTimer = (options = {}) => {
                             console.error(e);
                         }
                     }
-                    lastFireTimeRef.current = now;
-                    periodElapsedPauseTimeRef.current = 0;
                     // If it repeats
                     if (!options.runOnce) {
-                        // Calculate and set the next time the timer should fire
+                        // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
                         const overdueElapsedTime = overdueCalls * options.delay;
                         const newFireTime = Math.max(now, nextFireTimeRef.current + options.delay + overdueElapsedTime);
                         nextFireTimeRef.current = newFireTime;
@@ -235,7 +237,7 @@ const useTimer = (options = {}) => {
                 }
             }
         };
-        // Start checking the timer
+        // Check if the timer can fire
         checkTimer();
         return () => {
             clearTimeout(timeout);
@@ -250,26 +252,48 @@ const useTimer = (options = {}) => {
             }
         }
     }, [firstRun, options.startImmediately, start]);
-    return {
-        start,
-        stop,
-        pause,
-        resume,
-        isStarted,
-        isStopped,
-        isRunning,
-        isPaused,
-        getStartTime,
+    return React.useMemo(() => {
+        return {
+            start,
+            stop,
+            pause,
+            resume,
+            isStarted,
+            isStopped,
+            isRunning,
+            isPaused,
+            getStartTime,
+            getLastFireTime,
+            getNextFireTime,
+            getPauseTime,
+            getResumeTime,
+            getRemainingTime,
+            getElapsedStartedTime,
+            getElapsedRunningTime,
+            getTotalElapsedPausedTime,
+            getPeriodElapsedPausedTime,
+            getElapsedResumedTime,
+        };
+    }, [
+        getElapsedResumedTime,
+        getElapsedRunningTime,
+        getElapsedStartedTime,
         getLastFireTime,
         getNextFireTime,
         getPauseTime,
-        getResumeTime,
-        getRemainingTime,
-        getElapsedStartedTime,
-        getElapsedRunningTime,
-        getTotalElapsedPausedTime,
         getPeriodElapsedPausedTime,
-        getElapsedResumedTime,
-    };
+        getRemainingTime,
+        getResumeTime,
+        getStartTime,
+        getTotalElapsedPausedTime,
+        isPaused,
+        isRunning,
+        isStarted,
+        isStopped,
+        pause,
+        resume,
+        start,
+        stop,
+    ]);
 };
 exports.useTimer = useTimer;
