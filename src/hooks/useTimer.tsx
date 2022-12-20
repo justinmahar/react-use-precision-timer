@@ -208,13 +208,15 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
       // If it's a timer and it isn't paused...
       if (options.delay && !isPaused()) {
         const now = Date.now();
-        // Check if we're overdue on any events being fired (super low delay or expensive callback)
-        const overdueCalls =
-          lastFireTimeRef.current !== never
-            ? Math.max(0, Math.floor((now - nextFireTimeRef.current) / options.delay))
-            : 0;
         // If the timer is up...
         if (now >= nextFireTimeRef.current) {
+          // Check if we're overdue on any events being fired (super low delay or expensive callback)
+          const overdueCalls =
+            lastFireTimeRef.current !== never
+              ? Math.max(0, Math.floor((now - nextFireTimeRef.current) / options.delay))
+              : 0;
+          lastFireTimeRef.current = now;
+          periodElapsedPauseTimeRef.current = 0;
           // Call the callback
           if (typeof options.callback === 'function') {
             try {
@@ -223,8 +225,6 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
               console.error(e);
             }
           }
-          lastFireTimeRef.current = now;
-          periodElapsedPauseTimeRef.current = 0;
           // If it repeats
           if (!options.runOnce) {
             // Calculate and set the next time the timer should fire
