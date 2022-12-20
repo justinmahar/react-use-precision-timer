@@ -20,7 +20,7 @@
 
 Read the **[official documentation](https://justinmahar.github.io/react-use-precision-timer/)**.
 
-[![Demo](https://justinmahar.github.io/react-use-precision-timer/images/demo.gif "Demo")](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--page)
+[![Demo](https://justinmahar.github.io/react-use-precision-timer/images/timer-demo.gif "Demo")](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--page)
 
 👁️ **[Live Demo](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--page)**
 
