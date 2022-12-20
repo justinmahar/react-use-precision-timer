@@ -1,28 +1,17 @@
 export interface TimerOptions {
     /** Amount of time to wait before firing the timer, in milliseconds. Use `undefined` or `0` if you'd like the timer to behave as a stopwatch, never firing. */
     delay?: number;
-    /**
-     * The callback to call when the timer fires. Must provide a `delay` for the timer to fire.
-     *
-     * If you'd like, you can determine if any calls were missed by checking the `overdueCallCount` argument.
-     * This value will indicate how many calls were missed due to a very short timer delay or time-consuming callback.
-     */
-    callback?: (overdueCallCount: number) => void;
     /** Use `true` to only run the timer once, `false` otherwise.  */
     runOnce?: boolean;
     /** Use `true` if the timer should fire immediately, calling the provided callback when starting. Use `false` otherwise. */
     fireImmediately?: boolean;
     /** Use `true` if the timer should start immediately, `false` if you'd like to call `start()` yourself. */
     startImmediately?: boolean;
-    /** There is a failsafe built in for very low delays (less than 10ms) and expensive callback operations, which sometimes cause the timer to not fire fast enough. You can use `true` to disable the failsafe. With no failsafe, the callback will always be called the exact number of times expected, even when calls are overdue. Be aware that if the callback is expensive (takes longer than the delay), this may lead to a crash. When `false` (default), the failsafe is enabled and calls to the callback will be skipped when the timer can't keep up. Only set this to `true` if your callback isn't expensive. Default `false`. */
-    fireOverdueCallbacks?: boolean;
 }
 /**
  * See documentation: [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page)
  *
  * A versatile precision timer hook for React. Doubles as a stopwatch.
- *
- * IMPORTANT: Provided `options` should be memoized using `React.useMemo()` to prevent excessive rendering.
  *
  * - Based on `setTimeout()` and timestamps, not `setInterval()` or ticks.
  * - Features perfect mean interval accuracy, meaning it doesn't wander.
@@ -30,8 +19,11 @@ export interface TimerOptions {
  * - Can be used as a timer or a stopwatch.
  * - Supports starting, stopping, pausing, and resuming.
  * - Includes accessors for everything under the sun.
+ *
+ * @param options The TimerOptions for the timer.
+ * @param callback The callback to call when the timer fires. Must provide a `delay` for the timer to fire. If you'd like, you can determine if any calls were missed by checking the `overdueCallCount` argument. This value will indicate how many calls were missed due to a very short timer delay or time-consuming callback.
  */
-export declare const useTimer: (options?: TimerOptions) => Timer;
+export declare const useTimer: (options?: TimerOptions, callback?: ((overdueCallCount: number) => void) | undefined) => Timer;
 /**
  * See documentation: [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page#timer)
  */

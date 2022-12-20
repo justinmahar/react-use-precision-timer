@@ -5,6 +5,6 @@ import { Timer } from './useTimer';
  * Fires the callback after the specified delay has passed.
  *
  * @param delay The amount of time, in milliseconds, before the timer fires.
- * @param callback Called when the timer fires.
+ * @param callback Called when the timer fires. Use React.useCallback() for this.
  */
 export declare const useDelay: (delay: number, callback: () => void) => Timer;

@@ -21,14 +21,9 @@ import { useTimer } from 'react-use-precision-timer';
 In your function component:
 
 ```jsx
-const timerOptions = React.useMemo(() => {
-  return {
-    // The callback will be called every 1000 milliseconds.
-    delay: 1000,
-    callback: () => console.log('Boom'),
-  };
-}, []);
-const timer = useTimer(timerOptions);
+const callback = React.useCallback(() => console.log('Boom'), []);
+// The callback will be called every 1000 milliseconds.
+const timer = useTimer({ delay: 1000 }, callback);
 ```
 
 In a handler or effect:
@@ -37,7 +32,7 @@ In a handler or effect:
 timer.start();
 ```
 
-Pass the hook a memoized [TimerOptions](#timeroptions) object to configure a timer's delay and the callback called when it fires. By default, the timer repeats.
+Pass the hook a [TimerOptions](#timeroptions) object to configure a timer's delay, and the callback called when it fires. By default, the timer repeats.
 
 You can also configure whether it should only run once (`runOnce`), whether it should fire immediately (`fireImmediately`), and whether it should start immediately (`startImmediately`).
 
@@ -51,15 +46,8 @@ See all the ways to use a [Timer](#timer) below.
 
 ```jsx
 // Two second delay, only runs one time, starts immediately
-const timerOptions = React.useMemo(() => {
-  return {
-    delay: 2000,
-    callback: () => console.log('Boom'),
-    runOnce: true,
-    startImmediately: true,
-  };
-}, []);
-useTimer(timerOptions);
+const callback = React.useCallback(() => console.log('Boom'), []);
+useTimer({ delay: 2000, runOnce: true, startImmediately: true }, callback);
 ```
 
 This will call the callback after the provided delay, and only once.
@@ -70,39 +58,38 @@ For convenience, you can use the [useDelay](https://justinmahar.github.io/react-
 
 ```jsx
 // With no delay or callback, a timer acts as a stopwatch
-const timerOptions = React.useMemo(() => {
-  return {};
-}, []);
-const stopwatch = useTimer(timerOptions);
+const stopwatch = useTimer();
 ```
 
 A timer with no `delay` option behaves exactly as a stopwatch. Once started, it will run forever until you pause or stop it, tracking the elapsed time.
 
 You can `start`, `stop`, `pause`, and `resume` a stopwatch timer. You can retrieve elapsed time, total pause time, and more.
 
-For convenience, you can use the [useStopwatch](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usestopwatch--page) hook, which simplifies this option.
+For convenience, you can use the [useStopwatch](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usestopwatch--page) hook, which encapsulates this option.
 
 ## Signature
 
-`useTimer(options?: TimerOptions) => Timer`
+`useTimer(options?: TimerOptions, callback?: (overdueCallCount: number) => void) => Timer`
 
 ### Props
 
-| Prop    | Type                            | Description            |
-| ------- | ------------------------------- | ---------------------- |
-| options | [`TimerOptions`](#timeroptions) | Options for the timer. |
+All props are optional.
+
+| Prop     | Type                                 | Description                                                                                                                                                                                                                                                                                                                     |
+| -------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| options  | [`TimerOptions`](#timeroptions)      | Options for the timer.                                                                                                                                                                                                                                                                                                          |
+| callback | `(overdueCallCount: number) => void` | The callback to call when the timer fires. Must provide a `delay` option for the timer to fire. If you'd like, you can determine if any calls were missed by checking the `overdueCallCount` argument. This value will indicate how many calls were missed due to a very short timer delay (< 10ms) or time-consuming callback. |
 
 #### TimerOptions
 
 All properties are optional.
 
-| Property         | Type                                 | Description                                                                                                                                                                                                                                                                                                              |
-| ---------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| delay            | `number`                             | Amount of time to wait before firing the timer, in milliseconds. Use `undefined` or `0` if you'd like the timer to behave as a stopwatch, never firing.                                                                                                                                                                  |
-| callback         | `(overdueCallCount: number) => void` | The callback to call when the timer fires. Must provide a `delay` for the timer to fire. If you'd like, you can determine if any calls were missed by checking the `overdueCallCount` argument. This value will indicate how many calls were missed due to a very short timer delay (< 10ms) or time-consuming callback. |
-| runOnce          | `boolean`                            | Use `true` to only run the timer once, `false` otherwise.                                                                                                                                                                                                                                                                |
-| fireImmediately  | `boolean`                            | Use `true` if the timer should fire immediately, calling the provided callback when starting. Use `false` otherwise.                                                                                                                                                                                                     |
-| startImmediately | `boolean`                            | Use `true` if the timer should start immediately, `false` if you'd like to call `start()` yourself.                                                                                                                                                                                                                      |
+| Property         | Type      | Description                                                                                                                                             |
+| ---------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| delay            | `number`  | Amount of time to wait before firing the timer, in milliseconds. Use `undefined` or `0` if you'd like the timer to behave as a stopwatch, never firing. |
+| runOnce          | `boolean` | Use `true` to only run the timer once, `false` otherwise.                                                                                               |
+| fireImmediately  | `boolean` | Use `true` if the timer should fire immediately, calling the provided callback when starting. Use `false` otherwise.                                    |
+| startImmediately | `boolean` | Use `true` if the timer should start immediately, `false` if you'd like to call `start()` yourself.                                                     |
 
 #### Low Delays, Expensive Callbacks, and Overdue Calls
 

@@ -15,19 +15,19 @@ export function UseTimerExample(): JSX.Element {
   const [delayChanged, setDelayChanged] = React.useState(false);
   const [, setRenderTime] = React.useState(new Date().getTime());
   const [frameRate, setFrameRate] = React.useState(10);
-  const timerOptions = React.useMemo(() => {
-    return {
+  const callback = React.useCallback((overdueCount: number) => {
+    setCallbackTime(new Date().getTime());
+    setOverdueCallCount(overdueCount);
+  }, []);
+  const timer = useTimer(
+    {
       delay: isNaN(delay) ? 0 : delay,
-      callback: (overdueCount: number) => {
-        setCallbackTime(new Date().getTime());
-        setOverdueCallCount(overdueCount);
-      },
       runOnce,
       fireImmediately,
       startImmediately,
-    };
-  }, [delay, fireImmediately, runOnce, startImmediately]);
-  const timer = useTimer(timerOptions);
+    },
+    callback,
+  );
 
   React.useEffect(() => {
     const timeout = setTimeout(() => setRenderTime(new Date().getTime()), frameRate);

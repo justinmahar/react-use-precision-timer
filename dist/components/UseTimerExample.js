@@ -40,20 +40,16 @@ function UseTimerExample() {
     const [delayChanged, setDelayChanged] = React.useState(false);
     const [, setRenderTime] = React.useState(new Date().getTime());
     const [frameRate, setFrameRate] = React.useState(10);
-    const timerOptions = React.useMemo(() => {
-        return {
-            delay: isNaN(delay) ? 0 : delay,
-            callback: (overdueCount) => {
-                setCallbackTime(new Date().getTime());
-                setOverdueCallCount(overdueCount);
-            },
-            runOnce,
-            fireImmediately,
-            startImmediately,
-            fireOverdueCallbacks: true,
-        };
-    }, [delay, fireImmediately, runOnce, startImmediately]);
-    const timer = (0, useTimer_1.useTimer)(timerOptions);
+    const callback = React.useCallback((overdueCount) => {
+        setCallbackTime(new Date().getTime());
+        setOverdueCallCount(overdueCount);
+    }, []);
+    const timer = (0, useTimer_1.useTimer)({
+        delay: isNaN(delay) ? 0 : delay,
+        runOnce,
+        fireImmediately,
+        startImmediately,
+    }, callback);
     React.useEffect(() => {
         const timeout = setTimeout(() => setRenderTime(new Date().getTime()), frameRate);
         return () => {

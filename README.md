@@ -59,11 +59,11 @@ It's accurate, precise, and includes a rich set of options, functionality, and a
 - **🌞 Accessors for everything**
   - Includes getters for everything under the sun! Know all the things.
 
-## 🆕 New In Version 3
+### 🆕 New In Version 3
 
 Version 3 of this package features a complete redesign to reduce unnecessary renders. Timer state is now tracked via React refs.
 
-All timer options given to the hook should be memoized. Refer to the [Quick Start](#quick-start) section below.
+The hook's signature has been changed. The callback is now provided as the second argument, and should be cached using [`React.useCallback()`](https://beta.reactjs.org/apis/react/useCallback) to optimize render performance. Refer to the [Quick Start](#quick-start) section below.
 
 ## Installation
 
@@ -82,14 +82,9 @@ import { useTimer } from "react-use-precision-timer";
 In your function component:
 
 ```jsx
-const timerOptions = React.useMemo(() => {
-  return {
-    // The callback will be called every 1000 milliseconds.
-    delay: 1000,
-    callback: () => console.log('Boom'),
-  };
-}, []);
-const timer = useTimer(timerOptions);
+const callback = React.useCallback(() => console.log('Boom'), []);
+// The callback will be called every 1000 milliseconds.
+const timer = useTimer({ delay: 1000 }, callback);
 ```
 
 In a handler or effect:

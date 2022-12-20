@@ -8,7 +8,8 @@ const react_1 = __importDefault(require("react"));
 const useDelay_1 = require("./useDelay");
 const useMomentaryBool = (initial, delay) => {
     const [state, setState] = react_1.default.useState(initial);
-    const delayTimer = (0, useDelay_1.useDelay)(react_1.default.useMemo(() => delay, [delay]), react_1.default.useCallback(() => setState(initial), [initial]));
+    const callback = react_1.default.useCallback(() => setState(initial), [initial]);
+    const delayTimer = (0, useDelay_1.useDelay)(delay, callback);
     const toggle = react_1.default.useCallback(() => {
         setState(!initial);
         delayTimer.start();
