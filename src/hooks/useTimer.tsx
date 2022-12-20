@@ -211,6 +211,8 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
         // If the timer is up...
         if (now >= nextFireTimeRef.current) {
           // Check if we're overdue on any events being fired (super low delay or expensive callback)
+          // To do this, we divide the time elapsed beyond the next expected fire time by the delay,
+          // and floor the result. In other words, find how overdue we are, then divide by the delay.
           const overdueCalls =
             lastFireTimeRef.current !== never
               ? Math.max(0, Math.floor((now - nextFireTimeRef.current) / options.delay))
@@ -227,7 +229,7 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
           }
           // If it repeats
           if (!options.runOnce) {
-            // Calculate and set the next time the timer should fire
+            // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
             const overdueElapsedTime = overdueCalls * options.delay;
             const newFireTime = Math.max(now, nextFireTimeRef.current + options.delay + overdueElapsedTime);
             nextFireTimeRef.current = newFireTime;
