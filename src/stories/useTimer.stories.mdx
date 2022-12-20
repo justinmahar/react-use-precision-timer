@@ -151,7 +151,7 @@ The timer uses the start time and provided `delay` option to calculate the next 
 
 After firing, the next fire time is calculated by adding the `delay` to the previous fire time. This is how the timer avoids "wandering" from the start time due to inconsistencies with `setTimeout()`.
 
-If timer events become overdue due to very short delays (less than 10ms) and expensive callback operations, some callback calls may be skipped to allow the timer to recover, although you can disable this failsafe with the `fireOverdueCallbacks` option.
+If timer events become overdue due to very short delays (less than 10ms) and expensive callback operations, some callback calls may be skipped to allow the timer to recover, although you can account for these by checking the `overdueCallCount` argument in your callback.
 
 When used as a stopwatch (no `delay`), no timeouts are used.
 
