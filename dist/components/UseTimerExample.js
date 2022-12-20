@@ -24,7 +24,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UseTimerExample = void 0;
+require("bootstrap/dist/css/bootstrap.css");
 const React = __importStar(require("react"));
+const react_bootstrap_1 = require("react-bootstrap");
 const useTimer_1 = require("../hooks/useTimer");
 function UseTimerExample() {
     const [delay, setDelay] = React.useState(1000);
@@ -70,133 +72,161 @@ function UseTimerExample() {
             }
         }
     }, [delay, delayChanged, startImmediately, startTime, startTimeEnabled, timer]);
-    return (React.createElement("div", { style: { display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start' } },
-        React.createElement("div", null,
-            React.createElement("div", null,
-                React.createElement("div", null,
-                    React.createElement("div", { style: { marginBottom: 10 } },
-                        "Delay:",
-                        ' ',
-                        React.createElement("input", { type: "range", min: "0", max: "5000", value: isNaN(delay) ? 0 : delay, onChange: (e) => {
-                                const newDelay = parseInt(e.target.value);
-                                setDelay(newDelay);
-                                setDelayChanged(true);
-                                if (newDelay === 0) {
-                                    setCallbackTime(-1);
-                                    setOverdueCallCount(0);
-                                }
-                            } }),
-                        ' ',
-                        React.createElement("input", { type: "number", min: 0, value: delay, onChange: (e) => {
-                                const newDelay = parseInt(e.target.value);
-                                setDelay(newDelay);
-                                setDelayChanged(true);
-                                if (newDelay === 0) {
-                                    setCallbackTime(-1);
-                                    setOverdueCallCount(0);
-                                }
-                            }, style: { width: 50 } }),
-                        "ms ",
-                        (isNaN(delay) || delay === 0) && '(Stopwatch)'),
-                    React.createElement("div", { style: { marginBottom: 10 } },
-                        React.createElement("input", { type: "checkbox", id: "startTimeEnabled", name: "startTimeEnabled", checked: startTimeEnabled, onChange: (e) => {
-                                setStartTimeEnabled(e.target.checked);
-                            } }),
-                        "Use start time:",
-                        ' ',
-                        React.createElement("input", { type: "number", min: "0", value: startTime, onChange: (e) => {
-                                const newVal = parseInt(e.target.value);
-                                setStartTime(newVal);
-                            } }),
-                        ' ',
-                        "(Unix timestamp in millis)")),
-                React.createElement("div", { style: { marginBottom: 10 } },
-                    React.createElement("input", { type: "checkbox", id: "runOnce", name: "runOnce", checked: runOnce, onChange: (e) => setRunOnce(e.target.checked) }),
-                    React.createElement("label", { htmlFor: "runOnce" }, " runOnce"),
-                    React.createElement("input", { type: "checkbox", id: "fireImmediately", name: "fireImmediately", checked: fireImmediately, onChange: (e) => setFireImmediately(e.target.checked) }),
-                    React.createElement("label", { htmlFor: "fireImmediately" }, " fireImmediately"),
-                    React.createElement("input", { type: "checkbox", id: "startImmediately", name: "startImmediately", checked: startImmediately, onChange: (e) => setStartImmediately(e.target.checked) }),
-                    React.createElement("label", { htmlFor: "startImmediately" }, " startImmediately"),
-                    React.createElement("br", null))),
-            React.createElement("div", { style: { marginBottom: 10 } },
-                React.createElement("button", { onClick: () => {
-                        timer.start(startTimeEnabled ? startTime : undefined);
-                    } }, "Start"),
-                React.createElement("button", { onClick: () => {
-                        timer.stop();
-                    } }, "Stop"),
-                React.createElement("button", { onClick: () => {
-                        timer.pause();
-                    } }, "Pause"),
-                React.createElement("button", { onClick: () => {
-                        timer.resume();
-                    } }, "Resume")),
-            React.createElement("div", { style: { marginBottom: 10 } }, delay > 0 && (React.createElement("progress", { value: timer.isStopped() ? 0 : delay - timer.getRemainingTime(), max: delay }, timer.getRemainingTime()))),
-            React.createElement("table", null,
-                React.createElement("tbody", null,
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "Callback time:"),
-                        React.createElement("td", null, callbackTime)),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "isStarted():"),
-                        React.createElement("td", null, timer.isStarted() + '')),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "isStopped():"),
-                        React.createElement("td", null, timer.isStopped() + '')),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "isPaused():"),
-                        React.createElement("td", null, timer.isPaused() + '')),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "isRunning():"),
-                        React.createElement("td", null, timer.isRunning() + '')),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "getStartTime():"),
-                        React.createElement("td", null, timer.getStartTime())),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "getLastFireTime():"),
-                        React.createElement("td", null, timer.getLastFireTime())),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "getNextFireTime():"),
-                        React.createElement("td", null, timer.getNextFireTime())),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "getPauseTime():"),
-                        React.createElement("td", null, timer.getPauseTime())),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "getResumeTime():"),
-                        React.createElement("td", null, timer.getResumeTime())),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "getRemainingTime():"),
-                        React.createElement("td", null, timer.getRemainingTime())),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "getElapsedStartedTime():"),
-                        React.createElement("td", null, timer.getElapsedStartedTime())),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "getElapsedRunningTime():"),
-                        React.createElement("td", null, timer.getElapsedRunningTime())),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "getTotalElapsedPausedTime():"),
-                        React.createElement("td", null, timer.getTotalElapsedPausedTime())),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "getPeriodElapsedPausedTime():"),
-                        React.createElement("td", null, timer.getPeriodElapsedPausedTime())),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "getElapsedResumedTime():"),
-                        React.createElement("td", null, timer.getElapsedResumedTime())),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "Overdue call count (for delays under 10ms):"),
-                        React.createElement("td", null, overdueCallCount)),
-                    React.createElement("tr", null,
-                        React.createElement("td", null, "Render time:"),
-                        React.createElement("td", null, Date.now()))))),
-        React.createElement("div", { style: { textAlign: 'center', border: 'solid 2px lightgray', padding: '10px' } },
-            React.createElement("div", null,
-                "Render every:",
-                React.createElement("br", null),
-                frameRate,
-                " ms"),
-            React.createElement("div", null,
-                React.createElement("input", { type: "range", min: "1", max: "5000", value: frameRate, onChange: (e) => {
-                        setFrameRate(parseInt(e.target.value));
-                    } })))));
+    return (React.createElement(react_bootstrap_1.Card, { style: { maxWidth: 650 } },
+        React.createElement(react_bootstrap_1.Card.Body, { className: "d-flex flex-column gap-2" },
+            React.createElement("div", { className: "d-flex justify-between gap-2" },
+                React.createElement(react_bootstrap_1.Card, { className: "w-100" },
+                    React.createElement(react_bootstrap_1.Card.Header, null, "Timer Options"),
+                    React.createElement(react_bootstrap_1.Card.Body, null,
+                        React.createElement("div", { className: "d-flex align-items-center gap-2 mb-2" },
+                            "Delay:",
+                            ' ',
+                            React.createElement(react_bootstrap_1.Form.Range, { min: "0", max: "5000", value: isNaN(delay) ? 0 : delay, onChange: (e) => {
+                                    const newDelay = parseInt(e.target.value);
+                                    setDelay(newDelay);
+                                    setDelayChanged(true);
+                                    if (newDelay === 0) {
+                                        setCallbackTime(-1);
+                                        setOverdueCallCount(0);
+                                    }
+                                } }),
+                            ' ',
+                            React.createElement(react_bootstrap_1.Form.Control, { type: "number", min: 0, value: delay, onChange: (e) => {
+                                    const newDelay = parseInt(e.target.value);
+                                    setDelay(newDelay);
+                                    setDelayChanged(true);
+                                    if (newDelay === 0) {
+                                        setCallbackTime(-1);
+                                        setOverdueCallCount(0);
+                                    }
+                                }, style: { width: 80 } }),
+                            "ms"),
+                        React.createElement("div", { className: "d-flex align-items-start gap-1 mb-3" },
+                            React.createElement(react_bootstrap_1.Form.Check, { inline: true, label: "Use start time:", id: "start-time-checkbox", name: "startTimeEnabled", checked: startTimeEnabled, onChange: (e) => {
+                                    setStartTimeEnabled(e.target.checked);
+                                }, className: "my-2" }),
+                            React.createElement("div", null,
+                                React.createElement(react_bootstrap_1.Form.Control, { type: "number", min: "0", value: startTime, onChange: (e) => {
+                                        const newVal = parseInt(e.target.value);
+                                        setStartTime(newVal);
+                                    }, style: { width: 200 } }),
+                                React.createElement("div", null,
+                                    React.createElement(react_bootstrap_1.Form.Text, { className: "text-muted" }, "(Unix timestamp in millis)")))),
+                        React.createElement("div", { className: "d-flex flex-wrap gap-1" },
+                            React.createElement(react_bootstrap_1.Form.Check, { inline: true, label: "runOnce", id: "runOnce", name: "runOnce", checked: runOnce, onChange: (e) => setRunOnce(e.target.checked) }),
+                            React.createElement(react_bootstrap_1.Form.Check, { inline: true, label: "fireImmediately", id: "fireImmediately", name: "fireImmediately", checked: fireImmediately, onChange: (e) => setFireImmediately(e.target.checked) }),
+                            React.createElement(react_bootstrap_1.Form.Check, { inline: true, label: "startImmediately", id: "startImmediately", name: "startImmediately", checked: startImmediately, onChange: (e) => setStartImmediately(e.target.checked) })))),
+                React.createElement(react_bootstrap_1.Card, null,
+                    React.createElement(react_bootstrap_1.Card.Body, { className: "d-flex flex-column justify-content-center align-items-center" },
+                        React.createElement("div", { className: "text-center" },
+                            "Render every:",
+                            React.createElement("br", null),
+                            frameRate,
+                            " ms"),
+                        React.createElement("div", null,
+                            React.createElement(react_bootstrap_1.Form.Range, { min: "1", max: "5000", value: frameRate, onChange: (e) => {
+                                    setFrameRate(parseInt(e.target.value));
+                                } }))))),
+            React.createElement(react_bootstrap_1.Card, null,
+                React.createElement(react_bootstrap_1.Card.Body, null,
+                    React.createElement("div", { className: "d-flex gap-1 justify-content-center" },
+                        React.createElement(react_bootstrap_1.Button, { variant: timer.isStopped() ? 'primary' : 'outline-dark', onClick: () => {
+                                timer.start(startTimeEnabled ? startTime : undefined);
+                            } }, "Start"),
+                        React.createElement(react_bootstrap_1.Button, { variant: timer.isStarted() ? 'primary' : 'outline-dark', onClick: () => {
+                                timer.stop();
+                            } }, "Stop"),
+                        React.createElement(react_bootstrap_1.Button, { variant: timer.isRunning() ? 'primary' : 'outline-dark', onClick: () => {
+                                timer.pause();
+                            } }, "Pause"),
+                        React.createElement(react_bootstrap_1.Button, { variant: timer.isPaused() ? 'primary' : 'outline-dark', onClick: () => {
+                                timer.resume();
+                            } }, "Resume")))),
+            React.createElement("div", { className: "d-flex justify-content-center" },
+                React.createElement(react_bootstrap_1.Table, { striped: true, bordered: true, responsive: true },
+                    React.createElement("tbody", null,
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "Callback time:"),
+                            React.createElement("td", { style: { minWidth: 200 } },
+                                React.createElement("div", { className: "mb-2" },
+                                    React.createElement("style", null, `.progress-bar {
+                    -webkit-transition: none !important;
+                    -moz-transition: none !important;
+                    -ms-transition: none !important;
+                    -o-transition: none !important;
+                    transition: none !important;
+                  }`),
+                                    delay > 0 && (React.createElement(react_bootstrap_1.ProgressBar, { variant: "primary", now: timer.isStopped() ? 0 : delay - timer.getRemainingTime(), max: delay, label: `${delay - timer.getRemainingTime()}ms`, style: { transition: 'none' } })),
+                                    (isNaN(delay) || delay === 0) && React.createElement(react_bootstrap_1.Badge, { className: "fw-bold m-0" }, "Stopwatch")),
+                                React.createElement("div", null,
+                                    React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, callbackTime)))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "isStarted():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { bg: timer.isStarted() ? 'success' : 'danger', className: "font-monospace" }, timer.isStarted() + ''))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "isStopped():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { bg: timer.isStopped() ? 'success' : 'danger', className: "font-monospace" }, timer.isStopped() + ''))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "isPaused():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { bg: timer.isPaused() ? 'success' : 'danger', className: "font-monospace" }, timer.isPaused() + ''))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "isRunning():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { bg: timer.isRunning() ? 'success' : 'danger', className: "font-monospace" }, timer.isRunning() + ''))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "getStartTime():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, timer.getStartTime()))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "getLastFireTime():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, timer.getLastFireTime()))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "getNextFireTime():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, timer.getNextFireTime()))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "getPauseTime():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, timer.getPauseTime()))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "getResumeTime():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, timer.getResumeTime()))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "getRemainingTime():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" }, timer.getRemainingTime()))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "getElapsedStartedTime():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" }, timer.getElapsedStartedTime()))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "getElapsedRunningTime():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" }, timer.getElapsedRunningTime()))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "getTotalElapsedPausedTime():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" }, timer.getTotalElapsedPausedTime()))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "getPeriodElapsedPausedTime():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" }, timer.getPeriodElapsedPausedTime()))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "getElapsedResumedTime():"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" }, timer.getElapsedResumedTime()))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "Overdue call count (for delays under 10ms):"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "dark" }, overdueCallCount))),
+                        React.createElement("tr", null,
+                            React.createElement("td", null, "Render time:"),
+                            React.createElement("td", null,
+                                React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, Date.now())))))))));
 }
 exports.UseTimerExample = UseTimerExample;
