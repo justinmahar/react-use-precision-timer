@@ -109,7 +109,7 @@ Refer to [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/
 
 ### One-Time Delay
 
-If you'd like to run a callback after a one-time delay, use the helper hook [useDelay](https://justinmahar.github.io/react-use-precision-timer/useDelay):
+If you'd like to run a callback after a one-time delay, use the helper hook [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--page):
 
 ```jsx
 import { useDelay } from "react-use-precision-timer";
@@ -125,7 +125,7 @@ The provided callback will be called only once after the provided delay.
 
 ### Stopwatch
 
-The timer also functions as a stopwatch when no delay is provided. You can use the helper hook [useStopwatch](https://justinmahar.github.io/react-use-precision-timer/useStopwatch):
+The timer also functions as a stopwatch when no delay is provided. You can use the helper hook [useStopwatch](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usestopwatch--page):
 
 ```jsx
 import { useStopwatch } from "react-use-precision-timer";
@@ -143,7 +143,7 @@ Calling start while a stopwatch is already running will restart it.
 
 ### Momentary Boolean
 
-For convenience, the [useMomentaryBoolean](https://justinmahar.github.io/react-use-precision-timer/useMomentaryBoolean) hook has been included to momentarily toggle a boolean using the [useDelay](https://justinmahar.github.io/react-use-precision-timer/useDelay) hook.
+For convenience, the [useMomentaryBoolean](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usemomentarybool--page) hook has been included to momentarily toggle a boolean using the [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--page) hook.
 
 This is very useful for momentary notifications, such as a copy button that shows a momentary checkmark to indicate the operation succeeded.
 
