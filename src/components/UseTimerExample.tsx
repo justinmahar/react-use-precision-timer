@@ -224,7 +224,7 @@ export function UseTimerExample(): JSX.Element {
                         variant="primary"
                         now={timer.isStopped() ? 0 : delay - timer.getRemainingTime()}
                         max={delay}
-                        label={`${delay - timer.getRemainingTime()}ms`}
+                        label={`${delay - timer.getRemainingTime()} ms`}
                         style={{ transition: 'none' }}
                       />
                     )}
@@ -313,7 +313,7 @@ export function UseTimerExample(): JSX.Element {
                 <td>getRemainingTime():</td>
                 <td>
                   <Badge pill bg="primary">
-                    {timer.getRemainingTime()}
+                    {timer.getRemainingTime()} ms
                   </Badge>
                 </td>
               </tr>
@@ -321,7 +321,7 @@ export function UseTimerExample(): JSX.Element {
                 <td>getElapsedStartedTime():</td>
                 <td>
                   <Badge pill bg="primary">
-                    {timer.getElapsedStartedTime()}
+                    {timer.getElapsedStartedTime()} ms
                   </Badge>
                 </td>
               </tr>
@@ -329,7 +329,7 @@ export function UseTimerExample(): JSX.Element {
                 <td>getElapsedRunningTime():</td>
                 <td>
                   <Badge pill bg="primary">
-                    {timer.getElapsedRunningTime()}
+                    {timer.getElapsedRunningTime()} ms
                   </Badge>
                 </td>
               </tr>
@@ -337,7 +337,7 @@ export function UseTimerExample(): JSX.Element {
                 <td>getTotalElapsedPausedTime():</td>
                 <td>
                   <Badge pill bg="primary">
-                    {timer.getTotalElapsedPausedTime()}
+                    {timer.getTotalElapsedPausedTime()} ms
                   </Badge>
                 </td>
               </tr>
@@ -345,7 +345,7 @@ export function UseTimerExample(): JSX.Element {
                 <td>getPeriodElapsedPausedTime():</td>
                 <td>
                   <Badge pill bg="primary">
-                    {timer.getPeriodElapsedPausedTime()}
+                    {timer.getPeriodElapsedPausedTime()} ms
                   </Badge>
                 </td>
               </tr>
@@ -353,7 +353,7 @@ export function UseTimerExample(): JSX.Element {
                 <td>getElapsedResumedTime():</td>
                 <td>
                   <Badge pill bg="primary">
-                    {timer.getElapsedResumedTime()}
+                    {timer.getElapsedResumedTime()} ms
                   </Badge>
                 </td>
               </tr>
