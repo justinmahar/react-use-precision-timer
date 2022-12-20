@@ -59,6 +59,12 @@ It's accurate, precise, and includes a rich set of options, functionality, and a
 - **🌞 Accessors for everything**
   - Includes getters for everything under the sun! Know all the things.
 
+## 🆕 New In Version 3
+
+Version 3 of this package features a complete redesign to reduce unnecessary renders. Timer state is now tracked via React refs.
+
+All timer options given to the hook should be memoized. Refer to the [Quick Start](#quick-start) section below.
+
 ## Installation
 
 ```
