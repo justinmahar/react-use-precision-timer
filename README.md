@@ -61,9 +61,10 @@ It's accurate, precise, and includes a rich set of options, functionality, and a
 
 ### 🆕 New In Version 3
 
-Version 3 of this package features a complete redesign to reduce unnecessary renders. Timer state is now tracked via React refs.
-
-The useTimer hook's signature has been changed. The callback is now provided as the second argument, and should be cached using [`React.useCallback()`](https://beta.reactjs.org/apis/react/useCallback) to optimize render performance. Refer to the [Quick Start](#quick-start) section below.
+Version 3 of this package features a complete redesign to reduce unnecessary renders, plus the addition of a new convenience hook.
+- Internally, timer state is now tracked via React refs and timer options are memoized for you. These changes significantly improved performance.
+- The useTimer hook's signature has been changed. The callback is now provided as the second argument, and should be cached using [`React.useCallback()`](https://beta.reactjs.org/apis/react/useCallback) to optimize render performance. Refer to the [Quick Start](#quick-start) section below.
+- The [useMomentaryBool](#momentary-boolean) hook was added.
 
 ## Installation
 
