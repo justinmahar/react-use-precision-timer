@@ -161,6 +161,8 @@ In your function component:
 const [value, toggle] = useMomentaryBool(false, 1000);
 ```
 
+Calling `toggle()` will set the boolean to `true`, then back to `false` after a 1000 millisecond delay.
+
 ### Other Usage
 
 See [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page) for all other hook options and timer functions.
