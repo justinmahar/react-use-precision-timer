@@ -37,7 +37,7 @@ In a handler or effect:
 timer.start();
 ```
 
-Pass the hook a [TimerOptions](#timeroptions) object to configure a timer's delay and the callback called when it fires. By default, the timer repeats.
+Pass the hook a memoized [TimerOptions](#timeroptions) object to configure a timer's delay and the callback called when it fires. By default, the timer repeats.
 
 You can also configure whether it should only run once (`runOnce`), whether it should fire immediately (`fireImmediately`), and whether it should start immediately (`startImmediately`).
 
@@ -101,12 +101,13 @@ All properties are optional.
 
 #### Low Delays, Expensive Callbacks, and Overdue Calls
 
-Very low delays (less than 10ms) and expensive callback operations can sometimes
-cause the timer to not fire fast enough.
+Very low delays (less than 10ms) and expensive callback operations can sometimes cause the timer to not fire fast enough.
 
 As a failsafe, callback calls will be skipped when the timer can't keep up, allowing it to recover.
 
 If you'd like, you can check the `overdueCallCount` argument in your callback to determine how many calls were missed and account for those missed calls.
+
+You can test this in the [live demo](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--page) when you set a Delay under 10ms. Refer to the "Overdue call count" value.
 
 ### Return
 
