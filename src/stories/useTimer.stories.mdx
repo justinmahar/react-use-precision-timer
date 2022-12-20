@@ -62,20 +62,25 @@ const timerOptions = React.useMemo(() => {
 useTimer(timerOptions);
 ```
 
-This will call the callback after the provided delay, and only once. Alternatively, you can use the [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--page) hook, which encapsulates these options.
+This will call the callback after the provided delay, and only once.
+
+For convenience, you can use the [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--page) hook, which encapsulates these options.
 
 ### Stopwatch Timer
 
 ```jsx
 // With no delay or callback, a timer acts as a stopwatch
-const stopwatch = useTimer();
+const timerOptions = React.useMemo(() => {
+  return {};
+}, []);
+const stopwatch = useTimer(timerOptions);
 ```
 
-A timer with no `delay` option behaves exactly as a stopwatch. It will run forever until you pause or stop it, tracking the elapsed time.
+A timer with no `delay` option behaves exactly as a stopwatch. Once started, it will run forever until you pause or stop it, tracking the elapsed time.
 
 You can `start`, `stop`, `pause`, and `resume` a stopwatch timer. You can retrieve elapsed time, total pause time, and more.
 
-Alternatively, you can use the [useStopwatch](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usestopwatch--page) hook, which encapsulates this option.
+For convenience, you can use the [useStopwatch](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usestopwatch--page) hook, which simplifies this option.
 
 ## Signature
 

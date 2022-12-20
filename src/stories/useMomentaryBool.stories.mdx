@@ -1,0 +1,99 @@
+import { Meta } from '@storybook/addon-docs';
+import { UseMomentaryBoolExample } from '../components/UseMomentaryBoolExample';
+
+<Meta title="Extras/useMomentaryBool" />
+
+<h1>useMomentaryBool</h1>
+
+## Description
+
+Convenience hook that toggles a boolean, then uses [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page) to toggle it back after the specified delay has passed.
+
+This is very useful for momentary notifications, such as a copy button that shows a momentary checkmark to indicate the operation succeeded.
+
+## Usage
+
+```jsx
+import { useMomentaryBool } from 'react-use-precision-timer';
+```
+
+In your function component:
+
+```jsx
+// Toggle to true, then back to false after 1000ms.
+const [value, toggle] = useMomentaryBool(false, 1000);
+```
+
+Calling toggle() will set the boolean to `true`, then back to `false` after a 1000 millisecond delay.
+
+## Signature
+
+`useMomentaryBool(initial:boolean, delay: number) => [boolean, () => void]`
+
+### Props
+
+| Prop    | Type      | Description                                                              |
+| ------- | --------- | ------------------------------------------------------------------------ |
+| initial | `boolean` | The initial value of the boolean.                                        |
+| delay   | `number`  | The amount of time, in milliseconds, before the boolean is toggled back. |
+
+### Return
+
+The hook returns an array containing the following values:
+
+| Index | Name   | Type       | Description                                                                                                               |
+| ----- | ------ | ---------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 0     | value  | `boolean`  | The current value of the boolean.                                                                                         |
+| 1     | toggle | `() => {}` | A toggle function. Calling this will toggle the boolean and start a timer that changes it back after the specified delay. |
+
+## Example
+
+<div style={{ border: 'solid 2px #67788a', padding: '20px' }}>
+  <UseMomentaryBoolExample />
+</div>
+
+```jsx
+import * as React from 'react';
+import { useDelay } from 'react-use-precision-timer';
+
+export function UseDelayExample(): JSX.Element {
+  const [run, setRun] = React.useState(false);
+  const [resetTime, setResetTime] = React.useState(Date.now());
+  return (
+    <div key={resetTime}>
+      {!run && <button onClick={(e) => setRun(true)}>▶️ Run 1 Second Delay</button>}
+      {run && <OneSecondDelay />}
+      {run && (
+        <div style={{ marginTop: 10 }}>
+          <button
+            onClick={() => {
+              setResetTime(Date.now());
+              setRun(false);
+            }}
+          >
+            Reset
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function OneSecondDelay() {
+  const [firedAt, setFiredAt] = React.useState(0);
+  const callback = React.useCallback(() => setFiredAt(new Date().getTime()), []);
+  useDelay(1000, callback);
+  return (
+    <div>
+      <div style={{ marginBottom: 10 }}>Timer fired? {firedAt > 0 ? `Yes ✅ ` : 'No ❌'}</div>
+      {firedAt > 0 && (
+        <div style={{ fontSize: '80%' }}>
+          <>
+            At {`${new Date(firedAt)}`}, epoch {firedAt}
+          </>
+        </div>
+      )}
+    </div>
+  );
+}
+```

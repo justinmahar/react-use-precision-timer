@@ -210,7 +210,7 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
         const now = Date.now();
         // If the timer is up...
         if (now >= nextFireTimeRef.current) {
-          // Check if we're overdue on any events being fired (super low delay or expensive callback)
+          // Check if we're overdue on any events being fired (super low delay or expensive callback).
           // To do this, we divide the time elapsed beyond the next expected fire time by the delay,
           // and floor the result. In other words, find how overdue we are, then divide by the delay.
           const overdueCalls =
@@ -254,7 +254,7 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
       }
     };
 
-    // Start checking the timer
+    // Check if the timer can fire
     checkTimer();
 
     return () => {
@@ -272,27 +272,49 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
     }
   }, [firstRun, options.startImmediately, start]);
 
-  return {
-    start,
-    stop,
-    pause,
-    resume,
-    isStarted,
-    isStopped,
-    isRunning,
-    isPaused,
-    getStartTime,
+  return React.useMemo(() => {
+    return {
+      start,
+      stop,
+      pause,
+      resume,
+      isStarted,
+      isStopped,
+      isRunning,
+      isPaused,
+      getStartTime,
+      getLastFireTime,
+      getNextFireTime,
+      getPauseTime,
+      getResumeTime,
+      getRemainingTime,
+      getElapsedStartedTime,
+      getElapsedRunningTime,
+      getTotalElapsedPausedTime,
+      getPeriodElapsedPausedTime,
+      getElapsedResumedTime,
+    };
+  }, [
+    getElapsedResumedTime,
+    getElapsedRunningTime,
+    getElapsedStartedTime,
     getLastFireTime,
     getNextFireTime,
     getPauseTime,
-    getResumeTime,
-    getRemainingTime,
-    getElapsedStartedTime,
-    getElapsedRunningTime,
-    getTotalElapsedPausedTime,
     getPeriodElapsedPausedTime,
-    getElapsedResumedTime,
-  };
+    getRemainingTime,
+    getResumeTime,
+    getStartTime,
+    getTotalElapsedPausedTime,
+    isPaused,
+    isRunning,
+    isStarted,
+    isStopped,
+    pause,
+    resume,
+    start,
+    stop,
+  ]);
 };
 
 /**
