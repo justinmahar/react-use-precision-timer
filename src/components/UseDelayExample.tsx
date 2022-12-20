@@ -26,7 +26,8 @@ export function UseDelayExample(): JSX.Element {
 
 export function OneSecondDelay(): JSX.Element {
   const [firedAt, setFiredAt] = React.useState(0);
-  useDelay(1000, () => setFiredAt(new Date().getTime()));
+  const callback = React.useCallback(() => setFiredAt(new Date().getTime()), []);
+  useDelay(1000, callback);
   return (
     <div>
       <div style={{ marginBottom: 10 }}>Timer fired? {firedAt > 0 ? `Yes ✅ ` : 'No ❌'}</div>

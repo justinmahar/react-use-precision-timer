@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useTimer, Timer } from './useTimer';
+import { useTimer, Timer, TimerOptions } from './useTimer';
 
 /**
  * See documentation: [useDelay](https://justinmahar.github.io/react-use-precision-timer/useDelay)
@@ -11,12 +11,15 @@ import { useTimer, Timer } from './useTimer';
  */
 export const useDelay = (delay: number, callback: () => void): Timer => {
   const [firstRun, setFirstRun] = React.useState(true);
-  const timer = useTimer({
-    delay,
-    callback,
-    runOnce: true,
-    fireImmediately: false,
-  });
+  const timerOptions: TimerOptions = React.useMemo(() => {
+    return {
+      delay,
+      callback,
+      runOnce: true,
+      fireImmediately: false,
+    };
+  }, [callback, delay]);
+  const timer = useTimer(timerOptions);
   React.useEffect(() => {
     // Ensures the delay only ever runs once
     if (firstRun) {

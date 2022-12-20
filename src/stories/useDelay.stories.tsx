@@ -6,9 +6,9 @@ const HookComponent = (props: any) => {
   const [delay, setDelay] = React.useState(2000);
   const [callbackTime, setCallbackTime] = React.useState(-1);
   const [renderTime, setRenderTime] = React.useState(new Date().getTime());
-  const callback = () => {
+  const callback = React.useCallback(() => {
     setCallbackTime(new Date().getTime());
-  };
+  }, []);
   const timer = useDelay(delay, callback);
 
   React.useEffect(() => {

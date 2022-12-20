@@ -3,8 +3,13 @@ import * as React from 'react';
 export interface TimerOptions {
   /** Amount of time to wait before firing the timer, in milliseconds. Use `undefined` or `0` if you'd like the timer to behave as a stopwatch, never firing. */
   delay?: number;
-  /** The callback to call when the timer fires. Must provide a `delay` for the timer to fire. */
-  callback?: () => void;
+  /**
+   * The callback to call when the timer fires. Must provide a `delay` for the timer to fire.
+   *
+   * If you'd like, you can determine if any calls were missed by checking the `overdueCallCount` argument.
+   * This value will indicate how many calls were missed due to a very short timer delay or time-consuming callback.
+   */
+  callback?: (overdueCallCount: number) => void;
   /** Use `true` to only run the timer once, `false` otherwise.  */
   runOnce?: boolean;
   /** Use `true` if the timer should fire immediately, calling the provided callback when starting. Use `false` otherwise. */
@@ -23,6 +28,8 @@ const never = Number.MAX_SAFE_INTEGER;
  *
  * A versatile precision timer hook for React. Doubles as a stopwatch.
  *
+ * IMPORTANT: Provided `options` should be memoized using `React.useMemo()` to prevent excessive rendering.
+ *
  * - Based on `setTimeout()` and timestamps, not `setInterval()` or ticks.
  * - Features perfect mean interval accuracy, meaning it doesn't wander.
  * - Resilient to expensive callback operations and low timer delays.
@@ -32,7 +39,7 @@ const never = Number.MAX_SAFE_INTEGER;
  */
 export const useTimer = (options: TimerOptions = {}): Timer => {
   const [firstRun, setFirstRun] = React.useState(true);
-  const [, setRenderTime] = React.useState(Date.now());
+  const [renderTime, setRenderTime] = React.useState(Date.now());
   const startedRef = React.useRef(false);
   const startTimeRef = React.useRef(never);
   const lastFireTimeRef = React.useRef(never);
@@ -196,28 +203,22 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
 
   React.useEffect(() => {
     let timeout: NodeJS.Timeout;
-    // If it's a timer and it isn't paused...
-    if (options.delay && !isPaused()) {
-      const now = Date.now();
-      // Check if we're overdue on any events being fired (super low delay or expensive callback)
-      const overdueCalls =
-        lastFireTimeRef.current !== never
-          ? Math.max(0, Math.floor((now - nextFireTimeRef.current) / options.delay))
-          : 0;
-      // If we're overdue, this means we're not firing callbacks fast enough and need to prevent
-      // exceeding the maximum update depth.
-      // To do this, we only fire the callback on an even number of overdues (including 0, no overdues).
-      // Else, we wait a little, then try again.
-      if (overdueCalls % 2 !== 1) {
+    const checkTimer = () => {
+      clearTimeout(timeout);
+      // If it's a timer and it isn't paused...
+      if (options.delay && !isPaused()) {
+        const now = Date.now();
+        // Check if we're overdue on any events being fired (super low delay or expensive callback)
+        const overdueCalls =
+          lastFireTimeRef.current !== never
+            ? Math.max(0, Math.floor((now - nextFireTimeRef.current) / options.delay))
+            : 0;
         // If the timer is up...
         if (now >= nextFireTimeRef.current) {
           // Call the callback
           if (typeof options.callback === 'function') {
             try {
-              // Only fire overdue callbacks if we're told to, otherwise skip them
-              for (let i = 0; i < (options.fireOverdueCallbacks ? overdueCalls + 1 : 1); i++) {
-                options.callback();
-              }
+              options.callback(overdueCalls);
             } catch (e) {
               console.error(e);
             }
@@ -232,8 +233,8 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
             nextFireTimeRef.current = newFireTime;
             // Set a timeout to check and fire the timer when time's up
             timeout = setTimeout(() => {
-              // This merely triggers a rerender to check if the timer can fire.
-              setRenderTime(Date.now());
+              // Check if the timer can fire
+              checkTimer();
             }, Math.max(newFireTime - Date.now(), 1));
           } else {
             // If it doesn't repeat, stop the timer.
@@ -243,26 +244,21 @@ export const useTimer = (options: TimerOptions = {}): Timer => {
         // Time is not up yet. Set a timeout to check and fire when time's up
         else if (nextFireTimeRef.current < never) {
           timeout = setTimeout(() => {
-            // This merely triggers a rerender to check if the timer can fire.
-            setRenderTime(Date.now());
+            // Check if the timer can fire
+            checkTimer();
             // Home in on the exact time to fire.
           }, Math.max(nextFireTimeRef.current - Date.now(), 1));
         }
-      } else {
-        // Relief valve to avoid maximum update depth exceeded errors.
-        // When calls become overdue, there's too expensive of a callback or too low of a delay to keep up.
-        // In both cases, the React max update stack will be exceeded due to repeated firings.
-        // To relieve this, don't check to fire this time around, but check again in a short time.
-        timeout = setTimeout(() => {
-          setRenderTime(Date.now());
-        }, 20);
       }
-    }
+    };
+
+    // Start checking the timer
+    checkTimer();
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [options.runOnce, options.delay, stop, isPaused, options]);
+  }, [isPaused, options, renderTime, stop]);
 
   // Start immediately if this is our first run.
   React.useEffect(() => {

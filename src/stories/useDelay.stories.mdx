@@ -20,7 +20,8 @@ import { useDelay } from 'react-use-precision-timer';
 In your function component:
 
 ```jsx
-const callback = () => console.log('Boom');
+const callback = React.useCallback(() => console.log('Boom'), []);
+// Call once after 1000ms.
 useDelay(1000, callback);
 ```
 
@@ -32,10 +33,10 @@ This will call the callback after the provided 1000 millisecond delay only once.
 
 ### Props
 
-| Prop     | Type         | Description                                                  |
-| -------- | ------------ | ------------------------------------------------------------ |
-| delay    | `number`     | The amount of time, in milliseconds, before the timer fires. |
-| callback | `() => void` | Called when the timer fires.                                 |
+| Prop     | Type         | Description                                                            |
+| -------- | ------------ | ---------------------------------------------------------------------- |
+| delay    | `number`     | The amount of time, in milliseconds, before the timer fires.           |
+| callback | `() => void` | Called when the timer fires. Recommended to use `React.useCallback()`. |
 
 ### Return
 
@@ -51,19 +52,44 @@ The hook returns a [Timer](https://justinmahar.github.io/react-use-precision-tim
 import * as React from 'react';
 import { useDelay } from 'react-use-precision-timer';
 
-export function UseDelayExample() {
+export function UseDelayExample(): JSX.Element {
   const [run, setRun] = React.useState(false);
+  const [resetTime, setResetTime] = React.useState(Date.now());
   return (
-    <div>
+    <div key={resetTime}>
       {!run && <button onClick={(e) => setRun(true)}>▶️ Run 1 Second Delay</button>}
       {run && <OneSecondDelay />}
+      {run && (
+        <div style={{ marginTop: 10 }}>
+          <button
+            onClick={() => {
+              setResetTime(Date.now());
+              setRun(false);
+            }}
+          >
+            Reset
+          </button>
+        </div>
+      )}
     </div>
   );
 }
 
 export function OneSecondDelay() {
   const [firedAt, setFiredAt] = React.useState(0);
-  useDelay(1000, () => setFiredAt(new Date().getTime()));
-  return <>Timer fired? {firedAt > 0 ? `✔️ (at ${firedAt})` : '❌'}</>;
+  const callback = React.useCallback(() => setFiredAt(new Date().getTime()), []);
+  useDelay(1000, callback);
+  return (
+    <div>
+      <div style={{ marginBottom: 10 }}>Timer fired? {firedAt > 0 ? `Yes ✅ ` : 'No ❌'}</div>
+      {firedAt > 0 && (
+        <div style={{ fontSize: '80%' }}>
+          <>
+            At {`${new Date(firedAt)}`}, epoch {firedAt}
+          </>
+        </div>
+      )}
+    </div>
+  );
 }
 ```

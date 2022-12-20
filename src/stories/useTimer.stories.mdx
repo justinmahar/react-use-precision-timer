@@ -21,8 +21,14 @@ import { useTimer } from 'react-use-precision-timer';
 In your function component:
 
 ```jsx
-// The callback will be called every 1000 milliseconds.
-const timer = useTimer({ delay: 1000, callback: () => console.log('Boom') });
+const timerOptions = React.useMemo(() => {
+  return {
+    // The callback will be called every 1000 milliseconds.
+    delay: 1000,
+    callback: () => console.log('Boom'),
+  };
+}, []);
+const timer = useTimer(timerOptions);
 ```
 
 In a handler or effect:
@@ -45,7 +51,15 @@ See all the ways to use a [Timer](#timer) below.
 
 ```jsx
 // Two second delay, only runs one time, starts immediately
-useTimer({ delay: 2000, callback: () => console.log('Boom'), runOnce: true, startImmediately: true });
+const timerOptions = React.useMemo(() => {
+  return {
+    delay: 2000,
+    callback: () => console.log('Boom'),
+    runOnce: true,
+    startImmediately: true,
+  };
+}, []);
+useTimer(timerOptions);
 ```
 
 This will call the callback after the provided delay, and only once. Alternatively, you can use the [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--page) hook, which encapsulates these options.
@@ -77,29 +91,22 @@ Alternatively, you can use the [useStopwatch](https://justinmahar.github.io/reac
 
 All properties are optional.
 
-| Property             | Type         | Description                                                                                                                                                                                                                                           |
-| -------------------- | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| delay                | `number`     | Amount of time to wait before firing the timer, in milliseconds. Use `undefined` or `0` if you'd like the timer to behave as a stopwatch, never firing.                                                                                               |
-| callback             | `() => void` | The callback to call when the timer fires. Must provide a `delay` for the timer to fire.                                                                                                                                                              |
-| runOnce              | `boolean`    | Use `true` to only run the timer once, `false` otherwise.                                                                                                                                                                                             |
-| fireImmediately      | `boolean`    | Use `true` if the timer should fire immediately, calling the provided callback when starting. Use `false` otherwise.                                                                                                                                  |
-| startImmediately     | `boolean`    | Use `true` if the timer should start immediately, `false` if you'd like to call `start()` yourself.                                                                                                                                                   |
-| fireOverdueCallbacks | `boolean`    | Use `true` to ensure the callback is always called the exact number of times expected, even when the timer is struggling to keep up due to a low delay or expensive callback. Use `false` otherwise. Default `false`. See below for more information. |
+| Property         | Type                                 | Description                                                                                                                                                                                                                                                                                                              |
+| ---------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| delay            | `number`                             | Amount of time to wait before firing the timer, in milliseconds. Use `undefined` or `0` if you'd like the timer to behave as a stopwatch, never firing.                                                                                                                                                                  |
+| callback         | `(overdueCallCount: number) => void` | The callback to call when the timer fires. Must provide a `delay` for the timer to fire. If you'd like, you can determine if any calls were missed by checking the `overdueCallCount` argument. This value will indicate how many calls were missed due to a very short timer delay (< 10ms) or time-consuming callback. |
+| runOnce          | `boolean`                            | Use `true` to only run the timer once, `false` otherwise.                                                                                                                                                                                                                                                                |
+| fireImmediately  | `boolean`                            | Use `true` if the timer should fire immediately, calling the provided callback when starting. Use `false` otherwise.                                                                                                                                                                                                     |
+| startImmediately | `boolean`                            | Use `true` if the timer should start immediately, `false` if you'd like to call `start()` yourself.                                                                                                                                                                                                                      |
 
 #### Low Delays, Expensive Callbacks, and Overdue Calls
 
 Very low delays (less than 10ms) and expensive callback operations can sometimes
-cause the timer to not fire fast enough. In these situations, timer events and calls to your callback can start to back up and become "overdue", leading to freezing or crashing.
+cause the timer to not fire fast enough.
 
 As a failsafe, callback calls will be skipped when the timer can't keep up, allowing it to recover.
 
-If you'd like, you can set the `fireOverdueCallbacks` timer option to `true` to disable this failsafe.
-
-With no failsafe, the callback will always be called the exact number of times expected, even when calls are overdue. When calls are overdue, the callback will be called in loop to make up for missed fires.
-
-Be aware that if the callback is expensive and always takes longer than the delay, this may lead to a crash.
-
-Only set this to `true` if your callback doesn't consistently take longer than the delay and you are relying on a precise number of calls over time.
+If you'd like, you can check the `overdueCallCount` argument in your callback to determine how many calls were missed and account for those missed calls.
 
 ### Return
 

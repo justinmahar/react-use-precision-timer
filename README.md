@@ -76,8 +76,14 @@ import { useTimer } from "react-use-precision-timer";
 In your function component:
 
 ```jsx
-// The callback will be called every 1000 milliseconds.
-const timer = useTimer({ delay: 1000, callback: () => console.log("Boom") });
+const timerOptions = React.useMemo(() => {
+  return {
+    // The callback will be called every 1000 milliseconds.
+    delay: 1000,
+    callback: () => console.log('Boom'),
+  };
+}, []);
+const timer = useTimer(timerOptions);
 ```
 
 In a handler or effect:
@@ -104,8 +110,9 @@ import { useDelay } from "react-use-precision-timer";
 ```
 
 ```jsx
+const callback = React.useCallback(() => console.log("Boom"), []);
 // Call once after 1000ms.
-useDelay(1000, () => console.log("Boom"));
+useDelay(1000, callback);
 ```
 
 The provided callback will be called only once after the provided delay.

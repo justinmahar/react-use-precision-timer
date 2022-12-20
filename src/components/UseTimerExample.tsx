@@ -6,23 +6,27 @@ export function UseTimerExample(): JSX.Element {
   const [startTimeEnabled, setStartTimeEnabled] = React.useState(false);
   const [startTime, setStartTime] = React.useState(Date.now());
   const [callbackTime, setCallbackTime] = React.useState(-1);
+  const [overdueCallCount, setOverdueCallCount] = React.useState(0);
   const [runOnce, setRunOnce] = React.useState(false);
   const [fireImmediately, setFireImmediately] = React.useState(false);
   const [startImmediately, setStartImmediately] = React.useState(true);
   const [delayChanged, setDelayChanged] = React.useState(false);
-  const [renderTime, setRenderTime] = React.useState(new Date().getTime());
+  const [, setRenderTime] = React.useState(new Date().getTime());
   const [frameRate, setFrameRate] = React.useState(10);
-  const callback = () => {
-    setCallbackTime(new Date().getTime());
-  };
-  const timer = useTimer({
-    delay,
-    callback,
-    runOnce,
-    fireImmediately,
-    startImmediately,
-    fireOverdueCallbacks: true,
-  });
+  const timerOptions = React.useMemo(() => {
+    return {
+      delay: isNaN(delay) ? 0 : delay,
+      callback: (overdueCount: number) => {
+        setCallbackTime(new Date().getTime());
+        setOverdueCallCount(overdueCount);
+      },
+      runOnce,
+      fireImmediately,
+      startImmediately,
+      fireOverdueCallbacks: true,
+    };
+  }, [delay, fireImmediately, runOnce, startImmediately]);
+  const timer = useTimer(timerOptions);
 
   React.useEffect(() => {
     const timeout = setTimeout(() => setRenderTime(new Date().getTime()), frameRate);
@@ -54,6 +58,20 @@ export function UseTimerExample(): JSX.Element {
                 type="range"
                 min="0"
                 max="5000"
+                value={isNaN(delay) ? 0 : delay}
+                onChange={(e) => {
+                  const newDelay = parseInt(e.target.value);
+                  setDelay(newDelay);
+                  setDelayChanged(true);
+                  if (newDelay === 0) {
+                    setCallbackTime(-1);
+                    setOverdueCallCount(0);
+                  }
+                }}
+              />{' '}
+              <input
+                type="number"
+                min={0}
                 value={delay}
                 onChange={(e) => {
                   const newDelay = parseInt(e.target.value);
@@ -61,10 +79,12 @@ export function UseTimerExample(): JSX.Element {
                   setDelayChanged(true);
                   if (newDelay === 0) {
                     setCallbackTime(-1);
+                    setOverdueCallCount(0);
                   }
                 }}
-              />{' '}
-              {delay > 0 ? `${delay} ms` : 'Stopwatch'}
+                style={{ width: 50 }}
+              />
+              ms {(isNaN(delay) || delay === 0) && '(Stopwatch)'}
             </div>
             <div style={{ marginBottom: 10 }}>
               <input
@@ -219,6 +239,10 @@ export function UseTimerExample(): JSX.Element {
             <tr>
               <td>getElapsedResumedTime():</td>
               <td>{timer.getElapsedResumedTime()}</td>
+            </tr>
+            <tr>
+              <td>Overdue call count (for delays under 10ms):</td>
+              <td>{overdueCallCount}</td>
             </tr>
           </tbody>
         </table>
