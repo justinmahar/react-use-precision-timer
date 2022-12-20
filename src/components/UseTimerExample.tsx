@@ -244,6 +244,10 @@ export function UseTimerExample(): JSX.Element {
               <td>Overdue call count (for delays under 10ms):</td>
               <td>{overdueCallCount}</td>
             </tr>
+            <tr>
+              <td>Render time:</td>
+              <td>{Date.now()}</td>
+            </tr>
           </tbody>
         </table>
       </div>
