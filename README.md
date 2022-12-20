@@ -141,6 +141,12 @@ Stopwatch is a [Timer](https://justinmahar.github.io/react-use-precision-timer/?
 
 Calling start while a stopwatch is already running will restart it.
 
+### Momentary Boolean
+
+For convenience, the [useMomentaryBoolean](https://justinmahar.github.io/react-use-precision-timer/useMomentaryBoolean) hook has been included to momentarily toggle a boolean using the [useDelay](https://justinmahar.github.io/react-use-precision-timer/useDelay) hook.
+
+This is very useful for momentary notifications, such as a copy button that shows a momentary checkmark to indicate the operation succeeded.
+
 ### Other Usage
 
 See [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page) for all other hook options and timer functions.

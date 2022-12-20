@@ -1,6 +1,6 @@
 import React from 'react';
 import { DivProps } from 'react-html-props';
-import { useMomentaryBool } from '../hooks/extras/useMomentaryBool';
+import { useMomentaryBool } from '../hooks/useMomentaryBool';
 
 export interface UseMomentaryBoolExampleProps extends DivProps {}
 
