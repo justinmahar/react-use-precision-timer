@@ -1,6 +1,6 @@
 {
   "name": "react-use-precision-timer",
-  "version": "3.0.9",
+  "version": "3.0.10",
   "author": "Justin Mahar <contact@justinmahar.com>",
   "description": "A versatile precision timer hook for React. Doubles as a stopwatch.",
   "homepage": "https://justinmahar.github.io/react-use-precision-timer/",
