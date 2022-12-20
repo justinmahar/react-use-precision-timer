@@ -23,35 +23,34 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.OneSecondDelay = exports.UseDelayExample = void 0;
+exports.UseDelayExample = void 0;
 const React = __importStar(require("react"));
 const useDelay_1 = require("../hooks/useDelay");
 function UseDelayExample() {
     const [run, setRun] = React.useState(false);
-    const [resetTime, setResetTime] = React.useState(Date.now());
-    return (React.createElement("div", { key: resetTime },
-        !run && React.createElement("button", { onClick: (e) => setRun(true) }, "\u25B6\uFE0F Run 1 Second Delay"),
-        run && React.createElement(OneSecondDelay, null),
+    const [firedAt, setFiredAt] = React.useState(0);
+    const callback = React.useCallback(() => setFiredAt(new Date().getTime()), []);
+    const onceTimer = (0, useDelay_1.useDelay)(1000, callback);
+    return (React.createElement("div", null,
+        !run && (React.createElement("button", { onClick: (e) => {
+                setRun(true);
+                onceTimer.start();
+            } }, "\u25B6\uFE0F Run 1 Second Delay")),
+        run && (React.createElement("div", null,
+            React.createElement("div", { style: { marginBottom: 10 } },
+                "Timer fired? ",
+                firedAt > 0 ? `Yes ✅ ` : 'No ❌'),
+            firedAt > 0 && (React.createElement("div", { style: { fontSize: '80%' } },
+                React.createElement(React.Fragment, null,
+                    "At ",
+                    `${new Date(firedAt)}`,
+                    ", epoch ",
+                    firedAt))))),
         run && (React.createElement("div", { style: { marginTop: 10 } },
             React.createElement("button", { onClick: () => {
-                    setResetTime(Date.now());
+                    setFiredAt(0);
+                    onceTimer.stop();
                     setRun(false);
                 } }, "Reset")))));
 }
 exports.UseDelayExample = UseDelayExample;
-function OneSecondDelay() {
-    const [firedAt, setFiredAt] = React.useState(0);
-    const callback = React.useCallback(() => setFiredAt(new Date().getTime()), []);
-    (0, useDelay_1.useDelay)(1000, callback);
-    return (React.createElement("div", null,
-        React.createElement("div", { style: { marginBottom: 10 } },
-            "Timer fired? ",
-            firedAt > 0 ? `Yes ✅ ` : 'No ❌'),
-        firedAt > 0 && (React.createElement("div", { style: { fontSize: '80%' } },
-            React.createElement(React.Fragment, null,
-                "At ",
-                `${new Date(firedAt)}`,
-                ", epoch ",
-                firedAt)))));
-}
-exports.OneSecondDelay = OneSecondDelay;

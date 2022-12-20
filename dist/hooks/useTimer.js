@@ -40,7 +40,7 @@ const never = Number.MAX_SAFE_INTEGER;
  * - Includes accessors for everything under the sun.
  *
  * @param options The TimerOptions for the timer.
- * @param callback The callback to call when the timer fires. Must provide a `delay` for the timer to fire. If you'd like, you can determine if any calls were missed by checking the `overdueCallCount` argument. This value will indicate how many calls were missed due to a very short timer delay or time-consuming callback.
+ * @param callback The callback to call when the timer fires. Use React.useCallback() for this. Must provide a `delay` for the timer to fire. If you'd like, you can determine if any calls were missed by checking the `overdueCallCount` argument. This value will indicate how many calls were missed due to a very short timer delay or time-consuming callback.
  */
 const useTimer = (options = {}, callback) => {
     const [firstRun, setFirstRun] = React.useState(true);
