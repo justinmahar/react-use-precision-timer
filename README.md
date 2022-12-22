@@ -28,9 +28,11 @@ Read the **[official documentation](https://justinmahar.github.io/react-use-prec
 
 This project is the result of countless hours of work and I really hope it saves you hours of your own precious time.
 
-If you would like to join others in showing support for the development of this project, then please feel free to buy me a coffee.
+If this project helped you and you'd like to join others in showing support for the development of this project, I'd be honored for you to sponsor me or fuel development by buying me a coffee:
 
-<a href="https://paypal.me/thejustinmahar/5">
+<a href="https://github.com/sponsors/justinmahar">
+  <img src="https://justinmahar.github.io/react-use-precision-timer/support/sponsor.png" alt="Sponsor via GitHub" height="35" />
+</a> <a href="https://paypal.me/thejustinmahar/5">
   <img src="https://justinmahar.github.io/react-use-precision-timer/support/coffee-1.png" alt="Buy me a coffee" height="35" />
 </a> <a href="https://paypal.me/thejustinmahar/15">
   <img src="https://justinmahar.github.io/react-use-precision-timer/support/coffee-3.png" alt="Buy me 3 coffees" height="35" />
