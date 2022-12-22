@@ -14,6 +14,9 @@
   <a href="https://github.com/justinmahar/react-use-precision-timer/actions?query=workflow%3ADeploy" target="_blank" rel="noopener noreferrer">
     <img src="https://github.com/justinmahar/react-use-precision-timer/workflows/Deploy/badge.svg" alt="Deploy Status" />
   </a>
+  <a href="https://github.com/sponsors/justinmahar" target="_blank" rel="noopener noreferrer">
+    <img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" alt="Sponsor"/>
+  </a>
 </p>
 
 ## Documentation
