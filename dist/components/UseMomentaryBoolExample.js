@@ -11,7 +11,7 @@ const UseMomentaryBoolExample = () => {
     const [value, toggle] = (0, useMomentaryBool_1.useMomentaryBool)(false, delay);
     return (react_1.default.createElement("div", { style: { display: 'flex', flexDirection: 'column', rowGap: 10 } },
         react_1.default.createElement("div", null,
-            react_1.default.createElement("input", { type: "range", id: "points", name: "points", min: "10", max: "5000", value: delay, onChange: (e) => {
+            react_1.default.createElement("input", { type: "range", id: "delay", name: "delay", min: "10", max: "5000", value: delay, onChange: (e) => {
                     setDelay(parseInt(e.target.value));
                 } }),
             ' ',
