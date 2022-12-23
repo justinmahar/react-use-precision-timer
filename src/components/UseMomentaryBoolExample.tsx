@@ -12,8 +12,8 @@ export const UseMomentaryBoolExample = () => {
       <div>
         <input
           type="range"
-          id="points"
-          name="points"
+          id="delay"
+          name="delay"
           min="10"
           max="5000"
           value={delay}

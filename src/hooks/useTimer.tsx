@@ -353,9 +353,9 @@ export interface Timer {
   getElapsedStartedTime: () => number;
   /** Return the amount of time that has elapsed in milliseconds since starting the timer, minus the time spent paused (if any). Returns `0` if the timer is stopped. */
   getElapsedRunningTime: () => number;
-  /** Return the total amount of time elapsed in milliseconds while paused since starting the timer. Returns `0` if the timer is stopped. */
+  /** Return the cumulative total amount of time elapsed in milliseconds while paused since starting the timer. It is a total of all time spent paused. Returns `0` if the timer is stopped. */
   getTotalElapsedPausedTime: () => number;
-  /** Return the amount of time elapsed in milliseconds while paused in the current period. This will be the elapsed time since the timer last fired, or since it started if it hasn't fired yet. Returns `0` if never paused since starting or last firing. */
+  /** Return the amount of time elapsed in milliseconds while paused for the current pause period. This will be the elapsed time since the timer was last paused (not the cumulative total). Returns `0` if the timer is running. */
   getPeriodElapsedPausedTime: () => number;
   /** Return the total amount of time elapsed in milliseconds since the timer was last resumed, or since it was started if never paused. Returns `0` if the timer is stopped. */
   getElapsedResumedTime: () => number;

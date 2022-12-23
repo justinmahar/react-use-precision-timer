@@ -41,10 +41,10 @@ Calling `toggle()` will set the boolean to `true`, then back to `false` after a 
 
 The hook returns an array containing the following values:
 
-| Index | Name   | Type       | Description                                                                                                               |
-| ----- | ------ | ---------- | ------------------------------------------------------------------------------------------------------------------------- |
-| 0     | value  | `boolean`  | The current value of the boolean.                                                                                         |
-| 1     | toggle | `() => {}` | A toggle function. Calling this will toggle the boolean and start a timer that changes it back after the specified delay. |
+| Index | Name   | Type         | Description                                                                                                               |
+| ----- | ------ | ------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| 0     | value  | `boolean`    | The current value of the boolean.                                                                                         |
+| 1     | toggle | `() => void` | A toggle function. Calling this will toggle the boolean and start a timer that changes it back after the specified delay. |
 
 ## Example
 
@@ -64,8 +64,8 @@ export const UseMomentaryBoolExample = () => {
       <div>
         <input
           type="range"
-          id="points"
-          name="points"
+          id="delay"
+          name="delay"
           min="10"
           max="5000"
           value={delay}
