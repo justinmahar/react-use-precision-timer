@@ -27,22 +27,6 @@ Read the **[official documentation](https://justinmahar.github.io/react-use-prec
 
 👁️ **[Live Demo](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--page)**
 
-## Donate 
-
-If this project helped out or made your day a little brighter and you'd like to return the favor, why not buy me a coffee or become a sponsor? It'll make my day and help keep the project chugging along.
-
-Plus, I'll do a little dance in your honor. Maybe not a very good one, but a dance nonetheless.
-
-<a href="https://github.com/sponsors/justinmahar">
-  <img src="https://justinmahar.github.io/react-use-precision-timer/support/sponsor.png" alt="Sponsor via GitHub" height="35" />
-</a> <a href="https://paypal.me/thejustinmahar/5">
-  <img src="https://justinmahar.github.io/react-use-precision-timer/support/coffee-1.png" alt="Buy me a coffee" height="35" />
-</a> <a href="https://paypal.me/thejustinmahar/15">
-  <img src="https://justinmahar.github.io/react-use-precision-timer/support/coffee-3.png" alt="Buy me 3 coffees" height="35" />
-</a> <a href="https://paypal.me/thejustinmahar/25">
-  <img src="https://justinmahar.github.io/react-use-precision-timer/support/coffee-5.png" alt="Buy me 5 coffees" height="35" />
-</a>
-
 ## Overview
 
 A React timer hook that calls the provided callback at regular intervals. Can be used as a stopwatch, too.
@@ -70,6 +54,47 @@ Version 3 of this package features a complete redesign to reduce unnecessary ren
 - Internally, timer state is now tracked via React refs and timer options are memoized for you. These changes significantly improved performance.
 - The useTimer hook's signature has been changed. The callback is now provided as the second argument, and should be cached using [`React.useCallback()`](https://beta.reactjs.org/apis/react/useCallback) to optimize render performance. Refer to the [Quick Start](#quick-start) section below.
 - The [useMomentaryBool](#momentary-boolean) hook was added.
+
+[lock:donate]::🚫---------------------------------------
+
+## Donate 
+
+I hope this project makes your life a little easier! If it does and you'd like to show your appreciation, consider supporting the project with a coffee or sponsorship. 
+
+Your support helps keep the project going and will earn you some serious virtual high fives. Maybe even a virtual fist bump if you're feeling extra cool.
+
+<a href="https://github.com/sponsors/justinmahar">
+  <img src="https://justinmahar.github.io/react-kindling/support/sponsor.png" alt="Sponsor via GitHub" height="35" />
+</a> <a href="https://paypal.me/thejustinmahar/5">
+  <img src="https://justinmahar.github.io/react-kindling/support/coffee-1.png" alt="Buy me a coffee" height="35" />
+</a> <a href="https://paypal.me/thejustinmahar/15">
+  <img src="https://justinmahar.github.io/react-kindling/support/coffee-3.png" alt="Buy me 3 coffees" height="35" />
+</a> <a href="https://paypal.me/thejustinmahar/25">
+  <img src="https://justinmahar.github.io/react-kindling/support/coffee-5.png" alt="Buy me 5 coffees" height="35" />
+</a>
+
+[/lock:donate]::---------------------------------------🚫
+
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Overview](#overview)
+  - [Features include:](#features-include)
+  - [🆕 New In Version 3](#-new-in-version-3)
+- [Donate](#donate)
+- [Table of Contents](#table-of-contents)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+  - [Repeating Timer](#repeating-timer)
+  - [One-Time Delay](#one-time-delay)
+  - [Stopwatch](#stopwatch)
+  - [Momentary Boolean](#momentary-boolean)
+  - [Other Usage](#other-usage)
+- [TypeScript](#typescript)
+- [Icon Attribution](#icon-attribution)
+- [Contributing](#contributing)
+- [⭐ Found It Helpful? Star It!](#-found-it-helpful-star-it)
+- [License](#license)
 
 ## Installation
 
@@ -173,13 +198,23 @@ Calling `toggle()` will set the boolean to `true`, then back to `false` after a 
 
 See [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page) for all other hook options and timer functions.
 
+[lock:typescript]::🚫---------------------------------------
+
 ## TypeScript
 
 Type definitions have been included for [TypeScript](https://www.typescriptlang.org/) support.
 
+[/lock:typescript]::---------------------------------------🚫
+
+[lock:icon]::🚫---------------------------------------
+
 ## Icon Attribution
 
 Favicon by [Twemoji](https://github.com/twitter/twemoji).
+
+[/lock:icon]::---------------------------------------🚫
+
+[lock:contributing]::🚫---------------------------------------
 
 ## Contributing
 
@@ -188,6 +223,8 @@ Open source software is awesome and so are you. 😎
 Feel free to submit a pull request for bugs or additions, and make sure to update tests as appropriate. If you find a mistake in the docs, send a PR! Even the smallest changes help.
 
 For major changes, open an issue first to discuss what you'd like to change.
+
+[/lock:contributing]::---------------------------------------🚫
 
 ## ⭐ Found It Helpful? [Star It!](https://github.com/justinmahar/react-use-precision-timer/stargazers)
 

@@ -8,13 +8,10 @@
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "rm -rf ./dist && tsc",
-    "watch": "tsc --watch",
-    "test": "echo Tests",
-    "lint": "eslint '*/**/*.{js,jsx,ts,tsx}' --quiet --fix",
+    "test": "npm run build",
     "start": "npm run storybook",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "upgrade-storybook": "build-storybook",
     "preship": "npm run build && git add dist && git diff-index --quiet HEAD || git commit -m \"Build, version, and publish.\" && npm version patch -m \"Build, version, and publish.\"",
     "ship": "npm publish --access public",
     "postship": "git push",
@@ -62,7 +59,7 @@
     "typescript": "^4.5.5",
     "webpack": "^5.75.0"
   },
-  "coreVersion": "2.2.12",
+  "coreVersion": "2.3.4",
   "dependencies": {
     "react-sub-unsub": "^2.1.6"
   }
