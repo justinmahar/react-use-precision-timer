@@ -27,6 +27,7 @@ exports.UseTimerExample = void 0;
 require("bootstrap/dist/css/bootstrap.css");
 const React = __importStar(require("react"));
 const react_bootstrap_1 = require("react-bootstrap");
+const react_sub_unsub_1 = require("react-sub-unsub");
 const useTimer_1 = require("../hooks/useTimer");
 function UseTimerExample() {
     const [delay, setDelay] = React.useState(1000);
@@ -51,10 +52,9 @@ function UseTimerExample() {
         startImmediately,
     }, callback);
     React.useEffect(() => {
-        const timeout = setTimeout(() => setRenderTime(new Date().getTime()), frameRate);
-        return () => {
-            clearTimeout(timeout);
-        };
+        const subs = new react_sub_unsub_1.Subs();
+        subs.setTimeout(() => setRenderTime(new Date().getTime()), frameRate);
+        return subs.createCleanup();
     });
     // Automatically start or stop when the delay changes.
     React.useEffect(() => {

@@ -25,6 +25,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.useTimer = void 0;
 const React = __importStar(require("react"));
+const react_sub_unsub_1 = require("react-sub-unsub");
 /** Milliseconds representing forever in the future. */
 const never = Number.MAX_SAFE_INTEGER;
 /**
@@ -191,9 +192,8 @@ const useTimer = (options = {}, callback) => {
         }
     }, [isStarted, isPaused, getRemainingTime]);
     React.useEffect(() => {
-        let timeout;
+        const subs = new react_sub_unsub_1.Subs();
         const checkTimer = () => {
-            clearTimeout(timeout);
             // If it's a timer and it isn't paused...
             if (delay && !isPaused()) {
                 const now = Date.now();
@@ -221,7 +221,7 @@ const useTimer = (options = {}, callback) => {
                         const newFireTime = Math.max(now, nextFireTimeRef.current + delay + overdueElapsedTime);
                         nextFireTimeRef.current = newFireTime;
                         // Set a timeout to check and fire the timer when time's up
-                        timeout = setTimeout(() => {
+                        subs.setTimeout(() => {
                             // Check if the timer can fire
                             checkTimer();
                         }, Math.max(newFireTime - Date.now(), 1));
@@ -233,7 +233,7 @@ const useTimer = (options = {}, callback) => {
                 }
                 // Time is not up yet. Set a timeout to check and fire when time's up
                 else if (nextFireTimeRef.current < never) {
-                    timeout = setTimeout(() => {
+                    subs.setTimeout(() => {
                         // Check if the timer can fire
                         checkTimer();
                         // Home in on the exact time to fire.
@@ -243,9 +243,7 @@ const useTimer = (options = {}, callback) => {
         };
         // Check if the timer can fire
         checkTimer();
-        return () => {
-            clearTimeout(timeout);
-        };
+        return subs.createCleanup();
     }, [callback, delay, isPaused, renderTime, runOnce, stop]);
     // Start immediately if this is our first run.
     React.useEffect(() => {
