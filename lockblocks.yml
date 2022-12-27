@@ -4,6 +4,7 @@ replaceFiles:
   - CODE_OF_CONDUCT.md
   - lockblocks.yml
   - src/stories/core
+  - public/support
 fillFiles: []
 deleteFiles: []
 excludePaths:
@@ -21,6 +22,8 @@ updateJson:
       - key: scripts
         merge: true
       - key: devDependencies
+        merge: true
+      - key: peerDependencies
         merge: true
     deleteFields:
       - devDependencies.html-webpack-plugin
