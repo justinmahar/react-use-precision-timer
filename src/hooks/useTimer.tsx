@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Subs } from 'react-sub-unsub';
 
 export interface TimerOptions {
   /** Amount of time to wait before firing the timer, in milliseconds. Use `undefined` or `0` if you'd like the timer to behave as a stopwatch, never firing. */
@@ -200,9 +201,8 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
   }, [isStarted, isPaused, getRemainingTime]);
 
   React.useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    const subs = new Subs();
     const checkTimer = () => {
-      clearTimeout(timeout);
       // If it's a timer and it isn't paused...
       if (delay && !isPaused()) {
         const now = Date.now();
@@ -230,7 +230,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
             const newFireTime = Math.max(now, nextFireTimeRef.current + delay + overdueElapsedTime);
             nextFireTimeRef.current = newFireTime;
             // Set a timeout to check and fire the timer when time's up
-            timeout = setTimeout(() => {
+            subs.setTimeout(() => {
               // Check if the timer can fire
               checkTimer();
             }, Math.max(newFireTime - Date.now(), 1));
@@ -241,7 +241,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
         }
         // Time is not up yet. Set a timeout to check and fire when time's up
         else if (nextFireTimeRef.current < never) {
-          timeout = setTimeout(() => {
+          subs.setTimeout(() => {
             // Check if the timer can fire
             checkTimer();
             // Home in on the exact time to fire.
@@ -253,9 +253,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
     // Check if the timer can fire
     checkTimer();
 
-    return () => {
-      clearTimeout(timeout);
-    };
+    return subs.createCleanup();
   }, [callback, delay, isPaused, renderTime, runOnce, stop]);
 
   // Start immediately if this is our first run.

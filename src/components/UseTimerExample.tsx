@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import * as React from 'react';
 import { Badge, Button, Card, Form, ProgressBar, Table } from 'react-bootstrap';
+import { Subs } from 'react-sub-unsub';
 import { useTimer } from '../hooks/useTimer';
 
 export function UseTimerExample(): JSX.Element {
@@ -30,10 +31,9 @@ export function UseTimerExample(): JSX.Element {
   );
 
   React.useEffect(() => {
-    const timeout = setTimeout(() => setRenderTime(new Date().getTime()), frameRate);
-    return () => {
-      clearTimeout(timeout);
-    };
+    const subs = new Subs();
+    subs.setTimeout(() => setRenderTime(new Date().getTime()), frameRate);
+    return subs.createCleanup();
   });
 
   // Automatically start or stop when the delay changes.
