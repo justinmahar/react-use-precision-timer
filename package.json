@@ -37,8 +37,11 @@
     "delay",
     "timeout",
     "interval",
+    "setTimeout",
+    "setInterval",
     "pause",
     "resume",
+    "accurate",
     "effect"
   ],
   "peerDependencies": {
