@@ -26,7 +26,21 @@
   "bugs": {
     "url": "https://github.com/justinmahar/react-use-precision-timer/issues"
   },
-  "keywords": [],
+  "keywords": [
+    "react",
+    "timer",
+    "hook",
+    "hooks",
+    "stopwatch",
+    "stop",
+    "watch",
+    "delay",
+    "timeout",
+    "interval",
+    "pause",
+    "resume",
+    "effect"
+  ],
   "peerDependencies": {
     "react": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0",
     "react-dom": "^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^20.0.0"
