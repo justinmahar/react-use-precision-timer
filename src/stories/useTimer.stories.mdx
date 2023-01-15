@@ -34,7 +34,7 @@ timer.start();
 
 Pass the hook a [TimerOptions](#timeroptions) object to configure a timer's delay, and the callback called when it fires. By default, the timer repeats.
 
-You can also configure whether it should only run once (`runOnce`), whether it should fire immediately (`fireImmediately`), and whether it should start immediately (`startImmediately`).
+You can also configure whether it should only run once (`runOnce`), whether it should fire immediately (`fireOnStart`), and whether it should start immediately (`startImmediately`).
 
 The hook returns a [Timer](#timer) object. Using this, you can `start`, `stop`, `pause`, and `resume` a timer, and there are numerous accessors available for everything under the sun, from elapsed time to start time to whether the timer is running or paused.
 
@@ -88,7 +88,7 @@ All properties are optional.
 | ---------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | delay            | `number`  | Amount of time to wait before firing the timer, in milliseconds. Use `undefined` or `0` if you'd like the timer to behave as a stopwatch, never firing. |
 | runOnce          | `boolean` | Use `true` to only run the timer once, `false` otherwise.                                                                                               |
-| fireImmediately  | `boolean` | Use `true` if the timer should fire immediately, calling the provided callback when starting. Use `false` otherwise.                                    |
+| fireOnStart  | `boolean` | Use `true` if the timer should fire immediately, calling the provided callback when starting. Use `false` otherwise.                                    |
 | startImmediately | `boolean` | Use `true` if the timer should start immediately, `false` if you'd like to call `start()` yourself.                                                     |
 
 #### Low Delays, Expensive Callbacks, and Overdue Calls

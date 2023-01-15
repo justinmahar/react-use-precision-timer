@@ -7,7 +7,7 @@ export interface TimerOptions {
   /** Use `true` to only run the timer once, `false` otherwise.  */
   runOnce?: boolean;
   /** Use `true` if the timer should fire immediately, calling the provided callback when starting. Use `false` otherwise. */
-  fireImmediately?: boolean;
+  fireOnStart?: boolean;
   /** Use `true` if the timer should start immediately, `false` if you'd like to call `start()` yourself. */
   startImmediately?: boolean;
 }
@@ -45,7 +45,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
   // Memoized options
   const delay = React.useMemo(() => options.delay, [options.delay]);
   const runOnce = React.useMemo(() => options.runOnce, [options.runOnce]);
-  const fireImmediately = React.useMemo(() => options.fireImmediately, [options.fireImmediately]);
+  const fireOnStart = React.useMemo(() => options.fireOnStart, [options.fireOnStart]);
   const startImmediately = React.useMemo(() => options.startImmediately, [options.startImmediately]);
 
   const isStarted = React.useCallback((): boolean => {
@@ -153,7 +153,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
   const start = React.useCallback(
     (startTimeMillis = Date.now()) => {
       const newNextFireTime = delay
-        ? Math.max(startTimeMillis, fireImmediately ? startTimeMillis : startTimeMillis + delay)
+        ? Math.max(startTimeMillis, fireOnStart ? startTimeMillis : startTimeMillis + delay)
         : never;
       startTimeRef.current = startTimeMillis;
       lastFireTimeRef.current = never;
@@ -165,7 +165,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
       startedRef.current = true;
       setRenderTime(Date.now());
     },
-    [delay, fireImmediately],
+    [delay, fireOnStart],
   );
 
   const stop = React.useCallback((): void => {

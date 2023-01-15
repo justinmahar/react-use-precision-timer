@@ -11,7 +11,7 @@ export function UseTimerExample(): JSX.Element {
   const [callbackTime, setCallbackTime] = React.useState(-1);
   const [overdueCallCount, setOverdueCallCount] = React.useState(0);
   const [runOnce, setRunOnce] = React.useState(false);
-  const [fireImmediately, setFireImmediately] = React.useState(false);
+  const [fireOnStart, setFireOnStart] = React.useState(false);
   const [startImmediately, setStartImmediately] = React.useState(true);
   const [delayChanged, setDelayChanged] = React.useState(false);
   const [, setRenderTime] = React.useState(new Date().getTime());
@@ -24,7 +24,7 @@ export function UseTimerExample(): JSX.Element {
     {
       delay: isNaN(delay) ? 0 : delay,
       runOnce,
-      fireImmediately,
+      fireOnStart,
       startImmediately,
     },
     callback,
@@ -127,11 +127,11 @@ export function UseTimerExample(): JSX.Element {
                   />
                   <Form.Check
                     inline
-                    label="fireImmediately"
-                    id="fireImmediately"
-                    name="fireImmediately"
-                    checked={fireImmediately}
-                    onChange={(e) => setFireImmediately(e.target.checked)}
+                    label="fireOnStart"
+                    id="fireOnStart"
+                    name="fireOnStart"
+                    checked={fireOnStart}
+                    onChange={(e) => setFireOnStart(e.target.checked)}
                   />
                   <Form.Check
                     inline
