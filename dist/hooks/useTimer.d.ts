@@ -4,7 +4,7 @@ export interface TimerOptions {
     /** Use `true` to only run the timer once, `false` otherwise.  */
     runOnce?: boolean;
     /** Use `true` if the timer should fire immediately, calling the provided callback when starting. Use `false` otherwise. */
-    fireImmediately?: boolean;
+    fireOnStart?: boolean;
     /** Use `true` if the timer should start immediately, `false` if you'd like to call `start()` yourself. */
     startImmediately?: boolean;
 }

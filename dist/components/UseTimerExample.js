@@ -36,7 +36,7 @@ function UseTimerExample() {
     const [callbackTime, setCallbackTime] = React.useState(-1);
     const [overdueCallCount, setOverdueCallCount] = React.useState(0);
     const [runOnce, setRunOnce] = React.useState(false);
-    const [fireImmediately, setFireImmediately] = React.useState(false);
+    const [fireOnStart, setFireOnStart] = React.useState(false);
     const [startImmediately, setStartImmediately] = React.useState(true);
     const [delayChanged, setDelayChanged] = React.useState(false);
     const [, setRenderTime] = React.useState(new Date().getTime());
@@ -48,7 +48,7 @@ function UseTimerExample() {
     const timer = (0, useTimer_1.useTimer)({
         delay: isNaN(delay) ? 0 : delay,
         runOnce,
-        fireImmediately,
+        fireOnStart,
         startImmediately,
     }, callback);
     React.useEffect(() => {
@@ -111,7 +111,7 @@ function UseTimerExample() {
                                         React.createElement(react_bootstrap_1.Form.Text, { className: "text-muted" }, "(Unix timestamp in millis)")))),
                             React.createElement("div", { className: "d-flex flex-wrap justify-content-center gap-1" },
                                 React.createElement(react_bootstrap_1.Form.Check, { inline: true, label: "runOnce", id: "runOnce", name: "runOnce", checked: runOnce, onChange: (e) => setRunOnce(e.target.checked) }),
-                                React.createElement(react_bootstrap_1.Form.Check, { inline: true, label: "fireImmediately", id: "fireImmediately", name: "fireImmediately", checked: fireImmediately, onChange: (e) => setFireImmediately(e.target.checked) }),
+                                React.createElement(react_bootstrap_1.Form.Check, { inline: true, label: "fireOnStart", id: "fireOnStart", name: "fireOnStart", checked: fireOnStart, onChange: (e) => setFireOnStart(e.target.checked) }),
                                 React.createElement(react_bootstrap_1.Form.Check, { inline: true, label: "startImmediately", id: "startImmediately", name: "startImmediately", checked: startImmediately, onChange: (e) => setStartImmediately(e.target.checked) })))),
                     React.createElement(react_bootstrap_1.Card, null,
                         React.createElement(react_bootstrap_1.Card.Body, { className: "d-flex flex-column justify-content-center align-items-center" },

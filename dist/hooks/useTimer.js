@@ -57,7 +57,7 @@ const useTimer = (options = {}, callback) => {
     // Memoized options
     const delay = React.useMemo(() => options.delay, [options.delay]);
     const runOnce = React.useMemo(() => options.runOnce, [options.runOnce]);
-    const fireImmediately = React.useMemo(() => options.fireImmediately, [options.fireImmediately]);
+    const fireOnStart = React.useMemo(() => options.fireOnStart, [options.fireOnStart]);
     const startImmediately = React.useMemo(() => options.startImmediately, [options.startImmediately]);
     const isStarted = React.useCallback(() => {
         return startedRef.current;
@@ -150,7 +150,7 @@ const useTimer = (options = {}, callback) => {
     }, [isPaused, isRunning, isStarted, delay]);
     const start = React.useCallback((startTimeMillis = Date.now()) => {
         const newNextFireTime = delay
-            ? Math.max(startTimeMillis, fireImmediately ? startTimeMillis : startTimeMillis + delay)
+            ? Math.max(startTimeMillis, fireOnStart ? startTimeMillis : startTimeMillis + delay)
             : never;
         startTimeRef.current = startTimeMillis;
         lastFireTimeRef.current = never;
@@ -161,7 +161,7 @@ const useTimer = (options = {}, callback) => {
         totalElapsedPauseTimeRef.current = 0;
         startedRef.current = true;
         setRenderTime(Date.now());
-    }, [delay, fireImmediately]);
+    }, [delay, fireOnStart]);
     const stop = React.useCallback(() => {
         startTimeRef.current = never;
         lastFireTimeRef.current = never;
@@ -205,6 +205,10 @@ const useTimer = (options = {}, callback) => {
                     const overdueCalls = lastFireTimeRef.current !== never ? Math.max(0, Math.floor((now - nextFireTimeRef.current) / delay)) : 0;
                     lastFireTimeRef.current = now;
                     periodElapsedPauseTimeRef.current = 0;
+                    // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
+                    const overdueElapsedTime = overdueCalls * delay;
+                    const newFireTime = Math.max(now, nextFireTimeRef.current + delay + overdueElapsedTime);
+                    nextFireTimeRef.current = newFireTime;
                     // Call the callback
                     if (typeof callback === 'function') {
                         try {
@@ -216,10 +220,6 @@ const useTimer = (options = {}, callback) => {
                     }
                     // If it repeats
                     if (!runOnce) {
-                        // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
-                        const overdueElapsedTime = overdueCalls * delay;
-                        const newFireTime = Math.max(now, nextFireTimeRef.current + delay + overdueElapsedTime);
-                        nextFireTimeRef.current = newFireTime;
                         // Set a timeout to check and fire the timer when time's up
                         subs.setTimeout(() => {
                             // Check if the timer can fire
