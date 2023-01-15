@@ -215,6 +215,11 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
             lastFireTimeRef.current !== never ? Math.max(0, Math.floor((now - nextFireTimeRef.current) / delay)) : 0;
           lastFireTimeRef.current = now;
           periodElapsedPauseTimeRef.current = 0;
+          // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
+          const overdueElapsedTime = overdueCalls * delay;
+          const newFireTime = Math.max(now, nextFireTimeRef.current + delay + overdueElapsedTime);
+          nextFireTimeRef.current = newFireTime;
+
           // Call the callback
           if (typeof callback === 'function') {
             try {
@@ -225,10 +230,6 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
           }
           // If it repeats
           if (!runOnce) {
-            // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
-            const overdueElapsedTime = overdueCalls * delay;
-            const newFireTime = Math.max(now, nextFireTimeRef.current + delay + overdueElapsedTime);
-            nextFireTimeRef.current = newFireTime;
             // Set a timeout to check and fire the timer when time's up
             subs.setTimeout(() => {
               // Check if the timer can fire
