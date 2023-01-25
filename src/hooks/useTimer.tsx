@@ -10,6 +10,12 @@ export interface TimerOptions {
   fireOnStart?: boolean;
   /** Use `true` if the timer should start immediately, `false` if you'd like to call `start()` yourself. */
   startImmediately?: boolean;
+  /**
+   * Provide a multiplier greater than `0` to increase or decrease the speed of the timer delay.
+   * Set this to anything greater than `1` to make the timer fire faster, or less than `1` but greater
+   * than `0` to fire slower, with `1` being "normal" speed determined by `delay`. Default `1`.
+   */
+  speedMultiplier?: number;
 }
 
 /** Milliseconds representing forever in the future. */
@@ -43,7 +49,11 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
   const totalElapsedPauseTimeRef = React.useRef(0);
 
   // Memoized options
-  const delay = React.useMemo(() => options.delay, [options.delay]);
+  const delay = React.useMemo(() => {
+    const s = options.speedMultiplier ?? 1;
+    const d = options.delay ?? 0;
+    return s === 0 ? 0 : s > 0 && d > 0 ? Math.max(1, Math.round(d * (1 / s))) : d;
+  }, [options.delay, options.speedMultiplier]);
   const runOnce = React.useMemo(() => options.runOnce, [options.runOnce]);
   const fireOnStart = React.useMemo(() => options.fireOnStart, [options.fireOnStart]);
   const startImmediately = React.useMemo(() => options.startImmediately, [options.startImmediately]);
@@ -63,6 +73,10 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
   const isRunning = React.useCallback((): boolean => {
     return isStarted() && !isPaused();
   }, [isPaused, isStarted]);
+
+  const getEffectiveDelay = React.useCallback((): number => {
+    return delay;
+  }, [delay]);
 
   const getStartTime = React.useCallback((): number => {
     if (isStarted()) {
@@ -277,6 +291,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
       isStopped,
       isRunning,
       isPaused,
+      getEffectiveDelay,
       getStartTime,
       getLastFireTime,
       getNextFireTime,
@@ -290,6 +305,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
       getElapsedResumedTime,
     };
   }, [
+    getEffectiveDelay,
     getElapsedResumedTime,
     getElapsedRunningTime,
     getElapsedStartedTime,
@@ -336,6 +352,8 @@ export interface Timer {
   isRunning: () => boolean;
   /** Returns `true` if the timer is started but paused, `false` otherwise. */
   isPaused: () => boolean;
+  /** Returns the effective delay. Useful when using the `speedMultiplier` option. */
+  getEffectiveDelay: () => number;
   /** Return the time at which the timer was started, in milliseconds since the [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). Returns `-1` if the timer is stopped. */
   getStartTime: () => number;
   /** The last time the timer fired and the callback was called, in milliseconds since the [Unix epoch](https://en.wikipedia.org/wiki/Unix_time), or `-1` if it hasn't fired yet or there is no `delay`. */

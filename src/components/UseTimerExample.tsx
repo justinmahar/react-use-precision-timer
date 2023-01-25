@@ -6,6 +6,7 @@ import { useTimer } from '../hooks/useTimer';
 
 export function UseTimerExample(): JSX.Element {
   const [delay, setDelay] = React.useState(1000);
+  const [speedMultiplier, setSpeedMultiplier] = React.useState(1);
   const [startTimeEnabled, setStartTimeEnabled] = React.useState(false);
   const [startTime, setStartTime] = React.useState(Date.now());
   const [callbackTime, setCallbackTime] = React.useState(-1);
@@ -26,9 +27,12 @@ export function UseTimerExample(): JSX.Element {
       runOnce,
       fireOnStart,
       startImmediately,
+      speedMultiplier,
     },
     callback,
   );
+
+  const effectiveDelay = React.useMemo(() => timer.getEffectiveDelay(), [timer]);
 
   React.useEffect(() => {
     const subs = new Subs();
@@ -116,7 +120,7 @@ export function UseTimerExample(): JSX.Element {
                     </div>
                   </div>
                 </div>
-                <div className="d-flex flex-wrap justify-content-center gap-1">
+                <div className="d-flex flex-wrap justify-content-center gap-1 mb-3">
                   <Form.Check
                     inline
                     label="runOnce"
@@ -141,6 +145,42 @@ export function UseTimerExample(): JSX.Element {
                     checked={startImmediately}
                     onChange={(e) => setStartImmediately(e.target.checked)}
                   />
+                </div>
+                <div className="d-flex flex-column">
+                  <div>Speed multiplier:</div>
+                  <div className="d-flex align-items-center gap-2">
+                    <Form.Range
+                      min={0}
+                      max={5}
+                      step={0.25}
+                      value={isNaN(speedMultiplier) ? 1 : speedMultiplier}
+                      onChange={(e) => {
+                        const newSpeed = parseFloat(e.target.value);
+                        setSpeedMultiplier(newSpeed);
+                        setDelayChanged(true);
+                      }}
+                    />{' '}
+                    <div className="d-flex align-items-center gap-1">
+                      &times;
+                      <Form.Control
+                        type="number"
+                        min={0}
+                        step={0.25}
+                        value={isNaN(speedMultiplier) ? 1 : speedMultiplier}
+                        onChange={(e) => {
+                          const newSpeed = parseFloat(e.target.value);
+                          setSpeedMultiplier(newSpeed);
+                          setDelayChanged(true);
+                        }}
+                        style={{ width: 80 }}
+                      />
+                    </div>
+                  </div>
+                  {speedMultiplier !== 1 && (
+                    <div>
+                      <Form.Text className="text-muted">Effective delay: {effectiveDelay} ms</Form.Text>
+                    </div>
+                  )}
                 </div>
               </Card.Body>
             </Card>
@@ -218,16 +258,18 @@ export function UseTimerExample(): JSX.Element {
                             transition: none !important;
                           }`}
                       </style>
-                      {delay > 0 && (
+                      {effectiveDelay > 0 && (
                         <ProgressBar
                           variant="primary"
-                          now={timer.isStopped() ? 0 : delay - timer.getRemainingTime()}
-                          max={delay}
-                          label={`${delay - timer.getRemainingTime()} ms`}
+                          now={timer.isStopped() ? 0 : effectiveDelay - timer.getRemainingTime()}
+                          max={effectiveDelay}
+                          label={`${effectiveDelay - timer.getRemainingTime()} ms`}
                           style={{ transition: 'none' }}
                         />
                       )}
-                      {(isNaN(delay) || delay === 0) && <Badge className="fw-bold m-0">Stopwatch</Badge>}
+                      {(isNaN(effectiveDelay) || effectiveDelay === 0) && (
+                        <Badge className="fw-bold m-0">Stopwatch</Badge>
+                      )}
                     </div>
                     <div>
                       <Badge bg="warning" className="text-black">
@@ -265,6 +307,14 @@ export function UseTimerExample(): JSX.Element {
                   <td className="text-break">
                     <Badge bg={timer.isRunning() ? 'success' : 'danger'} className="font-monospace">
                       {timer.isRunning() + ''}
+                    </Badge>
+                  </td>
+                </tr>
+                <tr>
+                  <td className="text-break">getEffectiveDelay():</td>
+                  <td className="text-break">
+                    <Badge pill bg="primary">
+                      {timer.getEffectiveDelay()} ms
                     </Badge>
                   </td>
                 </tr>
