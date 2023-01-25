@@ -55,7 +55,12 @@ const useTimer = (options = {}, callback) => {
     const periodElapsedPauseTimeRef = React.useRef(0);
     const totalElapsedPauseTimeRef = React.useRef(0);
     // Memoized options
-    const delay = React.useMemo(() => options.delay, [options.delay]);
+    const delay = React.useMemo(() => {
+        var _a, _b;
+        const s = (_a = options.speedMultiplier) !== null && _a !== void 0 ? _a : 1;
+        const d = (_b = options.delay) !== null && _b !== void 0 ? _b : 0;
+        return s === 0 ? 0 : s > 0 && d > 0 ? Math.max(1, Math.round(d * (1 / s))) : d;
+    }, [options.delay, options.speedMultiplier]);
     const runOnce = React.useMemo(() => options.runOnce, [options.runOnce]);
     const fireOnStart = React.useMemo(() => options.fireOnStart, [options.fireOnStart]);
     const startImmediately = React.useMemo(() => options.startImmediately, [options.startImmediately]);
@@ -71,6 +76,9 @@ const useTimer = (options = {}, callback) => {
     const isRunning = React.useCallback(() => {
         return isStarted() && !isPaused();
     }, [isPaused, isStarted]);
+    const getEffectiveDelay = React.useCallback(() => {
+        return delay;
+    }, [delay]);
     const getStartTime = React.useCallback(() => {
         if (isStarted()) {
             return startTimeRef.current;
@@ -264,6 +272,7 @@ const useTimer = (options = {}, callback) => {
             isStopped,
             isRunning,
             isPaused,
+            getEffectiveDelay,
             getStartTime,
             getLastFireTime,
             getNextFireTime,
@@ -277,6 +286,7 @@ const useTimer = (options = {}, callback) => {
             getElapsedResumedTime,
         };
     }, [
+        getEffectiveDelay,
         getElapsedResumedTime,
         getElapsedRunningTime,
         getElapsedStartedTime,

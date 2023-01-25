@@ -7,6 +7,12 @@ export interface TimerOptions {
     fireOnStart?: boolean;
     /** Use `true` if the timer should start immediately, `false` if you'd like to call `start()` yourself. */
     startImmediately?: boolean;
+    /**
+     * Provide a multiplier greater than `0` to increase or decrease the speed of the timer delay.
+     * Set this to anything greater than `1` to make the timer fire faster, or less than `1` but greater
+     * than `0` to fire slower, with `1` being "normal" speed determined by `delay`. Default `1`.
+     */
+    speedMultiplier?: number;
 }
 /**
  * See documentation: [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page)
@@ -48,6 +54,8 @@ export interface Timer {
     isRunning: () => boolean;
     /** Returns `true` if the timer is started but paused, `false` otherwise. */
     isPaused: () => boolean;
+    /** Returns the effective delay. Useful when using the `speedMultiplier` option. */
+    getEffectiveDelay: () => number;
     /** Return the time at which the timer was started, in milliseconds since the [Unix epoch](https://en.wikipedia.org/wiki/Unix_time). Returns `-1` if the timer is stopped. */
     getStartTime: () => number;
     /** The last time the timer fired and the callback was called, in milliseconds since the [Unix epoch](https://en.wikipedia.org/wiki/Unix_time), or `-1` if it hasn't fired yet or there is no `delay`. */

@@ -31,6 +31,7 @@ const react_sub_unsub_1 = require("react-sub-unsub");
 const useTimer_1 = require("../hooks/useTimer");
 function UseTimerExample() {
     const [delay, setDelay] = React.useState(1000);
+    const [speedMultiplier, setSpeedMultiplier] = React.useState(1);
     const [startTimeEnabled, setStartTimeEnabled] = React.useState(false);
     const [startTime, setStartTime] = React.useState(Date.now());
     const [callbackTime, setCallbackTime] = React.useState(-1);
@@ -50,7 +51,9 @@ function UseTimerExample() {
         runOnce,
         fireOnStart,
         startImmediately,
+        speedMultiplier,
     }, callback);
+    const effectiveDelay = React.useMemo(() => timer.getEffectiveDelay(), [timer]);
     React.useEffect(() => {
         const subs = new react_sub_unsub_1.Subs();
         subs.setTimeout(() => setRenderTime(new Date().getTime()), frameRate);
@@ -109,10 +112,31 @@ function UseTimerExample() {
                                         }, style: { width: 180 } }),
                                     React.createElement("div", null,
                                         React.createElement(react_bootstrap_1.Form.Text, { className: "text-muted" }, "(Unix timestamp in millis)")))),
-                            React.createElement("div", { className: "d-flex flex-wrap justify-content-center gap-1" },
+                            React.createElement("div", { className: "d-flex flex-wrap justify-content-center gap-1 mb-3" },
                                 React.createElement(react_bootstrap_1.Form.Check, { inline: true, label: "runOnce", id: "runOnce", name: "runOnce", checked: runOnce, onChange: (e) => setRunOnce(e.target.checked) }),
                                 React.createElement(react_bootstrap_1.Form.Check, { inline: true, label: "fireOnStart", id: "fireOnStart", name: "fireOnStart", checked: fireOnStart, onChange: (e) => setFireOnStart(e.target.checked) }),
-                                React.createElement(react_bootstrap_1.Form.Check, { inline: true, label: "startImmediately", id: "startImmediately", name: "startImmediately", checked: startImmediately, onChange: (e) => setStartImmediately(e.target.checked) })))),
+                                React.createElement(react_bootstrap_1.Form.Check, { inline: true, label: "startImmediately", id: "startImmediately", name: "startImmediately", checked: startImmediately, onChange: (e) => setStartImmediately(e.target.checked) })),
+                            React.createElement("div", { className: "d-flex flex-column" },
+                                React.createElement("div", null, "Speed multiplier:"),
+                                React.createElement("div", { className: "d-flex align-items-center gap-2" },
+                                    React.createElement(react_bootstrap_1.Form.Range, { min: 0, max: 5, step: 0.25, value: isNaN(speedMultiplier) ? 1 : speedMultiplier, onChange: (e) => {
+                                            const newSpeed = parseFloat(e.target.value);
+                                            setSpeedMultiplier(newSpeed);
+                                            setDelayChanged(true);
+                                        } }),
+                                    ' ',
+                                    React.createElement("div", { className: "d-flex align-items-center gap-1" },
+                                        "\u00D7",
+                                        React.createElement(react_bootstrap_1.Form.Control, { type: "number", min: 0, step: 0.25, value: isNaN(speedMultiplier) ? 1 : speedMultiplier, onChange: (e) => {
+                                                const newSpeed = parseFloat(e.target.value);
+                                                setSpeedMultiplier(newSpeed);
+                                                setDelayChanged(true);
+                                            }, style: { width: 80 } }))),
+                                speedMultiplier !== 1 && (React.createElement("div", null,
+                                    React.createElement(react_bootstrap_1.Form.Text, { className: "text-muted" },
+                                        "Effective delay: ",
+                                        effectiveDelay,
+                                        " ms")))))),
                     React.createElement(react_bootstrap_1.Card, null,
                         React.createElement(react_bootstrap_1.Card.Body, { className: "d-flex flex-column justify-content-center align-items-center" },
                             React.createElement("div", { className: "text-center" },
@@ -153,8 +177,8 @@ function UseTimerExample() {
                             -o-transition: none !important;
                             transition: none !important;
                           }`),
-                                        delay > 0 && (React.createElement(react_bootstrap_1.ProgressBar, { variant: "primary", now: timer.isStopped() ? 0 : delay - timer.getRemainingTime(), max: delay, label: `${delay - timer.getRemainingTime()} ms`, style: { transition: 'none' } })),
-                                        (isNaN(delay) || delay === 0) && React.createElement(react_bootstrap_1.Badge, { className: "fw-bold m-0" }, "Stopwatch")),
+                                        effectiveDelay > 0 && (React.createElement(react_bootstrap_1.ProgressBar, { variant: "primary", now: timer.isStopped() ? 0 : effectiveDelay - timer.getRemainingTime(), max: effectiveDelay, label: `${effectiveDelay - timer.getRemainingTime()} ms`, style: { transition: 'none' } })),
+                                        (isNaN(effectiveDelay) || effectiveDelay === 0) && (React.createElement(react_bootstrap_1.Badge, { className: "fw-bold m-0" }, "Stopwatch"))),
                                     React.createElement("div", null,
                                         React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, callbackTime)))),
                             React.createElement("tr", null,
@@ -173,6 +197,12 @@ function UseTimerExample() {
                                 React.createElement("td", { className: "text-break" }, "isRunning():"),
                                 React.createElement("td", { className: "text-break" },
                                     React.createElement(react_bootstrap_1.Badge, { bg: timer.isRunning() ? 'success' : 'danger', className: "font-monospace" }, timer.isRunning() + ''))),
+                            React.createElement("tr", null,
+                                React.createElement("td", { className: "text-break" }, "getEffectiveDelay():"),
+                                React.createElement("td", { className: "text-break" },
+                                    React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
+                                        timer.getEffectiveDelay(),
+                                        " ms"))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getStartTime():"),
                                 React.createElement("td", { className: "text-break" },
