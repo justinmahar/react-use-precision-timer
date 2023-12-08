@@ -14,6 +14,9 @@ var __exportStar = (this && this.__exportStar) || function(m, exports) {
     for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+// Components
+__exportStar(require("./components/TimerRenderer"), exports);
+// Hooks
 __exportStar(require("./hooks/useDelay"), exports);
 __exportStar(require("./hooks/useStopwatch"), exports);
 __exportStar(require("./hooks/useTimer"), exports);

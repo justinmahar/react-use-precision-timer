@@ -41,7 +41,7 @@ function UseTimerExample() {
     const [startImmediately, setStartImmediately] = React.useState(true);
     const [delayChanged, setDelayChanged] = React.useState(false);
     const [, setRenderTime] = React.useState(new Date().getTime());
-    const [frameRate, setFrameRate] = React.useState(10);
+    const [renderRate, setRenderRate] = React.useState(10);
     const callback = React.useCallback((overdueCount) => {
         setCallbackTime(new Date().getTime());
         setOverdueCallCount(overdueCount);
@@ -56,7 +56,7 @@ function UseTimerExample() {
     const effectiveDelay = React.useMemo(() => timer.getEffectiveDelay(), [timer]);
     React.useEffect(() => {
         const subs = new react_sub_unsub_1.Subs();
-        subs.setTimeout(() => setRenderTime(new Date().getTime()), frameRate);
+        subs.setTimeout(() => setRenderTime(new Date().getTime()), renderRate);
         return subs.createCleanup();
     });
     // Automatically start or stop when the delay changes.
@@ -142,11 +142,11 @@ function UseTimerExample() {
                             React.createElement("div", { className: "text-center" },
                                 "Render every:",
                                 React.createElement("br", null),
-                                frameRate,
+                                renderRate,
                                 " ms"),
                             React.createElement("div", null,
-                                React.createElement(react_bootstrap_1.Form.Range, { min: "1", max: "5000", value: frameRate, onChange: (e) => {
-                                        setFrameRate(parseInt(e.target.value));
+                                React.createElement(react_bootstrap_1.Form.Range, { min: "1", max: "5000", value: renderRate, onChange: (e) => {
+                                        setRenderRate(parseInt(e.target.value));
                                     } }))))),
                 React.createElement(react_bootstrap_1.Card, { style: { minWidth: 300, maxWidth: 600 } },
                     React.createElement(react_bootstrap_1.Card.Body, null,
