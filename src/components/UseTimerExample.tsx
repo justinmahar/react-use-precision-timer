@@ -16,7 +16,7 @@ export function UseTimerExample(): JSX.Element {
   const [startImmediately, setStartImmediately] = React.useState(true);
   const [delayChanged, setDelayChanged] = React.useState(false);
   const [, setRenderTime] = React.useState(new Date().getTime());
-  const [frameRate, setFrameRate] = React.useState(10);
+  const [renderRate, setRenderRate] = React.useState(10);
   const callback = React.useCallback((overdueCount: number) => {
     setCallbackTime(new Date().getTime());
     setOverdueCallCount(overdueCount);
@@ -36,7 +36,7 @@ export function UseTimerExample(): JSX.Element {
 
   React.useEffect(() => {
     const subs = new Subs();
-    subs.setTimeout(() => setRenderTime(new Date().getTime()), frameRate);
+    subs.setTimeout(() => setRenderTime(new Date().getTime()), renderRate);
     return subs.createCleanup();
   });
 
@@ -189,15 +189,15 @@ export function UseTimerExample(): JSX.Element {
                 <div className="text-center">
                   Render every:
                   <br />
-                  {frameRate} ms
+                  {renderRate} ms
                 </div>
                 <div>
                   <Form.Range
                     min="1"
                     max="5000"
-                    value={frameRate}
+                    value={renderRate}
                     onChange={(e) => {
-                      setFrameRate(parseInt(e.target.value));
+                      setRenderRate(parseInt(e.target.value));
                     }}
                   />
                 </div>

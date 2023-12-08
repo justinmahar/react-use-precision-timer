@@ -51,9 +51,7 @@ Version 3 of this package features a complete redesign to reduce unnecessary ren
 
 ## Donate 
 
-I hope this project makes your life a little easier! If it does and you'd like to show your appreciation, consider supporting the project with a coffee or sponsorship. 
-
-Your support helps keep the project going and will earn you some serious virtual high fives. Maybe even a virtual fist bump if you're feeling extra cool.
+If this project helped you, please consider buying me a coffee. Your support is much appreciated!
 
 <a href="https://github.com/sponsors/justinmahar">
   <img src="https://justinmahar.github.io/react-kindling/support/sponsor.png" alt="Sponsor via GitHub" height="35" />
@@ -82,6 +80,7 @@ Your support helps keep the project going and will earn you some serious virtual
   - [Stopwatch](#stopwatch)
   - [Momentary Boolean](#momentary-boolean)
   - [Other Usage](#other-usage)
+- [Timer Renderer](#timer-renderer)
 - [TypeScript](#typescript)
 - [Icon Attribution](#icon-attribution)
 - [Contributing](#contributing)
@@ -191,6 +190,34 @@ Calling `toggle()` will set the boolean to `true`, then back to `false` after a 
 See [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page) for all other hook options and timer functions.
 
 [lock:typescript]::🚫---------------------------------------
+
+## Timer Renderer
+
+This timer hook operates entirely on Unix timestamps and timeouts. If it's being used as a stopwatch, no timeouts are used at all.
+
+This means there isn't a separate render timer running to render the timer's state to the page. So it may appear as if your timer or stopwatch isn't running, but that's not the case—you're just not telling React to render it to the page!
+
+To solve this, you can render a timer or stopwatch to the page as it runs with the `TimerRenderer` component. Use it like so:
+
+```jsx
+import { TimerRenderer } from './TimerRenderer';
+```
+
+```jsx
+const myTimer = useTimer(...); // Or useStopwatch()
+```
+
+```jsx
+<TimerRenderer
+  timer={myTimer}
+  render={(t) => <>{t.getElapsedRunningTime()}</>}
+  renderRate={10} // In milliseconds
+/>
+```
+
+Provide a `render` prop function that takes one argument, the timer. The render function should return your rendered timer or stopwatch.
+
+The `renderRate` prop determines how frequently the component renders, in milliseconds. If no `renderRate` is provided, the default is `10` milliseconds.
 
 ## TypeScript
 
