@@ -27,8 +27,8 @@ exports.UseTimerExample = void 0;
 require("bootstrap/dist/css/bootstrap.css");
 const React = __importStar(require("react"));
 const react_bootstrap_1 = require("react-bootstrap");
-const react_sub_unsub_1 = require("react-sub-unsub");
 const useTimer_1 = require("../hooks/useTimer");
+const TimerRenderer_1 = require("./TimerRenderer");
 function UseTimerExample() {
     const [delay, setDelay] = React.useState(1000);
     const [speedMultiplier, setSpeedMultiplier] = React.useState(1);
@@ -40,7 +40,6 @@ function UseTimerExample() {
     const [fireOnStart, setFireOnStart] = React.useState(false);
     const [startImmediately, setStartImmediately] = React.useState(true);
     const [delayChanged, setDelayChanged] = React.useState(false);
-    const [, setRenderTime] = React.useState(new Date().getTime());
     const [renderRate, setRenderRate] = React.useState(10);
     const callback = React.useCallback((overdueCount) => {
         setCallbackTime(new Date().getTime());
@@ -54,11 +53,6 @@ function UseTimerExample() {
         speedMultiplier,
     }, callback);
     const effectiveDelay = React.useMemo(() => timer.getEffectiveDelay(), [timer]);
-    React.useEffect(() => {
-        const subs = new react_sub_unsub_1.Subs();
-        subs.setTimeout(() => setRenderTime(new Date().getTime()), renderRate);
-        return subs.createCleanup();
-    });
     // Automatically start or stop when the delay changes.
     React.useEffect(() => {
         if (delayChanged) {
@@ -169,96 +163,96 @@ function UseTimerExample() {
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "Callback time:"),
                                 React.createElement("td", { style: { minWidth: 200 } },
-                                    React.createElement("div", { className: "mb-2" },
-                                        React.createElement("style", null, `.progress-bar {
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement("div", { className: "mb-2" },
+                                            React.createElement("style", null, `.progress-bar {
                             -webkit-transition: none !important;
                             -moz-transition: none !important;
                             -ms-transition: none !important;
                             -o-transition: none !important;
                             transition: none !important;
                           }`),
-                                        effectiveDelay > 0 && (React.createElement(react_bootstrap_1.ProgressBar, { variant: "primary", now: timer.isStopped() ? 0 : effectiveDelay - timer.getRemainingTime(), max: effectiveDelay, label: `${effectiveDelay - timer.getRemainingTime()} ms`, style: { transition: 'none' } })),
-                                        (isNaN(effectiveDelay) || effectiveDelay === 0) && (React.createElement(react_bootstrap_1.Badge, { className: "fw-bold m-0" }, "Stopwatch"))),
+                                            effectiveDelay > 0 && (React.createElement(react_bootstrap_1.ProgressBar, { variant: "primary", now: t.isStopped() ? 0 : effectiveDelay - t.getRemainingTime(), max: effectiveDelay, label: `${effectiveDelay - t.getRemainingTime()} ms`, style: { transition: 'none' } })),
+                                            (isNaN(effectiveDelay) || effectiveDelay === 0) && (React.createElement(react_bootstrap_1.Badge, { className: "fw-bold m-0" }, "Stopwatch")))) }),
                                     React.createElement("div", null,
                                         React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, callbackTime)))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "isStarted():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { bg: timer.isStarted() ? 'success' : 'danger', className: "font-monospace" }, timer.isStarted() + ''))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { bg: t.isStarted() ? 'success' : 'danger', className: "font-monospace" }, t.isStarted() + '')) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "isStopped():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { bg: timer.isStopped() ? 'success' : 'danger', className: "font-monospace" }, timer.isStopped() + ''))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { bg: t.isStopped() ? 'success' : 'danger', className: "font-monospace" }, t.isStopped() + '')) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "isPaused():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { bg: timer.isPaused() ? 'success' : 'danger', className: "font-monospace" }, timer.isPaused() + ''))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { bg: t.isPaused() ? 'success' : 'danger', className: "font-monospace" }, t.isPaused() + '')) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "isRunning():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { bg: timer.isRunning() ? 'success' : 'danger', className: "font-monospace" }, timer.isRunning() + ''))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { bg: t.isRunning() ? 'success' : 'danger', className: "font-monospace" }, t.isRunning() + '')) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getEffectiveDelay():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
-                                        timer.getEffectiveDelay(),
-                                        " ms"))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
+                                            t.getEffectiveDelay(),
+                                            " ms")) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getStartTime():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, timer.getStartTime()))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, t.getStartTime())) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getLastFireTime():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, timer.getLastFireTime()))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, t.getLastFireTime())) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getNextFireTime():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, timer.getNextFireTime()))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, t.getNextFireTime())) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getPauseTime():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, timer.getPauseTime()))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, t.getPauseTime())) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getResumeTime():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, timer.getResumeTime()))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, t.getResumeTime())) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getRemainingTime():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
-                                        timer.getRemainingTime(),
-                                        " ms"))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
+                                            t.getRemainingTime(),
+                                            " ms")) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getElapsedStartedTime():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
-                                        timer.getElapsedStartedTime(),
-                                        " ms"))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
+                                            t.getElapsedStartedTime(),
+                                            " ms")) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getElapsedRunningTime():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
-                                        timer.getElapsedRunningTime(),
-                                        " ms"))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
+                                            t.getElapsedRunningTime(),
+                                            " ms")) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getTotalElapsedPausedTime():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
-                                        timer.getTotalElapsedPausedTime(),
-                                        " ms"))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
+                                            t.getTotalElapsedPausedTime(),
+                                            " ms")) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getPeriodElapsedPausedTime():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
-                                        timer.getPeriodElapsedPausedTime(),
-                                        " ms"))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
+                                            t.getPeriodElapsedPausedTime(),
+                                            " ms")) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "getElapsedResumedTime():"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
-                                        timer.getElapsedResumedTime(),
-                                        " ms"))),
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { pill: true, bg: "primary" },
+                                            t.getElapsedResumedTime(),
+                                            " ms")) }))),
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "Overdue call count (for delays under 10ms):"),
                                 React.createElement("td", { className: "text-break" },
@@ -266,6 +260,6 @@ function UseTimerExample() {
                             React.createElement("tr", null,
                                 React.createElement("td", { className: "text-break" }, "Render time:"),
                                 React.createElement("td", { className: "text-break" },
-                                    React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, Date.now()))))))))));
+                                    React.createElement(TimerRenderer_1.TimerRenderer, { timer: timer, renderRate: renderRate, render: (t) => (React.createElement(react_bootstrap_1.Badge, { bg: "warning", className: "text-black" }, Date.now())) }))))))))));
 }
 exports.UseTimerExample = UseTimerExample;
