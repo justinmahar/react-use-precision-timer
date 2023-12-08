@@ -1,8 +1,8 @@
 import 'bootstrap/dist/css/bootstrap.css';
 import * as React from 'react';
 import { Badge, Button, Card, Form, ProgressBar, Table } from 'react-bootstrap';
-import { Subs } from 'react-sub-unsub';
 import { useTimer } from '../hooks/useTimer';
+import { TimerRenderer } from './TimerRenderer';
 
 export function UseTimerExample(): JSX.Element {
   const [delay, setDelay] = React.useState(1000);
@@ -15,7 +15,6 @@ export function UseTimerExample(): JSX.Element {
   const [fireOnStart, setFireOnStart] = React.useState(false);
   const [startImmediately, setStartImmediately] = React.useState(true);
   const [delayChanged, setDelayChanged] = React.useState(false);
-  const [, setRenderTime] = React.useState(new Date().getTime());
   const [renderRate, setRenderRate] = React.useState(10);
   const callback = React.useCallback((overdueCount: number) => {
     setCallbackTime(new Date().getTime());
@@ -33,12 +32,6 @@ export function UseTimerExample(): JSX.Element {
   );
 
   const effectiveDelay = React.useMemo(() => timer.getEffectiveDelay(), [timer]);
-
-  React.useEffect(() => {
-    const subs = new Subs();
-    subs.setTimeout(() => setRenderTime(new Date().getTime()), renderRate);
-    return subs.createCleanup();
-  });
 
   // Automatically start or stop when the delay changes.
   React.useEffect(() => {
@@ -248,29 +241,35 @@ export function UseTimerExample(): JSX.Element {
                 <tr>
                   <td className="text-break">Callback time:</td>
                   <td style={{ minWidth: 200 }}>
-                    <div className="mb-2">
-                      <style>
-                        {`.progress-bar {
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <div className="mb-2">
+                          <style>
+                            {`.progress-bar {
                             -webkit-transition: none !important;
                             -moz-transition: none !important;
                             -ms-transition: none !important;
                             -o-transition: none !important;
                             transition: none !important;
                           }`}
-                      </style>
-                      {effectiveDelay > 0 && (
-                        <ProgressBar
-                          variant="primary"
-                          now={timer.isStopped() ? 0 : effectiveDelay - timer.getRemainingTime()}
-                          max={effectiveDelay}
-                          label={`${effectiveDelay - timer.getRemainingTime()} ms`}
-                          style={{ transition: 'none' }}
-                        />
+                          </style>
+                          {effectiveDelay > 0 && (
+                            <ProgressBar
+                              variant="primary"
+                              now={t.isStopped() ? 0 : effectiveDelay - t.getRemainingTime()}
+                              max={effectiveDelay}
+                              label={`${effectiveDelay - t.getRemainingTime()} ms`}
+                              style={{ transition: 'none' }}
+                            />
+                          )}
+                          {(isNaN(effectiveDelay) || effectiveDelay === 0) && (
+                            <Badge className="fw-bold m-0">Stopwatch</Badge>
+                          )}
+                        </div>
                       )}
-                      {(isNaN(effectiveDelay) || effectiveDelay === 0) && (
-                        <Badge className="fw-bold m-0">Stopwatch</Badge>
-                      )}
-                    </div>
+                    />
                     <div>
                       <Badge bg="warning" className="text-black">
                         {callbackTime}
@@ -281,129 +280,225 @@ export function UseTimerExample(): JSX.Element {
                 <tr>
                   <td className="text-break">isStarted():</td>
                   <td className="text-break">
-                    <Badge bg={timer.isStarted() ? 'success' : 'danger'} className="font-monospace">
-                      {timer.isStarted() + ''}
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge bg={t.isStarted() ? 'success' : 'danger'} className="font-monospace">
+                          {t.isStarted() + ''}
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">isStopped():</td>
                   <td className="text-break">
-                    <Badge bg={timer.isStopped() ? 'success' : 'danger'} className="font-monospace">
-                      {timer.isStopped() + ''}
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge bg={t.isStopped() ? 'success' : 'danger'} className="font-monospace">
+                          {t.isStopped() + ''}
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">isPaused():</td>
                   <td className="text-break">
-                    <Badge bg={timer.isPaused() ? 'success' : 'danger'} className="font-monospace">
-                      {timer.isPaused() + ''}
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge bg={t.isPaused() ? 'success' : 'danger'} className="font-monospace">
+                          {t.isPaused() + ''}
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">isRunning():</td>
                   <td className="text-break">
-                    <Badge bg={timer.isRunning() ? 'success' : 'danger'} className="font-monospace">
-                      {timer.isRunning() + ''}
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge bg={t.isRunning() ? 'success' : 'danger'} className="font-monospace">
+                          {t.isRunning() + ''}
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">getEffectiveDelay():</td>
                   <td className="text-break">
-                    <Badge pill bg="primary">
-                      {timer.getEffectiveDelay()} ms
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge pill bg="primary">
+                          {t.getEffectiveDelay()} ms
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">getStartTime():</td>
                   <td className="text-break">
-                    <Badge bg="warning" className="text-black">
-                      {timer.getStartTime()}
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge bg="warning" className="text-black">
+                          {t.getStartTime()}
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">getLastFireTime():</td>
                   <td className="text-break">
-                    <Badge bg="warning" className="text-black">
-                      {timer.getLastFireTime()}
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge bg="warning" className="text-black">
+                          {t.getLastFireTime()}
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">getNextFireTime():</td>
                   <td className="text-break">
-                    <Badge bg="warning" className="text-black">
-                      {timer.getNextFireTime()}
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge bg="warning" className="text-black">
+                          {t.getNextFireTime()}
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">getPauseTime():</td>
                   <td className="text-break">
-                    <Badge bg="warning" className="text-black">
-                      {timer.getPauseTime()}
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge bg="warning" className="text-black">
+                          {t.getPauseTime()}
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">getResumeTime():</td>
                   <td className="text-break">
-                    <Badge bg="warning" className="text-black">
-                      {timer.getResumeTime()}
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge bg="warning" className="text-black">
+                          {t.getResumeTime()}
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">getRemainingTime():</td>
                   <td className="text-break">
-                    <Badge pill bg="primary">
-                      {timer.getRemainingTime()} ms
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge pill bg="primary">
+                          {t.getRemainingTime()} ms
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">getElapsedStartedTime():</td>
                   <td className="text-break">
-                    <Badge pill bg="primary">
-                      {timer.getElapsedStartedTime()} ms
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge pill bg="primary">
+                          {t.getElapsedStartedTime()} ms
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">getElapsedRunningTime():</td>
                   <td className="text-break">
-                    <Badge pill bg="primary">
-                      {timer.getElapsedRunningTime()} ms
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge pill bg="primary">
+                          {t.getElapsedRunningTime()} ms
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">getTotalElapsedPausedTime():</td>
                   <td className="text-break">
-                    <Badge pill bg="primary">
-                      {timer.getTotalElapsedPausedTime()} ms
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge pill bg="primary">
+                          {t.getTotalElapsedPausedTime()} ms
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">getPeriodElapsedPausedTime():</td>
                   <td className="text-break">
-                    <Badge pill bg="primary">
-                      {timer.getPeriodElapsedPausedTime()} ms
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge pill bg="primary">
+                          {t.getPeriodElapsedPausedTime()} ms
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
                   <td className="text-break">getElapsedResumedTime():</td>
                   <td className="text-break">
-                    <Badge pill bg="primary">
-                      {timer.getElapsedResumedTime()} ms
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge pill bg="primary">
+                          {t.getElapsedResumedTime()} ms
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
                 <tr>
@@ -417,9 +512,15 @@ export function UseTimerExample(): JSX.Element {
                 <tr>
                   <td className="text-break">Render time:</td>
                   <td className="text-break">
-                    <Badge bg="warning" className="text-black">
-                      {Date.now()}
-                    </Badge>
+                    <TimerRenderer
+                      timer={timer}
+                      renderRate={renderRate}
+                      render={(t) => (
+                        <Badge bg="warning" className="text-black">
+                          {Date.now()}
+                        </Badge>
+                      )}
+                    />
                   </td>
                 </tr>
               </tbody>

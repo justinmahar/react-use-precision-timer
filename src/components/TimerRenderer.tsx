@@ -1,5 +1,6 @@
 import React from 'react';
 import { Timer, useTimer } from '../hooks/useTimer';
+import { Subs } from 'react-sub-unsub';
 
 export interface TimerRendererProps {
   /** The timer or stopwatch to render. */
@@ -22,6 +23,10 @@ export const TimerRenderer = ({
   renderRate = 10,
 }: TimerRendererProps) => {
   const [, setRenderTime] = React.useState(Date.now());
-  useTimer({ delay: Math.max(0, renderRate) }, () => setRenderTime(Date.now()));
+  React.useEffect(() => {
+    const subs = new Subs();
+    subs.setInterval(() => setRenderTime(new Date().getTime()), renderRate);
+    return subs.createCleanup();
+  }, [renderRate]);
   return render(timer);
 };
