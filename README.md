@@ -200,7 +200,7 @@ This means there isn't a separate render timer running to render the timer's sta
 To solve this, you can render a timer or stopwatch to the page as it runs with the `TimerRenderer` component. Use it like so:
 
 ```jsx
-import { TimerRenderer } from './TimerRenderer';
+import { TimerRenderer } from 'react-use-precision-timer';
 ```
 
 ```jsx
