@@ -1,6 +1,4 @@
-import classNames from 'classnames';
 import React from 'react';
-import { DivProps } from 'react-html-props';
 import { Timer, useTimer } from '../hooks/useTimer';
 
 export interface TimerRendererProps {
