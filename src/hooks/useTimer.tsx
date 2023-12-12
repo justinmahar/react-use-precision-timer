@@ -403,7 +403,7 @@ export interface Timer {
    *
    * @param startTime Optional. The Unix epoch time in milliseconds at which to start the timer. Defaults to the current time in millis.
    */
-  start: (startTime?: number) => void;
+  start: (startTime?: number, delayIndex?: number) => void;
   /** Stop the timer. */
   stop: () => void;
   /** Pause the timer. */
