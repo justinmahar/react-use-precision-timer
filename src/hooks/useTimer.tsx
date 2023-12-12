@@ -3,7 +3,7 @@ import { Subs } from 'react-sub-unsub';
 
 export interface TimerOptions {
   /** Amount of time to wait before firing the timer, in milliseconds. Use `undefined` or `0` if you'd like the timer to behave as a stopwatch, never firing. */
-  delay?: number;
+  delay?: number | number[];
   /** Use `true` to only run the timer once, `false` otherwise.  */
   runOnce?: boolean;
   /** Use `true` if the timer should fire immediately, calling the provided callback when starting. Use `false` otherwise. */
@@ -47,11 +47,13 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
   const resumeTimeRef = React.useRef(never);
   const periodElapsedPauseTimeRef = React.useRef(0);
   const totalElapsedPauseTimeRef = React.useRef(0);
+  const delayIndexRef = React.useRef(0);
 
+  console.log(options.delay);
   // Memoized options
   const delay = React.useMemo(() => {
     const s = options.speedMultiplier ?? 1;
-    const d = options.delay ?? 0;
+    const d = options.delay ? (Array.isArray(options.delay) ? options.delay[delayIndexRef.current] : options.delay ) : 0;
     return s === 0 ? 0 : s > 0 && d > 0 ? Math.max(1, Math.round(d * (1 / s))) : d;
   }, [options.delay, options.speedMultiplier]);
   const runOnce = React.useMemo(() => options.runOnce, [options.runOnce]);
@@ -224,35 +226,84 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
         if (now >= nextFireTimeRef.current) {
           // Check if we're overdue on any events being fired (super low delay or expensive callback).
           // To do this, we divide the time elapsed beyond the next expected fire time by the delay,
-          // and floor the result. In other words, find how overdue we are, then divide by the delay.
-          const overdueCalls =
-            lastFireTimeRef.current !== never ? Math.max(0, Math.floor((now - nextFireTimeRef.current) / delay)) : 0;
+          // and floor the result. In other words, find how overdue we are, then divide by the delay.console.log("now: " + now);
+
+          const timeOverdue = now - nextFireTimeRef.current;
+          const overdueCallsArray = [0];
+          if (Array.isArray(options.delay)) {
+              const total = [0];
+              options.delay.slice(delayIndexRef.current, options.delay.length).every((d, i) => {
+                  total[0] = total[0] + d;
+                  if (timeOverdue < total[0]) {
+                      overdueCallsArray[0] = i;
+                      return false;
+                  }
+                  return true;
+              });
+          } else {
+              overdueCallsArray[0] = Math.floor(timeOverdue / delay);
+          }
+
+          const overdueCalls = lastFireTimeRef.current !== never ? Math.max(0, overdueCallsArray[0]) : 0;
           lastFireTimeRef.current = now;
           periodElapsedPauseTimeRef.current = 0;
           // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
-          const overdueElapsedTime = overdueCalls * delay;
-          const newFireTime = Math.max(now, nextFireTimeRef.current + delay + overdueElapsedTime);
-          nextFireTimeRef.current = newFireTime;
-
-          // Call the callback
-          if (typeof callback === 'function') {
-            try {
-              callback(overdueCalls);
-            } catch (e) {
-              console.error(e);
+          if (Array.isArray(options.delay)){
+            const overdueElapsedTime = options.delay.slice(delayIndexRef.current, delayIndexRef.current + overdueCalls).reduce((a, b) => a + b, 0);
+            console.log("overdueElapsedTime: " + overdueElapsedTime);
+            const newFireTime = Math.max(now, nextFireTimeRef.current + (delayIndexRef.current + overdueCalls < options.delay.length ? options.delay[delayIndexRef.current + overdueCalls] : 0) + overdueElapsedTime);
+            console.log("newFireTime: " + newFireTime);
+            nextFireTimeRef.current = newFireTime;
+            console.log("delayIndexRef.current: " + delayIndexRef.current);
+            delayIndexRef.current = delayIndexRef.current + overdueCalls + 1;
+            console.log("updated delayIndexRef.current: " + delayIndexRef.current);
+            // Call the callback
+            if (typeof callback === 'function') {
+              try {
+                  callback(overdueCalls);
+              }
+              catch (e) {
+                  console.error(e);
+              }
             }
-          }
-          // If it repeats
-          if (!runOnce) {
-            // Set a timeout to check and fire the timer when time's up
-            subs.setTimeout(() => {
-              // Check if the timer can fire
-              checkTimer();
-            }, Math.max(newFireTime - Date.now(), 1));
+            // If it repeats
+            if (!runOnce) {
+              // Set a timeout to check and fire the timer when time's up
+              subs.setTimeout(() => {
+                  // Check if the timer can fire
+                  checkTimer();
+              }, Math.max(newFireTime - Date.now(), 1));
+            }
+            else {
+              // If it doesn't repeat, stop the timer.
+              stop();
+            }
           } else {
-            // If it doesn't repeat, stop the timer.
-            stop();
-          }
+            const overdueElapsedTime = delay * overdueCalls;
+            const newFireTime = Math.max(now, nextFireTimeRef.current + delay + overdueElapsedTime);
+            nextFireTimeRef.current = newFireTime;
+            // Call the callback
+            if (typeof callback === 'function') {
+              try {
+                  callback(overdueCalls);
+              }
+              catch (e) {
+                  console.error(e);
+              }
+            }
+            // If it repeats
+            if (!runOnce) {
+              // Set a timeout to check and fire the timer when time's up
+              subs.setTimeout(() => {
+                  // Check if the timer can fire
+                  checkTimer();
+              }, Math.max(newFireTime - Date.now(), 1));
+            }
+            else {
+              // If it doesn't repeat, stop the timer.
+              stop();
+            }
+          }           
         }
         // Time is not up yet. Set a timeout to check and fire when time's up
         else if (nextFireTimeRef.current < never) {
