@@ -262,6 +262,8 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
                   : 0) +
                 overdueElapsedTime,
             );
+            console.log('oldFireTime: ' + nextFireTimeRef.current);
+            console.log('delay to next call: ' + options.delay[delayIndexRef.current]);
             console.log('newFireTime: ' + newFireTime);
             nextFireTimeRef.current = newFireTime;
             console.log('delayIndexRef.current: ' + delayIndexRef.current);
