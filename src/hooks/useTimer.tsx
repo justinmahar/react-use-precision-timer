@@ -53,7 +53,8 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
   // Memoized options
   const delay = React.useMemo(() => {
     const s = options.speedMultiplier ?? 1;
-    const d = options.delay ? (Array.isArray(options.delay) ? options.delay[delayIndexRef.current] : options.delay ) : 0;
+    const d = options.delay ? (Array.isArray(options.delay) ? options.delay[delayIndexRef.current] : options.delay) : 0;
+    console.log('delay: ' + d);
     return s === 0 ? 0 : s > 0 && d > 0 ? Math.max(1, Math.round(d * (1 / s))) : d;
   }, [options.delay, options.speedMultiplier]);
   const runOnce = React.useMemo(() => options.runOnce, [options.runOnce]);
@@ -231,50 +232,57 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
           const timeOverdue = now - nextFireTimeRef.current;
           const overdueCallsArray = [0];
           if (Array.isArray(options.delay)) {
-              const total = [0];
-              options.delay.slice(delayIndexRef.current, options.delay.length).every((d, i) => {
-                  total[0] = total[0] + d;
-                  if (timeOverdue < total[0]) {
-                      overdueCallsArray[0] = i;
-                      return false;
-                  }
-                  return true;
-              });
+            const total = [0];
+            options.delay.slice(delayIndexRef.current, options.delay.length).every((d, i) => {
+              total[0] = total[0] + d;
+              if (timeOverdue < total[0]) {
+                overdueCallsArray[0] = i;
+                return false;
+              }
+              return true;
+            });
           } else {
-              overdueCallsArray[0] = Math.floor(timeOverdue / delay);
+            overdueCallsArray[0] = Math.floor(timeOverdue / delay);
           }
 
           const overdueCalls = lastFireTimeRef.current !== never ? Math.max(0, overdueCallsArray[0]) : 0;
           lastFireTimeRef.current = now;
           periodElapsedPauseTimeRef.current = 0;
           // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
-          if (Array.isArray(options.delay)){
-            const overdueElapsedTime = options.delay.slice(delayIndexRef.current, delayIndexRef.current + overdueCalls).reduce((a, b) => a + b, 0);
-            console.log("overdueElapsedTime: " + overdueElapsedTime);
-            const newFireTime = Math.max(now, nextFireTimeRef.current + (delayIndexRef.current + overdueCalls < options.delay.length ? options.delay[delayIndexRef.current + overdueCalls] : 0) + overdueElapsedTime);
-            console.log("newFireTime: " + newFireTime);
+          if (Array.isArray(options.delay)) {
+            const overdueElapsedTime = options.delay
+              .slice(delayIndexRef.current, delayIndexRef.current + overdueCalls)
+              .reduce((a, b) => a + b, 0);
+            console.log('overdueElapsedTime: ' + overdueElapsedTime);
+            const newFireTime = Math.max(
+              now,
+              nextFireTimeRef.current +
+                (delayIndexRef.current + overdueCalls < options.delay.length
+                  ? options.delay[delayIndexRef.current + overdueCalls]
+                  : 0) +
+                overdueElapsedTime,
+            );
+            console.log('newFireTime: ' + newFireTime);
             nextFireTimeRef.current = newFireTime;
-            console.log("delayIndexRef.current: " + delayIndexRef.current);
+            console.log('delayIndexRef.current: ' + delayIndexRef.current);
             delayIndexRef.current = delayIndexRef.current + overdueCalls + 1;
-            console.log("updated delayIndexRef.current: " + delayIndexRef.current);
+            console.log('updated delayIndexRef.current: ' + delayIndexRef.current);
             // Call the callback
             if (typeof callback === 'function') {
               try {
-                  callback(overdueCalls);
-              }
-              catch (e) {
-                  console.error(e);
+                callback(overdueCalls);
+              } catch (e) {
+                console.error(e);
               }
             }
             // If it repeats
             if (!runOnce) {
               // Set a timeout to check and fire the timer when time's up
               subs.setTimeout(() => {
-                  // Check if the timer can fire
-                  checkTimer();
+                // Check if the timer can fire
+                checkTimer();
               }, Math.max(newFireTime - Date.now(), 1));
-            }
-            else {
+            } else {
               // If it doesn't repeat, stop the timer.
               stop();
             }
@@ -285,25 +293,23 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
             // Call the callback
             if (typeof callback === 'function') {
               try {
-                  callback(overdueCalls);
-              }
-              catch (e) {
-                  console.error(e);
+                callback(overdueCalls);
+              } catch (e) {
+                console.error(e);
               }
             }
             // If it repeats
             if (!runOnce) {
               // Set a timeout to check and fire the timer when time's up
               subs.setTimeout(() => {
-                  // Check if the timer can fire
-                  checkTimer();
+                // Check if the timer can fire
+                checkTimer();
               }, Math.max(newFireTime - Date.now(), 1));
-            }
-            else {
+            } else {
               // If it doesn't repeat, stop the timer.
               stop();
             }
-          }           
+          }
         }
         // Time is not up yet. Set a timeout to check and fire when time's up
         else if (nextFireTimeRef.current < never) {
@@ -320,7 +326,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
     checkTimer();
 
     return subs.createCleanup();
-  }, [callback, delay, isPaused, renderTime, runOnce, stop]);
+  }, [callback, delay, isPaused, renderTime, runOnce, stop, options.delay]);
 
   // Start immediately if this is our first run.
   React.useEffect(() => {
