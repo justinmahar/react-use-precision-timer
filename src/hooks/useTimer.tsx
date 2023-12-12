@@ -229,11 +229,13 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
           // To do this, we divide the time elapsed beyond the next expected fire time by the delay,
           // and floor the result. In other words, find how overdue we are, then divide by the delay.console.log("now: " + now);
 
+          const delayIndex = Array.isArray(options.delay) ? delayIndexRef.current + 1 : 0;
+
           const timeOverdue = now - nextFireTimeRef.current;
           const overdueCallsArray = [0];
-          if (Array.isArray(options.delay)) {
+          if (Array.isArray(options.delay) && delayIndex < options.delay.length) {
             const total = [0];
-            options.delay.slice(delayIndexRef.current, options.delay.length).every((d, i) => {
+            options.delay.slice(delayIndex, options.delay.length).every((d, i) => {
               total[0] = total[0] + d;
               if (timeOverdue < total[0]) {
                 overdueCallsArray[0] = i;
@@ -241,34 +243,27 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
               }
               return true;
             });
-          } else {
-            overdueCallsArray[0] = Math.floor(timeOverdue / delay);
-          }
-
-          const overdueCalls = lastFireTimeRef.current !== never ? Math.max(0, overdueCallsArray[0]) : 0;
-          lastFireTimeRef.current = now;
-          periodElapsedPauseTimeRef.current = 0;
-          // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
-          if (Array.isArray(options.delay)) {
+            const overdueCalls = lastFireTimeRef.current !== never ? Math.max(0, overdueCallsArray[0]) : 0;
+            lastFireTimeRef.current = now;
+            periodElapsedPauseTimeRef.current = 0;
             const overdueElapsedTime = options.delay
-              .slice(delayIndexRef.current, delayIndexRef.current + overdueCalls)
+              .slice(delayIndex, delayIndex + overdueCalls)
               .reduce((a, b) => a + b, 0);
             console.log('overdueElapsedTime: ' + overdueElapsedTime);
             const newFireTime = Math.max(
               now,
               nextFireTimeRef.current +
-                (delayIndexRef.current + overdueCalls < options.delay.length
-                  ? options.delay[delayIndexRef.current + overdueCalls]
-                  : 0) +
+                (delayIndex + overdueCalls < options.delay.length ? options.delay[delayIndex + overdueCalls] : 0) +
                 overdueElapsedTime,
             );
             console.log('oldFireTime: ' + nextFireTimeRef.current);
-            console.log('delay to next call: ' + options.delay[delayIndexRef.current]);
+            console.log('delay to next call: ' + options.delay[delayIndex]);
             console.log('newFireTime: ' + newFireTime);
+            // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
             nextFireTimeRef.current = newFireTime;
-            console.log('delayIndexRef.current: ' + delayIndexRef.current);
-            delayIndexRef.current = delayIndexRef.current + overdueCalls + 1;
-            console.log('updated delayIndexRef.current: ' + delayIndexRef.current);
+            console.log('delayIndex: ' + delayIndex);
+            delayIndexRef.current = delayIndex + overdueCalls;
+            console.log('updated delayIndex: ' + delayIndex);
             // Call the callback
             if (typeof callback === 'function') {
               try {
@@ -289,6 +284,11 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
               stop();
             }
           } else {
+            // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
+            overdueCallsArray[0] = Math.floor(timeOverdue / delay);
+            const overdueCalls = lastFireTimeRef.current !== never ? Math.max(0, overdueCallsArray[0]) : 0;
+            lastFireTimeRef.current = now;
+            periodElapsedPauseTimeRef.current = 0;
             const overdueElapsedTime = delay * overdueCalls;
             const newFireTime = Math.max(now, nextFireTimeRef.current + delay + overdueElapsedTime);
             nextFireTimeRef.current = newFireTime;
