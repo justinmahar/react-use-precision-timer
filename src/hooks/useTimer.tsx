@@ -168,13 +168,18 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
   }, [isPaused, isRunning, isStarted, delay]);
 
   const start = React.useCallback(
-    (startTimeMillis = Date.now()) => {
-      const newNextFireTime = delay
-        ? Math.max(startTimeMillis, fireOnStart ? startTimeMillis : startTimeMillis + delay)
-        : never;
+    (startTimeMillis = Date.now(), delayIndex = delayIndexRef.current) => {
+      const newNextFireTime = () => {
+        if (Array.isArray(options.delay) && options.delay.length > delayIndex && delayIndexRef.current != delayIndex) {
+          delayIndexRef.current = delayIndex;
+          return options.delay[delayIndex];
+        } else {
+          return delay ? Math.max(startTimeMillis, fireOnStart ? startTimeMillis : startTimeMillis + delay) : never;
+        }
+      };
       startTimeRef.current = startTimeMillis;
       lastFireTimeRef.current = never;
-      nextFireTimeRef.current = newNextFireTime;
+      nextFireTimeRef.current = newNextFireTime();
       pauseTimeRef.current = never;
       resumeTimeRef.current = startTimeMillis;
       periodElapsedPauseTimeRef.current = 0;
@@ -182,7 +187,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
       startedRef.current = true;
       setRenderTime(Date.now());
     },
-    [delay, fireOnStart],
+    [delay, fireOnStart, options.delay],
   );
 
   const stop = React.useCallback((): void => {
