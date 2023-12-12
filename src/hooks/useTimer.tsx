@@ -54,9 +54,9 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
   const delay = React.useMemo(() => {
     const s = options.speedMultiplier ?? 1;
     const d = options.delay ? (Array.isArray(options.delay) ? options.delay[delayIndexRef.current] : options.delay) : 0;
-    console.log('delay: ' + d);
     return s === 0 ? 0 : s > 0 && d > 0 ? Math.max(1, Math.round(d * (1 / s))) : d;
   }, [options.delay, options.speedMultiplier]);
+  console.log('delay: ' + delay);
   const runOnce = React.useMemo(() => options.runOnce, [options.runOnce]);
   const fireOnStart = React.useMemo(() => options.fireOnStart, [options.fireOnStart]);
   const startImmediately = React.useMemo(() => options.startImmediately, [options.startImmediately]);
