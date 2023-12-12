@@ -266,6 +266,9 @@ const useTimer = (options = {}, callback) => {
                             stop();
                         }
                     }
+                    else if (Array.isArray(options.delay)) {
+                        stop();
+                    }
                     else {
                         // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
                         overdueCallsArray[0] = Math.floor(timeOverdue / delay);
