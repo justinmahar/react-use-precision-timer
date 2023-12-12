@@ -63,6 +63,7 @@ const useTimer = (options = {}, callback) => {
         const d = options.delay ? (Array.isArray(options.delay) ? options.delay[delayIndexRef.current] : options.delay) : 0;
         return s === 0 ? 0 : s > 0 && d > 0 ? Math.max(1, Math.round(d * (1 / s))) : d;
     }, [options.delay, options.speedMultiplier]);
+    console.log('delay: ' + delay);
     const runOnce = React.useMemo(() => options.runOnce, [options.runOnce]);
     const fireOnStart = React.useMemo(() => options.fireOnStart, [options.fireOnStart]);
     const startImmediately = React.useMemo(() => options.startImmediately, [options.startImmediately]);
@@ -233,14 +234,20 @@ const useTimer = (options = {}, callback) => {
                     periodElapsedPauseTimeRef.current = 0;
                     // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
                     if (Array.isArray(options.delay)) {
-                        const overdueElapsedTime = options.delay.slice(delayIndexRef.current, delayIndexRef.current + overdueCalls).reduce((a, b) => a + b, 0);
-                        console.log("overdueElapsedTime: " + overdueElapsedTime);
-                        const newFireTime = Math.max(now, nextFireTimeRef.current + (delayIndexRef.current + overdueCalls < options.delay.length ? options.delay[delayIndexRef.current + overdueCalls] : 0) + overdueElapsedTime);
-                        console.log("newFireTime: " + newFireTime);
+                        const overdueElapsedTime = options.delay
+                            .slice(delayIndexRef.current, delayIndexRef.current + overdueCalls)
+                            .reduce((a, b) => a + b, 0);
+                        console.log('overdueElapsedTime: ' + overdueElapsedTime);
+                        const newFireTime = Math.max(now, nextFireTimeRef.current +
+                            (delayIndexRef.current + overdueCalls < options.delay.length
+                                ? options.delay[delayIndexRef.current + overdueCalls]
+                                : 0) +
+                            overdueElapsedTime);
+                        console.log('newFireTime: ' + newFireTime);
                         nextFireTimeRef.current = newFireTime;
-                        console.log("delayIndexRef.current: " + delayIndexRef.current);
+                        console.log('delayIndexRef.current: ' + delayIndexRef.current);
                         delayIndexRef.current = delayIndexRef.current + overdueCalls + 1;
-                        console.log("updated delayIndexRef.current: " + delayIndexRef.current);
+                        console.log('updated delayIndexRef.current: ' + delayIndexRef.current);
                         // Call the callback
                         if (typeof callback === 'function') {
                             try {
@@ -303,7 +310,7 @@ const useTimer = (options = {}, callback) => {
         // Check if the timer can fire
         checkTimer();
         return subs.createCleanup();
-    }, [callback, delay, isPaused, renderTime, runOnce, stop]);
+    }, [callback, delay, isPaused, renderTime, runOnce, stop, options.delay]);
     // Start immediately if this is our first run.
     React.useEffect(() => {
         if (firstRun) {
