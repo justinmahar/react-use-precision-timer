@@ -1,6 +1,6 @@
-/// <reference types="react" />
+import React from 'react';
 export declare const TimerStory: {
-    (): JSX.Element;
+    (): React.JSX.Element;
     story: {
         name: string;
     };

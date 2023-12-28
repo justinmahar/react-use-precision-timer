@@ -1,6 +1,6 @@
 export interface TimerOptions {
     /** Amount of time to wait before firing the timer, in milliseconds. Use `undefined` or `0` if you'd like the timer to behave as a stopwatch, never firing. */
-    delay?: number;
+    delay?: number | number[];
     /** Use `true` to only run the timer once, `false` otherwise.  */
     runOnce?: boolean;
     /** Use `true` if the timer should fire immediately, calling the provided callback when starting. Use `false` otherwise. */
@@ -39,7 +39,7 @@ export interface Timer {
      *
      * @param startTime Optional. The Unix epoch time in milliseconds at which to start the timer. Defaults to the current time in millis.
      */
-    start: (startTime?: number) => void;
+    start: (startTime?: number, delayIndex?: number) => void;
     /** Stop the timer. */
     stop: () => void;
     /** Pause the timer. */

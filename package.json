@@ -52,11 +52,11 @@
     "@babel/core": "^7.20.12",
     "@mdx-js/react": "^1.6.22",
     "@storybook/addon-actions": "^6.5.15",
-    "@storybook/addon-essentials": "^6.5.15",
+    "@storybook/addon-essentials": "^7.6.6",
     "@storybook/addon-links": "^6.5.15",
     "@storybook/builder-webpack5": "^6.5.15",
     "@storybook/manager-webpack5": "^6.5.15",
-    "@storybook/react": "^6.5.15",
+    "@storybook/react": "^7.6.6",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
     "babel-loader": "^9.1.2",
@@ -67,6 +67,7 @@
     "eslint-plugin-react": "^7.31.11",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.10",
+    "glob-parent": "^6.0.1",
     "lockblocks": "^1.1.1",
     "prettier": "^2.8.2",
     "react": "^17.0.2",
@@ -74,11 +75,14 @@
     "react-dom": "^17.0.2",
     "react-html-props": "^1.0.32",
     "react-markdown": "^8.0.3",
+    "replace-in-file": "^6.3.5",
     "typescript": "^4.9.4",
-    "webpack": "^5.75.0",
-    "replace-in-file": "^6.3.5"
+    "webpack": "^5.75.0"
   },
   "dependencies": {
     "react-sub-unsub": "^2.1.6"
+  },
+  "overrides": {
+    "glob-parent": "$glob-parent"
   }
 }
