@@ -49,7 +49,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
   const totalElapsedPauseTimeRef = React.useRef(0);
   const delayIndexRef = React.useRef(0);
 
-  console.log("options.delay: " + options.delay); 
+  // console.log("options.delay: " + options.delay); 
   console.log("delayIndexRef: " + delayIndexRef.current);
   console.log("delay at render start: " + options.delay);
   // Memoized options
