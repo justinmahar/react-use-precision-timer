@@ -49,15 +49,12 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
   const totalElapsedPauseTimeRef = React.useRef(0);
   const delayIndexRef = React.useRef(0);
 
-  // console.log("options.delay: " + options.delay); 
-  console.log("delayIndexRef: " + delayIndexRef.current);
   // Memoized options
   const delay = React.useMemo(() => {
     const s = options.speedMultiplier ?? 1;
     const d = options.delay ? (Array.isArray(options.delay) ? options.delay[delayIndexRef.current] : options.delay) : 0;
     return s === 0 ? 0 : s > 0 && d > 0 ? Math.max(1, Math.round(d * (1 / s))) : d;
   }, [options.delay, options.speedMultiplier]);
-  console.log('new delay set to: ' + delay);
   const runOnce = React.useMemo(() => options.runOnce, [options.runOnce]);
   const fireOnStart = React.useMemo(() => options.fireOnStart, [options.fireOnStart]);
   const startImmediately = React.useMemo(() => options.startImmediately, [options.startImmediately]);
@@ -168,6 +165,8 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
     return 0;
   }, [isPaused, isRunning, isStarted, delay]);
 
+  // The start callback has been changed to accept a delayIndex parameter.
+  // This allows for starting the timer at a specific index in the delay array.
   const start = React.useCallback(
     (startTimeMillis = Date.now(), delayIndex = delayIndexRef.current) => {
       const newNextFireTime = () => {
@@ -234,12 +233,30 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
           // Check if we're overdue on any events being fired (super low delay or expensive callback).
           // To do this, we divide the time elapsed beyond the next expected fire time by the delay,
           // and floor the result. In other words, find how overdue we are, then divide by the delay.console.log("now: " + now);
-
-          const delayIndex = Array.isArray(options.delay) ? delayIndexRef.current + 1 : 0;
-
+          
           const timeOverdue = now - nextFireTimeRef.current;
           const overdueCallsArray = [0];
+
+          // - Check if an array is given to the delay option
+          // - If so, we need to check if we're overdue on any events being fired.
+          // - If we are, we need to find out how many events we missed, and adjust
+          //   the next fire time accordingly.
+          // - We also need to increase the delayIndexRef value by the number of events we missed
+          //   so that we can keep track of where we are in the delay array. This is important 
+          //   because future fire times are calculated based on the values in the delay array.
+          // - If an array is not given to the delay option, we execute the old original code.
+          // ------------------------------------------------------------
+          // The change in the structure of the code is intentional, and meant to make it easier
+          // to track the logic and reduce the number of if statements and ternary conditional operators.
+          // The downside is that there are more lines of code.
+          // Possible performance improvement: Move `delayIndexRef.current = delayIndex + overdueCalls;`
+          // up so that we can avoid repeating the `delayIndex + overdueCalls` calculation. This has 
+          // not been done because it would need to be tested to make sure it doesn't break anything. 
+          const delayIndex = Array.isArray(options.delay) ? delayIndexRef.current + 1 : 0;
           if (Array.isArray(options.delay) && delayIndex < options.delay.length) {
+            // In the following loop, we start from current position in the delay array and count how 
+            // many of the next delay values fit into the timeOverdue value. We then obtain the number
+            // of overdue calls directly from the result.
             const total = [0];
             options.delay.slice(delayIndex, options.delay.length).every((d, i) => {
               total[0] = total[0] + d;
@@ -255,21 +272,16 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
             const overdueElapsedTime = options.delay
               .slice(delayIndex, delayIndex + overdueCalls)
               .reduce((a, b) => a + b, 0);
-            console.log('overdueElapsedTime: ' + overdueElapsedTime);
             const newFireTime = Math.max(
               now,
               nextFireTimeRef.current +
                 (delayIndex + overdueCalls < options.delay.length ? options.delay[delayIndex + overdueCalls] : 0) +
                 overdueElapsedTime,
             );
-            console.log('oldFireTime: ' + nextFireTimeRef.current);
-            console.log('delay to next call: ' + options.delay[delayIndex]);
-            console.log('newFireTime: ' + newFireTime);
             // Calculate and set the next time the timer should fire, accounting for overdue calls (if any)
             nextFireTimeRef.current = newFireTime;
-            console.log('delayIndex: ' + delayIndex);
             delayIndexRef.current = delayIndex + overdueCalls;
-            console.log('updated delayIndex: ' + delayIndex);
+
             // Call the callback
             if (typeof callback === 'function') {
               try {
