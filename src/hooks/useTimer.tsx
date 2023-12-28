@@ -51,7 +51,6 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
 
   // console.log("options.delay: " + options.delay); 
   console.log("delayIndexRef: " + delayIndexRef.current);
-  console.log("delay at render start: " + options.delay);
   // Memoized options
   const delay = React.useMemo(() => {
     const s = options.speedMultiplier ?? 1;

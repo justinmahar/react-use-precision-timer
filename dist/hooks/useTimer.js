@@ -57,7 +57,6 @@ const useTimer = (options = {}, callback) => {
     const delayIndexRef = React.useRef(0);
     // console.log("options.delay: " + options.delay); 
     console.log("delayIndexRef: " + delayIndexRef.current);
-    console.log("delay at render start: " + options.delay);
     // Memoized options
     const delay = React.useMemo(() => {
         var _a;
