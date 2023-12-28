@@ -161,9 +161,9 @@ const useTimer = (options = {}, callback) => {
     // This allows for starting the timer at a specific index in the delay array.
     const start = React.useCallback((startTimeMillis = Date.now(), delayIndex = delayIndexRef.current) => {
         const newNextFireTime = () => {
-            if (Array.isArray(options.delay) && options.delay.length > delayIndex && delayIndexRef.current != delayIndex) {
+            if (Array.isArray(options.delay)) {
                 delayIndexRef.current = delayIndex;
-                return options.delay[delayIndex] ? Math.max(startTimeMillis, fireOnStart ? startTimeMillis : startTimeMillis + options.delay[delayIndex]) : never;
+                return options.delay.length > delayIndex && options.delay[delayIndex] ? Math.max(startTimeMillis, fireOnStart ? startTimeMillis : startTimeMillis + options.delay[delayIndex]) : never;
             }
             else {
                 return delay ? Math.max(startTimeMillis, fireOnStart ? startTimeMillis : startTimeMillis + delay) : never;
