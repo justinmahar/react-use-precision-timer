@@ -49,14 +49,16 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
   const totalElapsedPauseTimeRef = React.useRef(0);
   const delayIndexRef = React.useRef(0);
 
-  console.log(options.delay);
+  console.log("options.delay: " + options.delay); 
+  console.log("delayIndexRef: " + delayIndexRef.current);
+  console.log("delay at render start: " + options.delay);
   // Memoized options
   const delay = React.useMemo(() => {
     const s = options.speedMultiplier ?? 1;
     const d = options.delay ? (Array.isArray(options.delay) ? options.delay[delayIndexRef.current] : options.delay) : 0;
     return s === 0 ? 0 : s > 0 && d > 0 ? Math.max(1, Math.round(d * (1 / s))) : d;
   }, [options.delay, options.speedMultiplier]);
-  console.log('delay: ' + delay);
+  console.log('new delay set to: ' + delay);
   const runOnce = React.useMemo(() => options.runOnce, [options.runOnce]);
   const fireOnStart = React.useMemo(() => options.fireOnStart, [options.fireOnStart]);
   const startImmediately = React.useMemo(() => options.startImmediately, [options.startImmediately]);
@@ -172,7 +174,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
       const newNextFireTime = () => {
         if (Array.isArray(options.delay) && options.delay.length > delayIndex && delayIndexRef.current != delayIndex) {
           delayIndexRef.current = delayIndex;
-          return options.delay[delayIndex];
+          return options.delay[delayIndex] ? Math.max(startTimeMillis, fireOnStart ? startTimeMillis : startTimeMillis + options.delay[delayIndex]) : never; 
         } else {
           return delay ? Math.max(startTimeMillis, fireOnStart ? startTimeMillis : startTimeMillis + delay) : never;
         }
