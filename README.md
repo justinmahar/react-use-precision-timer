@@ -19,9 +19,9 @@
 
 Read the **[official documentation](https://justinmahar.github.io/react-use-precision-timer/)**.
 
-[![Demo](https://justinmahar.github.io/react-use-precision-timer/images/timer-demo.gif "Demo")](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--page)
+[![Demo](https://justinmahar.github.io/react-use-precision-timer/images/timer-demo.gif "Demo")](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--docs)
 
-👁️ **[Live Demo](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--page)**
+👁️ **[Live Demo](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--docs)**
 
 ## Overview
 
@@ -110,18 +110,18 @@ In a handler or effect:
 timer.start();
 ```
 
-The following functions can be used to control the [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page#timer):
+The following functions can be used to control the [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--docs#timer):
 
 - `timer.start()` - Start the timer. If already started, will restart the timer. You can optionally pass a start time in Unix epoch milliseconds.
 - `timer.stop()` - Stop the timer.
 - `timer.pause()` - Pause the timer.
 - `timer.resume()` - Resume the timer.
 
-Refer to [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page#timer) for all available functions, including getters for elapsed times.
+Refer to [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--docs#timer) for all available functions, including getters for elapsed times.
 
 ### One-Time Delay
 
-If you'd like to run a callback after a one-time delay, use the helper hook [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--page):
+If you'd like to run a callback after a one-time delay, use the helper hook [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--docs):
 
 ```jsx
 import { useDelay } from 'react-use-precision-timer';
@@ -145,7 +145,7 @@ This will call the callback after the provided 1000 millisecond delay only once.
 
 ### Stopwatch
 
-The timer also functions as a stopwatch when no delay is provided. You can use the helper hook [useStopwatch](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usestopwatch--page):
+The timer also functions as a stopwatch when no delay is provided. You can use the helper hook [useStopwatch](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usestopwatch--docs):
 
 ```jsx
 import { useStopwatch } from "react-use-precision-timer";
@@ -157,13 +157,13 @@ const stopwatch = useStopwatch();
 
 Use `start()`, `stop()`, `pause()`, and `resume()` to control the stopwatch.
 
-Stopwatch is a [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page#timer) object. Refer to Timer's getters to retrieve elapsed running time, paused time, and so forth.
+Stopwatch is a [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--docs#timer) object. Refer to Timer's getters to retrieve elapsed running time, paused time, and so forth.
 
 Calling start while a stopwatch is already running will restart it.
 
 ### Momentary Boolean
 
-For convenience, the [useMomentaryBool](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usemomentarybool--page) hook has been included to momentarily toggle a boolean. This wraps the [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--page) hook.
+For convenience, the [useMomentaryBool](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usemomentarybool--docs) hook has been included to momentarily toggle a boolean. This wraps the [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--docs) hook.
 
 This is very useful for momentary notifications, such as a copy button that shows a momentary checkmark to indicate the operation succeeded.
 
@@ -182,7 +182,7 @@ Calling `toggle()` will set the boolean to `true`, then back to `false` after a 
 
 ### Other Usage
 
-See [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page) for all other hook options and timer functions.
+See [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--docs) for all other hook options and timer functions.
 
 <!-- [lock:typescript] 🚫--------------------------------------- -->
 
@@ -218,4 +218,4 @@ If you found this project helpful, let the community know by giving it a [star](
 
 ## License
 
-See [LICENSE.md](https://justinmahar.github.io/react-use-precision-timer/?path=/story/license--page).
+See [LICENSE.md](https://justinmahar.github.io/react-use-precision-timer/?path=/docs/license--docs).

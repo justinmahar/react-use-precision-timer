@@ -22,7 +22,7 @@ export interface TimerOptions {
 const never = Number.MAX_SAFE_INTEGER;
 
 /**
- * See documentation: [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page)
+ * See documentation: [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--docs)
  *
  * A versatile precision timer hook for React. Doubles as a stopwatch.
  *
@@ -245,10 +245,13 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
           // If it repeats
           if (!runOnce) {
             // Set a timeout to check and fire the timer when time's up
-            subs.setTimeout(() => {
-              // Check if the timer can fire
-              checkTimer();
-            }, Math.max(newFireTime - Date.now(), 1));
+            subs.setTimeout(
+              () => {
+                // Check if the timer can fire
+                checkTimer();
+              },
+              Math.max(newFireTime - Date.now(), 1),
+            );
           } else {
             // If it doesn't repeat, stop the timer.
             stop();
@@ -256,11 +259,14 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
         }
         // Time is not up yet. Set a timeout to check and fire when time's up
         else if (nextFireTimeRef.current < never) {
-          subs.setTimeout(() => {
-            // Check if the timer can fire
-            checkTimer();
-            // Home in on the exact time to fire.
-          }, Math.max(nextFireTimeRef.current - Date.now(), 1));
+          subs.setTimeout(
+            () => {
+              // Check if the timer can fire
+              checkTimer();
+              // Home in on the exact time to fire.
+            },
+            Math.max(nextFireTimeRef.current - Date.now(), 1),
+          );
         }
       }
     };
@@ -329,7 +335,7 @@ export const useTimer = (options: TimerOptions = {}, callback?: (overdueCallCoun
 };
 
 /**
- * See documentation: [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page#timer)
+ * See documentation: [Timer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--docs#timer)
  */
 export interface Timer {
   /**

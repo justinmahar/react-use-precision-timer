@@ -8,7 +8,7 @@ import { Meta } from '@storybook/addon-docs';
 
 A versatile precision timer hook for React. Doubles as a stopwatch.
 
-See the [live demo](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--page).
+See the [live demo](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--docs).
 
 ## Usage
 
@@ -52,7 +52,7 @@ useTimer({ delay: 2000, runOnce: true, startImmediately: true }, callback);
 
 This will call the callback after the provided delay, and only once.
 
-For convenience, you can use the [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--page) hook, which encapsulates these options.
+For convenience, you can use the [useDelay](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usedelay--docs) hook, which encapsulates these options.
 
 ### Stopwatch Timer
 
@@ -65,7 +65,7 @@ A timer with no `delay` option behaves exactly as a stopwatch. Once started, it 
 
 You can `start`, `stop`, `pause`, and `resume` a stopwatch timer. You can retrieve elapsed time, total pause time, and more.
 
-For convenience, you can use the [useStopwatch](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usestopwatch--page) hook, which encapsulates this option.
+For convenience, you can use the [useStopwatch](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usestopwatch--docs) hook, which encapsulates this option.
 
 ## Signature
 
@@ -100,7 +100,7 @@ As a failsafe, callback calls will be skipped when the timer can't keep up, allo
 
 If you'd like, you can check the `overdueCallCount` argument in your callback to determine how many calls were missed and account for those missed calls.
 
-You can test this in the [live demo](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--page) when you set a Delay under 10ms. Refer to the "Overdue call count" value.
+You can test this in the [live demo](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--docs) when you set a Delay under 10ms. Refer to the "Overdue call count" value.
 
 ### Return
 
@@ -152,4 +152,4 @@ When used as a stopwatch (no `delay`), no timeouts are used.
 
 ## Demo
 
-See the [live demo](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--page).
+See the [live demo](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-demo--docs).
