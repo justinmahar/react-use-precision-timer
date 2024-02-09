@@ -1,6 +1,5 @@
-import React from 'react';
-import { UseTimerExample } from '../components/UseTimerExample';
 import type { Meta, StoryObj } from '@storybook/react';
+import { UseTimerExample } from '../components/UseTimerExample';
 
 // === Setup ===
 const StoryComponent = UseTimerExample; // <-- Set to your component
