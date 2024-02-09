@@ -1,9 +1,17 @@
-import React from 'react';
+import type { Meta, StoryObj } from '@storybook/react';
 import { UseMomentaryBoolExample } from '../components/UseMomentaryBoolExample';
 
-export const TimerStory = () => <UseMomentaryBoolExample />;
-TimerStory.story = {
-  name: 'Hook Visual',
+// === Setup ===
+const StoryComponent = UseMomentaryBoolExample; // <-- Set to your component
+const meta: Meta<typeof StoryComponent> = {
+  title: 'Stories/useMomentaryBool', // <-- Set to your story title
+  component: StoryComponent,
+  parameters: {
+    options: { showPanel: false }, // Don't show addons panel
+  },
 };
+export default meta;
+type Story = StoryObj<typeof meta>;
 
-export default {};
+// === Stories ===
+export const Example: Story = {};

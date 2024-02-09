@@ -7,9 +7,13 @@
 <p align="center">
   <a href="https://badge.fury.io/js/react-use-precision-timer" target="_blank" rel="noopener noreferrer"><img src="https://badge.fury.io/js/react-use-precision-timer.svg" alt="npm Version" /></a>&nbsp;
   <a href="https://github.com/justinmahar/react-use-precision-timer/" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/badge/GitHub-Source-success" alt="View project on GitHub" /></a>&nbsp;
-  <a href="https://github.com/justinmahar/react-use-precision-timer/actions?query=workflow%3ADeploy" target="_blank" rel="noopener noreferrer"><img src="https://github.com/justinmahar/react-use-precision-timer/workflows/Deploy/badge.svg" alt="Deploy Status" /></a>&nbsp;
-  <a href="https://github.com/sponsors/justinmahar" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" alt="Sponsor"/></a>
+  <a href="https://github.com/justinmahar/react-use-precision-timer/actions?query=workflow%3ADeploy" target="_blank" rel="noopener noreferrer"><img src="https://github.com/justinmahar/react-use-precision-timer/workflows/Deploy/badge.svg" alt="Deploy Status" /></a>
 </p>
+<!-- [lock:donate-badges] 🚫--------------------------------------- -->
+<p align="center">
+  <a href="https://ko-fi.com/justinmahar"><img src="https://img.shields.io/static/v1?label=Buy%20me%20a%20coffee&message=%E2%9D%A4&logo=KoFi&color=%23fe8e86" alt="Buy me a coffee" /></a>&nbsp;<a href="https://github.com/sponsors/justinmahar" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" alt="Sponsor"/></a>
+</p>
+<!-- [/lock:donate-badges] ---------------------------------------🚫 -->
 
 ## Documentation
 
@@ -47,23 +51,15 @@ Version 3 of this package features a complete redesign to reduce unnecessary ren
 - The useTimer hook's signature has been changed. The callback is now provided as the second argument, and should be cached using [`React.useCallback()`](https://beta.reactjs.org/apis/react/useCallback) to optimize render performance. Refer to the [Quick Start](#quick-start) section below.
 - The [useMomentaryBool](#momentary-boolean) hook was added.
 
-[lock:donate]::🚫---------------------------------------
+<!-- [lock:donate] 🚫--------------------------------------- -->
 
 ## Donate 
 
-If this project helped you, please consider buying me a coffee. Your support is much appreciated!
+If this project helped you, please consider buying me a coffee or sponsoring me. Your support is much appreciated!
 
-<a href="https://github.com/sponsors/justinmahar">
-  <img src="https://justinmahar.github.io/react-kindling/support/sponsor.png" alt="Sponsor via GitHub" height="35" />
-</a> <a href="https://paypal.me/thejustinmahar/5">
-  <img src="https://justinmahar.github.io/react-kindling/support/coffee-1.png" alt="Buy me a coffee" height="35" />
-</a> <a href="https://paypal.me/thejustinmahar/15">
-  <img src="https://justinmahar.github.io/react-kindling/support/coffee-3.png" alt="Buy me 3 coffees" height="35" />
-</a> <a href="https://paypal.me/thejustinmahar/25">
-  <img src="https://justinmahar.github.io/react-kindling/support/coffee-5.png" alt="Buy me 5 coffees" height="35" />
-</a>
+<a href="https://ko-fi.com/justinmahar"><img src="https://img.shields.io/static/v1?label=Buy%20me%20a%20coffee&message=%E2%9D%A4&logo=KoFi&color=%23fe8e86" alt="Buy me a coffee" /></a>&nbsp;<a href="https://github.com/sponsors/justinmahar" target="_blank" rel="noopener noreferrer"><img src="https://img.shields.io/static/v1?label=Sponsor&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" alt="Sponsor"/></a>
 
-[/lock:donate]::---------------------------------------🚫
+<!-- [/lock:donate] ---------------------------------------🚫 -->
 
 ## Table of Contents
 
@@ -80,7 +76,6 @@ If this project helped you, please consider buying me a coffee. Your support is 
   - [Stopwatch](#stopwatch)
   - [Momentary Boolean](#momentary-boolean)
   - [Other Usage](#other-usage)
-- [Timer Renderer](#timer-renderer)
 - [TypeScript](#typescript)
 - [Icon Attribution](#icon-attribution)
 - [Contributing](#contributing)
@@ -189,51 +184,23 @@ Calling `toggle()` will set the boolean to `true`, then back to `false` after a 
 
 See [useTimer](https://justinmahar.github.io/react-use-precision-timer/?path=/story/docs-usetimer--page) for all other hook options and timer functions.
 
-[lock:typescript]::🚫---------------------------------------
-
-## Timer Renderer
-
-This timer hook operates entirely on Unix timestamps and timeouts. If it's being used as a stopwatch, no timeouts are used at all.
-
-This means there isn't a separate render timer running to render the timer's state to the page. So it may appear as if your timer or stopwatch isn't running, but that's not the case—you're just not telling React to render it to the page!
-
-To solve this, you can render a timer or stopwatch to the page as it runs with the `TimerRenderer` component. Use it like so:
-
-```jsx
-import { TimerRenderer } from 'react-use-precision-timer';
-```
-
-```jsx
-const myTimer = useTimer(...); // Or useStopwatch()
-```
-
-```jsx
-<TimerRenderer
-  timer={myTimer}
-  render={(t) => <>{t.getElapsedRunningTime()}</>}
-  renderRate={10} // In milliseconds
-/>
-```
-
-Provide a `render` prop function that takes one argument, the timer. The render function should return your rendered timer or stopwatch.
-
-The `renderRate` prop determines how frequently the component renders, in milliseconds. If no `renderRate` is provided, the default is `10` milliseconds.
+<!-- [lock:typescript] 🚫--------------------------------------- -->
 
 ## TypeScript
 
 Type definitions have been included for [TypeScript](https://www.typescriptlang.org/) support.
 
-[/lock:typescript]::---------------------------------------🚫
+<!-- [/lock:typescript] ---------------------------------------🚫 -->
 
-[lock:icon]::🚫---------------------------------------
+<!-- [lock:icon] 🚫--------------------------------------- -->
 
 ## Icon Attribution
 
 Favicon by [Twemoji](https://github.com/twitter/twemoji).
 
-[/lock:icon]::---------------------------------------🚫
+<!-- [/lock:icon] ---------------------------------------🚫 -->
 
-[lock:contributing]::🚫---------------------------------------
+<!-- [lock:contributing] 🚫--------------------------------------- -->
 
 ## Contributing
 
@@ -243,7 +210,7 @@ Feel free to submit a pull request for bugs or additions, and make sure to updat
 
 For major changes, open an issue first to discuss what you'd like to change.
 
-[/lock:contributing]::---------------------------------------🚫
+<!-- [/lock:contributing] --------------------------------------🚫 -->
 
 ## ⭐ Found It Helpful? [Star It!](https://github.com/justinmahar/react-use-precision-timer/stargazers)
 

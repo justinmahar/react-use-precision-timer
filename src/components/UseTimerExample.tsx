@@ -4,8 +4,12 @@ import { Badge, Button, Card, Form, ProgressBar, Table } from 'react-bootstrap';
 import { useTimer } from '../hooks/useTimer';
 import { TimerRenderer } from './TimerRenderer';
 
-export function UseTimerExample(): JSX.Element {
-  const [delay, setDelay] = React.useState(1000);
+export interface UseTimerExampleProps {
+  initialDelay?: number;
+}
+
+export function UseTimerExample({ initialDelay = 1000 }: UseTimerExampleProps): JSX.Element {
+  const [delay, setDelay] = React.useState(initialDelay);
   const [speedMultiplier, setSpeedMultiplier] = React.useState(1);
   const [startTimeEnabled, setStartTimeEnabled] = React.useState(false);
   const [startTime, setStartTime] = React.useState(Date.now());

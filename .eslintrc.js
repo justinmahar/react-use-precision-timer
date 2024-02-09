@@ -47,6 +47,8 @@ const sharedTSAndJSRules = {
 
 const tsSpecificRules = {
   '@typescript-eslint/no-empty-interface': 'off', // Disable empty interface error
+  '@typescript-eslint/no-explicit-any': 'warn', // Warn on any
+  '@typescript-eslint/no-unused-vars': 'warn', // Warn for unused vars
 };
 /** Rules specific to JS. */
 
